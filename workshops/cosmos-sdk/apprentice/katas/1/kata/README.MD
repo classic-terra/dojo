@@ -112,6 +112,8 @@ func main() {
 ## Conclusion
 Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions of `protobuf`, offering better performance, new features, and improved tooling. Understanding this data serialization format is essential to succesfully working with `Cosmos SDK` and thus we decided make it the beginning of a hopefully long and prosperous journey through.
 
+The architectural pattern of Protocol Buffers is based on a client-server model, where the client and server use Protocol Buffers to communicate with each other. The server defines the `.proto` file that defines the data structure, and the client uses the generated code to serialize and deserialize the data that is transmitted over the network. This makes it a powerful tool for efficient inter-process communication and data storage.
+
 In this exercise, we demonstrate how to create a simple message instance, set its fields, and serialize it to a byte stream, which in turn is deserialize back to an instance of the message and printed to `stdout` via the fmt package. We will use this knowledge as we progress to training steps related to `messages` and `custom types`.
 
 ## Want to help make our training material better?
