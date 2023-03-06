@@ -1,2 +1,2 @@
-# L1-dojo
-Workshops and learning material for Layer 1 subject matter concerning Cosmos SDK, Cosmosvisor, Tendermint, etc.
+# Terra Classic L1 Task Force Dojo
+Workshops and learning material for L1 subject matter concerning Cosmos SDK, Cosmosvisor, Tendermint, etc.
