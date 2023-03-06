@@ -27,7 +27,7 @@ Protocol Buffer 4.0 is the latest version of the protocol buffer specification, 
 - Improved tooling: Protobuf 4.0 includes several improvements to the protobuf compiler and related tooling, including support for generating code in additional programming languages, improved error messages, and better support for integrating with build systems.
 
 ## Exercise
-In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 4.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for message contract in the target programming language, `go`.
+In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 4.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `go`.
 
 After generating the code, we will then write a small program that can use our new message contract to create message instances, set fields, and serialize it to a byte stream using the `proto.Marshal()` method and subsequently deserialize it back to another message instance via `proto.Unmarshal()`.
 
