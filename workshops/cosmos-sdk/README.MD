@@ -2,9 +2,9 @@
 ## Preface
 Distributed ledger technology, commonly referred to as "blockchain", was introduced with the launch of Bitcoin in 2009 which featured an open-source software client released into a distributed peer-to-peer network to facilitate transactions and store data amongst its peers. This innovation brought about the worlds first secure and transparent "digital value network" which was not dependant on a centralized intermediary to operate. However, as Bitcoin grew in popularity, two major challenges become apparent in its "proof-of-work" architecture:
 
-- Scalability => As the number of transactions on a blockchain network grows, the network becomes slower and more expensive to operate. This leads to higher transaction fees and longer wait times for users.
+- **Scalability** => As the number of transactions on a blockchain network grows, the network becomes slower and more expensive to operate. This leads to higher transaction fees and longer wait times for users.
 
-- Interoperability => Different blockchain networks are often unable to communicate with each other, which limits their potential use cases and makes it difficult to exchange assets across different networks.
+- **Interoperability** => Different blockchain networks are often unable to communicate with each other, which limits their potential use cases and makes it difficult to exchange assets across different networks.
 
 Cosmos SDK attempts to address these challenges by providing a framework for building interconnected blockchain applications, which allows for the creation of "application specific blockchains" that can exchange assets and data across a wide varity of networks (Gaia, Juno, etc), while still maintaining the security and decentralization of each individual network.
 
