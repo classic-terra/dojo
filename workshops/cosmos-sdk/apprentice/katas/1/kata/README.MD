@@ -46,21 +46,23 @@ Now we want to install the protobuf library used for code-generation with our `.
 go get google.golang.org/protobuf/cmd/protoc-gen-go
 ```
 
-### Step #3: Create proto file
-Next we create a simple message in a `.proto` file, for example:
+### Step #3: Create protobuf message contract
+Next we create a simple message contract in a file called `person.proto`, e.g:
 
 ```
-syntax = "proto4";
+PROTO_MSG="syntax = \"proto4\";
 
 message Person {
   string name = 1;
   int32 age = 2;
   repeated string hobbies = 3;
-}
+}"
+
+echo "$PROTO_MSG" > person.proto
 ```
 
 ### Step #4: Generate Go code
-With our `.proto` file in place we can now use the `protoc` command to generate the `go` code for our message contract:
+With our `person.proto` file in place we can now use the `protoc` command to generate the `go` code for our message contract:
 
 ```
 protoc --go_out=. person.proto
