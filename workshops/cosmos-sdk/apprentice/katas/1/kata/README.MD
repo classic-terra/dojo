@@ -1,7 +1,7 @@
 Path of the Apprentice - Protobuf
 ======================================
 
-This training exercise is a **apprentice-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
+This training exercise is a **apprentice-level** course on `Cosmos SDK` that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
 ## Getting started
 These instructions will help you prepare for the kata and ensure that your training machine has the tools installed you will need to complete the exercise. If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
@@ -40,7 +40,7 @@ cd kata1
 ```
 
 ### Step #2: Install the protobuf library
-Now we want to install the `protobuf` library used for code-generation with our `.proto` files:
+Now we want to install the protobuf library used for code-generation with our `.proto` files:
 
 ```
 go get google.golang.org/protobuf/cmd/protoc-gen-go
@@ -60,7 +60,7 @@ message Person {
 ```
 
 ### Step #4: Generate Go code
-With our `.proto` file in place wee can now use the `protoc` command to generate the `go` code for our message contract:
+With our `.proto` file in place we can now use the `protoc` command to generate the `go` code for our message contract:
 
 ```
 protoc --go_out=. person.proto
