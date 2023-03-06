@@ -1,6 +1,6 @@
 # Cosmos SDK - Training
 ## Preface
-Distributed ledger technology, commonly referred to as "blockchain", was introduced with the launch of Bitcoin in 2009, which featured an open-source software client released into a distributed peer-to-peer network to facilitat transactions and store data amongst its peers. This innovation brought about the worlds first secure and transparent "digital value network" that did not rely on a centralized intermediary to operate. However, as Bitcoin grew in popularity, two major challenges become apparent in its "proof-of-work" architecture:
+Distributed ledger technology, commonly referred to as "blockchain", was introduced with the launch of Bitcoin in 2009 which featured an open-source software client released into a distributed peer-to-peer network to facilitate transactions and store data amongst its peers. This innovation brought about the worlds first secure and transparent "digital value network" which was not dependant on a centralized intermediary to operate. However, as Bitcoin grew in popularity, two major challenges become apparent in its "proof-of-work" architecture:
 
 - Scalability => As the number of transactions on a blockchain network grows, the network becomes slower and more expensive to operate. This leads to higher transaction fees and longer wait times for users.
 
