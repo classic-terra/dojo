@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -10,6 +11,7 @@ import (
 
 func main() {
 	// Set up the SDK client
+	ctx := context.Background()
 	client := auth.NewCLIContext().WithCodec(sdk.MustSortJSONCodec())
 
 	// Set up the sender and recipient addresses

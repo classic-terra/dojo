@@ -48,6 +48,8 @@ cat > main.go
 At the top of `main.go` add an import statements for the `Go` packages neccessary to work with the `Cosmos SDK` `MsgSend` type:
 
 ```
+package main
+
 import (
     "fmt"
 
@@ -63,8 +65,16 @@ import (
 )
 ```
 
-### Step #4: Initialize variables
-Now we need to initialize some local variables used by our `training step`:
+### Step #4: Add empty main() method
+Then create an empty method body below the import statements:
+
+```
+func main() {
+}
+```
+
+### Step #5: Initialize variables
+Inside the main method initialize some local variables used by our `training step`:
 
 ```
 senderAddress := "terra..."
@@ -74,7 +84,7 @@ senderPublicKey := "..."
 chainID := "columbus-5"
 ```
 
-### Step #5: Create a new MsgSend object
+### Step #6: Create a new MsgSend object
 Then initialize a pointer to a newly created `MsgSend` object with the appropriate fields:
 
 ```
@@ -85,7 +95,7 @@ msgsend := &types.MsgSend{
 }
 ```
 
-### Step #6: Build the transaction
+### Step #7: Build the transaction
 Once our `MsgSend` object is instantiated we can use it to build a transaction that acts as a `message envelope` once broadcasted:
 
 ```
@@ -100,7 +110,7 @@ txBuilder.SetGasLimit(200000)
 txBuilder.SetMemo("Sample transaction")
 ```
 
-### Step #7: Sign the transaction
+### Step #8: Sign the transaction
 Before we can broadcast our transaction we need to sign it with the sender's private key:
 
 ```
@@ -121,7 +131,7 @@ txBytes, _ := txBuilder.SetSignatures(sig).BuildAndSign(senderAddress, privKey)
 tx := fmt.Sprintf("%X", txBytes)
 ```
 
-### Step #8: Submit the transaction to the blockchain
+### Step #9: Submit the transaction to the blockchain
 Now we can create a new `message service client` and broadcast the transaction:
 
 ```
@@ -151,14 +161,14 @@ if result.Code != 0 {
 fmt.Printf("Transaction succeeded with hash %s\n", result.TxHash)
 ```
 
-### Step #9: Build executable
+### Step #10: Build executable
 Build a new `Go` binary based on `main.go`:
 
 ```
 go build
 ```
 
-### Step #10: Run executable
+### Step #11: Run executable
 Lastly we can run our new `Go` program with the following command:
 
 ```

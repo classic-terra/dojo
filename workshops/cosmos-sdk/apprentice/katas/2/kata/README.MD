@@ -46,6 +46,8 @@ cat > main.go
 At the top of `main.go` add an import statements for the `Go` packages neccessary to work with the `Cosmos SDK` transactions types:
 
 ```
+package main
+
 import (
     "context"
     "fmt"
@@ -55,14 +57,23 @@ import (
 )
 ```
 
-### Step #4: Set up the SDK client
-Now we need to set up the SDK client used by our `training step`:
+### Step #4: Add empty main() method
+Then create an empty method body below the import statements:
 
 ```
+func main() {
+}
+```
+
+### Step #5: Set up the SDK client
+Inside the main method begin setting up the SDK client used by our `training step`:
+
+```
+ctx := context.Background()
 client := auth.NewCLIContext().WithCodec(sdk.MustSortJSONCodec())
 ```
 
-### Step #5: Set up the sender and recipient addresses
+### Step #6: Set up the sender and recipient addresses
 Then initialize sender & recipient addresses variables with the appropriate values:
 
 ```
@@ -70,7 +81,7 @@ senderAddr := sdk.AccAddress([]byte("sender_address"))
 recipientAddr := sdk.AccAddress([]byte("recipient_address"))
 ```
 
-### Step #6: Build the transaction
+### Step #7: Build the transaction
 Once our variablees are initialized we can use then to setup a transaction to acts as a `message envelope` for broadcasting:
 
 ```
@@ -83,7 +94,7 @@ msg := auth.NewStdMsg(
 )
 ```
 
-### Step #7: Sign & broadcast the transaction
+### Step #8: Sign & broadcast the transaction
 Before we can broadcast our transaction we need to sign it with the sender's private key:
 
 ```
@@ -102,14 +113,14 @@ if err != nil {
 fmt.Println(res.String())
 ```
 
-### Step #8: Build executable
+### Step #9: Build executable
 Build a new `Go` binary based on `main.go`:
 
 ```
 go build
 ```
 
-### Step #9: Run executable
+### Step #10: Run executable
 Lastly we can run our new `Go` program with the following command:
 
 ```
