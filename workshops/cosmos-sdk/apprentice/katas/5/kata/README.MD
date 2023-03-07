@@ -157,7 +157,7 @@ func (h SupplyChainHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) 
 }
 ```
 
-### Step 5: Create simple `app`
+### Step 6: Create simple `app`
 Initialize the supply chain module by creating a new instance of SupplyChainKeeper in your application's `app.go` file:
 
 ```
@@ -194,14 +194,14 @@ func main() {
 ```
 
 
-### Step #6: Build executable
+### Step #7: Build executable
 Build a new `Go` binary based on our custom module logic:
 
 ```
 go build
 ```
 
-### Step #7: Run executable
+### Step #8: Run executable
 Lastly we can run our new `Go` program with the following command:
 
 ```
