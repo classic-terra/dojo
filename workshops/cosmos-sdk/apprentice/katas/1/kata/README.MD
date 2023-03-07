@@ -9,6 +9,7 @@ These instructions will help you prepare for the `training step` and ensure that
 ### Prerequisites
 
 * [Golang](https://go.dev/dl/)
+* [Protocol Buffer Compiler](https://grpc.io/docs/protoc-installation/)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 * [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (Windows)
 
@@ -30,7 +31,7 @@ Protocol Buffer 4.0 is the latest version of the protocol buffer specification, 
 
 ## Exercise
 
-In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 4.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `Go`.
+In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 3.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `Go`. 
 
 After generating the code, we will then write a small program that can use our new message contract to create message instances, set fields, and serialize it to a byte stream using the `proto.Marshal()` method and subsequently deserialize it back to another message instance via `proto.Unmarshal()`.
 
@@ -43,12 +44,15 @@ mkdir kata1
 cd kata1
 ```
 
-### Step #2: Install the protobuf library
+### Step #2: Initialize go module
 
-Now we want to install the protobuf library used for code-generation with our `.proto` files:
+Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
 
-```go
-go get google.golang.org/protobuf/cmd/protoc-gen-go
+```bash
+go mod init example.com/proto
+go get google.golang.org/protobuf/proto@latest
+go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
 ### Step #3: Create protobuf message contract
@@ -56,7 +60,8 @@ go get google.golang.org/protobuf/cmd/protoc-gen-go
 Next we create a simple message contract in a file called `person.proto`, e.g:
 
 ```bash
-PROTO_MSG="syntax = \"proto4\";
+PROTO_MSG="syntax = \"proto3\";
+option go_package = \"example.com/proto/main\";
 
 message Person {
   string name = 1;
@@ -69,13 +74,13 @@ echo "$PROTO_MSG" > person.proto
 
 ### Step #4: Generate Go code
 
-With our `person.proto` file in place we can now use the `protoc` command to generate the `Go` code for our message contract:
+With our `person.proto` file in place we can now use the `protoc` CLI to generate the `Go` code for our message contract:
 
 ```bash
-protoc --go_out=. person.proto
+protoc --go_out=. person.proto --go_opt=paths=source_relative
 ```
 
-This will generate a file called `person.pb.go` in the current directory that contains the `Go` code.
+This will generate a file called `person.pb.go` in the current directory that contains the `Go` code for our message contract.
 
 ### Step #5: Utilize the new message contract
 
@@ -119,15 +124,36 @@ func main() {
 }
 ```
 
+Once your satisfied with the implementing save the code to a file named `main.go`.
+
+
+### Step #6: Build executable
+
+Build a new `Go` binary based on our module:
+
+```bash
+go build
+```
+
+### Step #7: Run executable
+
+Lastly we can run our new `Go` binary with the following command to verify that everything works as intended:
+
+```bash
+./proto
+```
+
 ## Conclusion
 
 Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions of `protobuf`, offering better performance, new features, and improved tooling. Understanding this data serialization format is essential to succesfully working with `Cosmos SDK` and thus we decided make it the beginning of a hopefully long and prosperous journey through.
 
 The architectural pattern of Protocol Buffers is based on a client-server model, where the client and server use Protocol Buffers to communicate with each other. The server defines the `.proto` file that defines the data structure, and the client uses the generated code to serialize and deserialize the data that is transmitted over the network. This makes it a powerful tool for efficient inter-process communication and data storage.
 
-In this `training step`, we demonstrate how to use this exciting  new technology to create a simple message instance, set its fields, and serialize it to a byte stream, which in turn was deserialized back to an instance of the message and printed to `stdout` via the `fmt` package.
+`Cosmos SDK` currently target Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version.
 
-We will use this knowledge as we progress to future `training steps` related to messages and custom types.
+To conclude in this `training step`, we demonstrate how to use this exciting  new technology to create a simple message instance, set its fields, and serialize it to a byte stream, which in turn was deserialized back to a new instance of the message and printed to `stdout` via the `fmt` package.
+
+We will use this knowledge as we progress to future `training steps` related to messages and types.
 
 ## Want to help make our training material better?
 
