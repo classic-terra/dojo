@@ -1,9 +1,9 @@
 #!/bin/bash
-#Create a new directory called kata2
-mkdir kata2
+#Create a new directory called kata3
+mkdir kata3
 
-#Change into the kata2 directory
-cd kata2
+#Change into the kata3 directory
+cd kata3
 
 #Initialize a new go module
 go mod init example.com/transactions
@@ -18,12 +18,17 @@ go get github.com/cosmos/cosmos-sdk@v0.45.12
 GO_CODE="package main
 
 import (
-	\"context\"
 	\"fmt\"
 
-	\"github.com/cosmos/cosmos-sdk/client\"
-	sdk \"github.com/cosmos/cosmos-sdk/types\"
-	banktypes \"github.com/cosmos/cosmos-sdk/x/bank/types\"
+	\"encoding/hex\"
+
+	\"github.com/cosmos/cosmos-sdk/codec\"
+	\"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1\"
+	\"github.com/cosmos/cosmos-sdk/types\"
+	\"github.com/cosmos/cosmos-sdk/types/msgservice\"
+	\"github.com/cosmos/cosmos-sdk/x/auth/types\"
+	\"github.com/cosmos/cosmos-sdk/x/auth/tx\"
+	\"github.com/tendermint/tendermint/crypto/ed25519\"
 )
 
 func main() {

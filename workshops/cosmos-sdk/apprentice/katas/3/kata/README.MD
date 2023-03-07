@@ -97,11 +97,7 @@ chainID := "columbus-5"
 Then initialize a pointer to a newly created `MsgSend` object with the appropriate fields:
 
 ```go
-msgsend := &types.MsgSend{
-    FromAddress: types.AccAddress(senderAddress),
-    ToAddress:   types.AccAddress(recipientAddress),
-    Amount:      types.NewCoins(types.NewCoin("uluna", types.NewInt(100))),
-}
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #7: Build the transaction
@@ -109,15 +105,7 @@ msgsend := &types.MsgSend{
 Once our `MsgSend` object is instantiated we can use it to build a transaction that acts as a `message envelope` once broadcasted:
 
 ```go
-txBuilder := tx.NewTxBuilder(
-    tx.DefaultTxEncoder(codec.New()),
-    tx.DefaultTxDecoder(codec.New()),
-).WithChainID(chainID)
-
-txBuilder.SetMsgs(msg)
-txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewCoin("uluna", sdk.NewInt(500))))
-txBuilder.SetGasLimit(200000)
-txBuilder.SetMemo("Sample transaction")
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #8: Sign the transaction
@@ -125,21 +113,7 @@ txBuilder.SetMemo("Sample transaction")
 Before we can broadcast our transaction we need to sign it with the sender's private key:
 
 ```go
-privKeyBytes, _ := hex.DecodeString(senderPrivateKey)
-privKey := secp256k1.PrivKeySecp256k1(privKeyBytes)
-
-pubKeyBytes, _ := hex.DecodeString(senderPublicKey)
-pubKey := ed25519.PubKey(pubKeyBytes)
-
-signer := types.DefaultSigner(privKey, pubKey, "")
-sigBytes, _ := signer.Sign(txBuilder.ChainID(), txBuilder.GetTx())
-sig := &types.StdSignature{
-    PubKey:    pubKey,
-    Signature: sigBytes,
-}
-
-txBytes, _ := txBuilder.SetSignatures(sig).BuildAndSign(senderAddress, privKey)
-tx := fmt.Sprintf("%X", txBytes)
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #9: Submit the transaction to the blockchain
@@ -147,30 +121,7 @@ tx := fmt.Sprintf("%X", txBytes)
 Now we can create a new `message service client` and broadcast the transaction:
 
 ```go
-result := types.TxResponse{}
-resp, err := msgservice.NewMsgServiceClient(nil).BroadcastTxSync(nil, &types.Tx{
-    Body: txBytes,
-    AuthInfo: &types.AuthInfo{
-        Fee: txBuilder.GetFee(),
-    },
-})
-
-if err != nil {
-    fmt.Printf("Error broadcasting transaction: %v\n", err)
-    return
-}
-
-if err := result.Unmarshal(resp.GetTxResponse().GetTx()); err != nil {
-    fmt.Printf("Error unmarshaling result: %v\n", err)
-    return
-}
-
-if result.Code != 0 {
-    fmt.Printf("Transaction failed with code %d: %s\n", result.Code, result.Log)
-    return
-}
-
-fmt.Printf("Transaction succeeded with hash %s\n", result.TxHash)
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #10: Build executable

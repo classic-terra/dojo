@@ -86,33 +86,7 @@ func main() {
 Inside the main method begin by initializing the command used by this `training step`:
 
 ```go
-cmd := &cobra.Command{
-        Use: "balance",
-        Args: cobra.ExactArgs(1),
-        Short: "Get the balance of an account",
-        RunE: func(cmd *cobra.Command, args []string) error {
-            // Get the account address
-            address, err := sdk.AccAddressFromBech32(args[0])
-            if err != nil {
-                return err
-            }
-
-            // Create a new CLI context
-            ctx := context.Background()
-            cliCtx := client.Context{}.WithCodec(sdk.NewCodec())
-
-            // Query the balance of the account
-            res, _, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/%s/%s", types.QuerierRoute, types.QueryBalance, address), nil)
-            if err != nil {
-                return err
-            }
-
-            // Print the balance
-            fmt.Println(string(res))
-
-            return nil
-        },
-    }
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #6: Add the flags
@@ -120,7 +94,7 @@ cmd := &cobra.Command{
 Then we need to add query flags to our new command object, as follows:
 
 ```go
-flags.AddQueryFlagsToCmd(cmd)
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #7: Execute command
@@ -128,10 +102,7 @@ flags.AddQueryFlagsToCmd(cmd)
 Lastly we need to execute our command and print out any errors:
 
 ```go
-if err := cmd.Execute(); err != nil {
-    fmt.Println(err)
-    os.Exit(1)
-}
+UPGRADE TO  v0.45.12
 ```
 
 ### Step #8: Build executable
