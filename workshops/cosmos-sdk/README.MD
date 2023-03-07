@@ -18,11 +18,11 @@ To accomplish this task we break Cosmos SDK into individual `knowledge paths` wi
 The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `knowledge paths`, which when broken down into `training steps` result in the following literacy curriculum:
 
 ### Path of the Apprentice
-- [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata)
-- [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata)
-- [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata)
-- [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata)
-- [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata)
+- [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata) - learn about the language-agnostic data serialization format developed by Google.
+- [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata) - try to create a simple `Cosmos SDK` transaction.
+- [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata) - examine how messages work in `Cosmos SDK`.
+- [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata) - play around with `Cosmos SDK` queries.
+- [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata) - explore existing `Cosmos SDK` modules, their structure & internals.
 
 ### Path of the Journeyman
 - [Keepers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/1/kata)
