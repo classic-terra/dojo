@@ -227,6 +227,22 @@ func main() {
 }
 ```
 
+### Step #7: Build executable
+
+Build a new `Go` binary based on `main.go`:
+
+```bash
+go build
+```
+
+### Step #8: Run executable
+
+Lastly we can run our new `Go` program with the following command:
+
+```bash
+./main
+```
+
 ## Conclusion
 
 In this `training step` we learned how to create a default codec and simple store key, which in turn allowed us to `mount` a store with `LevelDb` to enable us to persist data passed to our code. Then we created a new LinkKeeper instance using the codec and store key as parameters for the `NewKeeper(cdc codec.BinaryMarshaler, storeKey sdk.StoreKey) LinkKeeper` function, which acts like a `factory method`. With our newly minted LinkKeeper instance in hand we then proceed to use the SetLink and GetLink methods of the LinkKeeper instance to store and retrieve string data from `LevelDb`.
