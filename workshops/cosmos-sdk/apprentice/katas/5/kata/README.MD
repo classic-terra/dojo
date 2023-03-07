@@ -21,8 +21,8 @@ These instructions will help you prepare for the kata and ensure that your train
 First we setup a directory for our exercise files. It's pretty straight forward:
 
 ```
-mkdir kata2
-cd kata2
+mkdir kata5
+cd kata5
 ```
 
 ## Conclusion

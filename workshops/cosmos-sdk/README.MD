@@ -19,9 +19,9 @@ The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `knowledge
 
 ### [Path of the Apprentice](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice)
 - [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata)
-- [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata)
-- [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata)
-- [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata)
+- [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata)
+- [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata)
+- [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata)
 - [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata)
 
 ### [Path of the Journeyman](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman)
