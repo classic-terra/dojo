@@ -97,27 +97,23 @@ import (
 )
 
 func main() {
-    // Create a new person message
     p := &Person{
         Name:    "Alice",
         Age:     30,
         Hobbies: []string{"reading", "hiking"},
     }
 
-    // Serialize the message to a byte slice
     data, err := proto.Marshal(p)
     if err != nil {
         log.Fatal("error marshaling person:", err)
     }
 
-    // Deserialize the message from the byte slice
     var p2 Person
     err = proto.Unmarshal(data, &p2)
     if err != nil {
         log.Fatal("error unmarshaling person:", err)
     }
 
-    // Print the deserialized message
     fmt.Printf("name: %s\n", p2.Name)
     fmt.Printf("age: %d\n", p2.Age)
     fmt.Printf("hobbies: %v\n", p2.Hobbies)
@@ -125,7 +121,6 @@ func main() {
 ```
 
 Once your satisfied with the implementing save the code to a file named `main.go`.
-
 
 ### Step #6: Build executable
 
