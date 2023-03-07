@@ -16,15 +16,15 @@ Protocol Buffers (protobuf) is a language-agnostic data serialization format dev
 
 Protocol Buffer 4.0 is the latest version of the protocol buffer specification, which was released in February 2022. It introduces several new features and improvements over the previous version, including:
 
-- Backward compatibility: Protobuf 4.0 introduces a new syntax for defining messages that is backwards-compatible with earlier versions of protobuf. This means that existing protobuf messages can be used with newer versions of protobuf without requiring any changes to the message definition.
+- `Backward compatibility`: Protobuf 4.0 introduces a new syntax for defining messages that is backwards-compatible with earlier versions of protobuf. This means that existing protobuf messages can be used with newer versions of protobuf without requiring any changes to the message definition.
 
-- Support for new data types: Protobuf 4.0 adds support for several new data types, including uint128, int128, and Timestamp with subsecond precision.
+- `Support for new data types`: Protobuf 4.0 adds support for several new data types, including uint128, int128, and Timestamp with subsecond precision.
 
-- Improved performance: Protobuf 4.0 introduces several optimizations that improve serialization and deserialization performance, especially for large messages.
+- `Improved performance`: Protobuf 4.0 introduces several optimizations that improve serialization and deserialization performance, especially for large messages.
 
-- Simplified syntax: Protobuf 4.0 introduces a simplified syntax for defining messages, which makes it easier to write and maintain protobuf message definitions.
+- `Simplified syntax`: Protobuf 4.0 introduces a simplified syntax for defining messages, which makes it easier to write and maintain protobuf message definitions.
 
-- Improved tooling: Protobuf 4.0 includes several improvements to the protobuf compiler and related tooling, including support for generating code in additional programming languages, improved error messages, and better support for integrating with build systems.
+- `Improved tooling`: Protobuf 4.0 includes several improvements to the protobuf compiler and related tooling, including support for generating code in additional programming languages, improved error messages, and better support for integrating with build systems.
 
 ## Exercise
 In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 4.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `Go`.
