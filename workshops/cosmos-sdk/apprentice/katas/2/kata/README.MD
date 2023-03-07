@@ -47,11 +47,11 @@ At the top of `main.go` add an import statements for the `Go` packages neccessar
 
 ```
 import (
-	"context"
-	"fmt"
+    "context"
+    "fmt"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	auth "github.com/cosmos/cosmos-sdk/x/auth"
+    sdk "github.com/cosmos/cosmos-sdk/types"
+    auth "github.com/cosmos/cosmos-sdk/x/auth"
 )
 ```
 
