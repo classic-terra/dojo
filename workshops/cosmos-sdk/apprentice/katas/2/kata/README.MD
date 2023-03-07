@@ -39,7 +39,21 @@ mkdir kata2
 cd kata2
 ```
 
-### Step #2: Create a file called `main.go`
+### Step #2: Initialize go module
+
+Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
+
+```bash
+go mod init example.com/transactions
+go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
+go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
+go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
+go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
+go get github.com/cosmos/cosmos-sdk@v0.45.12
+```
+
+### Step #3: Create a file called `main.go`
 
 Secondly we need to create a file for our code kata:
 
@@ -47,7 +61,7 @@ Secondly we need to create a file for our code kata:
 cat > main.go
 ```
 
-### Step #3: Import the necessary packages
+### Step #4: Import the necessary packages
 
 At the top of `main.go` add an import statements for the `Go` packages neccessary to work with the `Cosmos SDK` transactions types:
 
@@ -58,12 +72,13 @@ import (
     "context"
     "fmt"
 
-    sdk "github.com/cosmos/cosmos-sdk/types"
-    auth "github.com/cosmos/cosmos-sdk/x/auth"
+	"github.com/cosmos/cosmos-sdk/client"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 ```
 
-### Step #4: Add empty main() method
+### Step #5: Add empty main() method
 
 Then create an empty method body below the import statements:
 
@@ -72,59 +87,39 @@ func main() {
 }
 ```
 
-### Step #5: Set up the SDK client
+### Step #6: Set up the SDK client
 
 Inside the main method begin setting up the SDK client used by our `training step`:
 
 ```go
-ctx := context.Background()
-client := auth.NewCLIContext().WithCodec(sdk.MustSortJSONCodec())
+UPGRADE TO  v0.45.12
 ```
 
-### Step #6: Set up the sender and recipient addresses
+### Step #7: Set up the sender and recipient addresses
 
 Then initialize sender & recipient addresses variables with the appropriate values:
 
 ```go
-senderAddr := sdk.AccAddress([]byte("sender_address"))
-recipientAddr := sdk.AccAddress([]byte("recipient_address"))
+UPGRADE TO  v0.45.12
 ```
 
-### Step #7: Build the transaction
+### Step #8: Build the transaction
 
 Once our variablees are initialized we can use then to setup a transaction to acts as a `message envelope` for broadcasting:
 
 ```go
-amount := sdk.NewCoin("uluna", sdk.NewInt(100))
-msg := auth.NewStdMsg(
-    []sdk.Msg{bank.NewMsgSend(senderAddr, recipientAddr, sdk.NewCoins(amount))},
-    auth.NewStdFee(100000, sdk.NewCoins(sdk.NewCoin("uluna", sdk.NewInt(10)))),
-    []auth.StdSignature{},
-    "",
-)
+UPGRADE TO  v0.45.12
 ```
 
-### Step #8: Sign & broadcast the transaction
+### Step #9: Sign & broadcast the transaction
 
 Before we can broadcast our transaction we need to sign it with the sender's private key:
 
 ```go
-txBytes, err := client.TxEncoder()(msg)
-
-if err != nil {
-    panic(err)
-}
-
-res, err := client.BroadcastTx(txBytes)
-
-if err != nil {
-    panic(err)
-}
-
-fmt.Println(res.String())
+UPGRADE TO  v0.45.12
 ```
 
-### Step #9: Build executable
+### Step #10: Build executable
 
 Build a new `Go` binary based on `main.go`:
 
@@ -132,7 +127,7 @@ Build a new `Go` binary based on `main.go`:
 go build
 ```
 
-### Step #10: Run executable
+### Step #11: Run executable
 
 Lastly we can run our new `Go` program with the following command:
 
