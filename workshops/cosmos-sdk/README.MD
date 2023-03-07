@@ -17,14 +17,14 @@ To accomplish this task we break Cosmos SDK into individual `knowledge paths` wi
 
 The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `knowledge paths`, which when broken down into `training steps` result in the following literacy curriculum:
 
-### [Path of the Apprentice](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice)
+### Path of the Apprentice
 - [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata)
 - [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata)
 - [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata)
 - [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata)
 - [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata)
 
-### [Path of the Journeyman](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman)
+### Path of the Journeyman
 - [Keepers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/1/kata)
 - Keepers > [Types](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/2/kata)
 - Keepers > [Genesis](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/3/kata)
@@ -32,13 +32,13 @@ The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `knowledge
 - [BaseApp](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata)
 - [AppIntegration](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/6/kata)
 
-### [Path of the Expert](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert)
+### Path of the Expert
 - [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata)
 - [Context](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/2/kata)
 - [Migrations](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/3/kata)
 - [Bridges](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/4/kata)
 
-### [Path of the Cosmonaut](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut)
+### Path of the Cosmonaut
 - [IBC](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/1/kata)
 - IBC > [Connections](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/2/kata)
 - IBC > [Channels](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/3/kata)
