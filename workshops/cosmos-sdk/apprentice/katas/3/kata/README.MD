@@ -1,4 +1,4 @@
-Path of the Apprentice - Messages
+Path of the Apprentice - Queries
 ======================================
 
 This training exercise is a **apprentice-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
@@ -21,8 +21,8 @@ These instructions will help you prepare for the kata and ensure that your train
 First we setup a directory for our exercise files. It's pretty straight forward:
 
 ```
-mkdir kata3
-cd kata3
+mkdir kata4
+cd kata4
 ```
 
 ## Conclusion
