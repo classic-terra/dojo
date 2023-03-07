@@ -4,7 +4,7 @@ Path of the Apprentice - Protobuf
 This training exercise is a **apprentice-level** course on `Cosmos SDK` that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
 ## Getting started
-These instructions will help you prepare for the kata and ensure that your training machine has the tools installed you will need to complete the exercise. If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
+These instructions will help you prepare for the `training step` and ensure that your training machine has the tools installed you will need to complete the exercise. If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
 
 ### Prerequisites
 * [Golang](https://go.dev/dl/)
@@ -62,13 +62,13 @@ echo "$PROTO_MSG" > person.proto
 ```
 
 ### Step #4: Generate Go code
-With our `person.proto` file in place we can now use the `protoc` command to generate the `go` code for our message contract:
+With our `person.proto` file in place we can now use the `protoc` command to generate the `Go` code for our message contract:
 
 ```
 protoc --go_out=. person.proto
 ```
 
-This will generate a file called `person.pb.go` in the current directory that contains the `Go` code for the `Person` message contract.
+This will generate a file called `person.pb.go` in the current directory that contains the `Go` code.
 
 ### Step #5: Utilize the new message contract
 Now, you can use the generated code to create and serialize `Person` messages:
@@ -116,7 +116,9 @@ Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions 
 
 The architectural pattern of Protocol Buffers is based on a client-server model, where the client and server use Protocol Buffers to communicate with each other. The server defines the `.proto` file that defines the data structure, and the client uses the generated code to serialize and deserialize the data that is transmitted over the network. This makes it a powerful tool for efficient inter-process communication and data storage.
 
-In this exercise, we demonstrate how to create a simple message instance, set its fields, and serialize it to a byte stream, which in turn is deserialize back to an instance of the message and printed to `stdout` via the fmt package. We will use this knowledge as we progress to training steps related to `messages` and `custom types`.
+In this `training step`, we demonstrate how to use this exciting  new technology to create a simple message instance, set its fields, and serialize it to a byte stream, which in turn was deserialized back to an instance of the message and printed to `stdout` via the `fmt` package.
+
+We will use this knowledge as we progress to future `training steps` related to messages and custom types.
 
 ## Want to help make our training material better?
  * Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).

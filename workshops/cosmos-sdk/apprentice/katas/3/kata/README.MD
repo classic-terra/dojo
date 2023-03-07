@@ -4,7 +4,7 @@ Path of the Apprentice - Messages
 This training exercise is a **apprentice-level** course on `Cosmos SDK` that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
 ## Getting started
-These instructions will help you prepare for the kata and ensure that your training machine has the tools installed you will need to complete the exercise. If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
+These instructions will help you prepare for the `training step` and ensure that your training machine has the tools installed you will need to complete the exercise. If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
 
 ### Prerequisites
 * [Golang](https://go.dev/dl/)
@@ -86,7 +86,7 @@ msgsend := &types.MsgSend{
 ```
 
 ### Step #6: Build the transaction
-Once our `MsgSend` object is instantiated we can use it to build a `transaction` that acts as a `message envelope` once broadcasted:
+Once our `MsgSend` object is instantiated we can use it to build a transaction that acts as a `message envelope` once broadcasted:
 
 ```
 txBuilder := tx.NewTxBuilder(
@@ -101,7 +101,7 @@ txBuilder.SetMemo("Sample transaction")
 ```
 
 ### Step #7: Sign the transaction
-Before we can broadcast our `transaction` we need to sign it with the sender's private key:
+Before we can broadcast our transaction we need to sign it with the sender's private key:
 
 ```
 privKeyBytes, _ := hex.DecodeString(senderPrivateKey)
@@ -122,7 +122,7 @@ tx := fmt.Sprintf("%X", txBytes)
 ```
 
 ### Step #8: Submit the transaction to the blockchain
-Now we can create a new `message service client` and broadcast the `transaction`:
+Now we can create a new `message service client` and broadcast the transaction:
 
 ```
 result := types.TxResponse{}
@@ -166,7 +166,7 @@ Lastly we can run our new `Go` program with the following command:
 ```
 
 ## Conclusion
-In conclusion, messages in the `Cosmos SDK` are the primary way for applications to interact with the `blockchain`. Messages contain the necessary data for a transaction, such as the sender and recipient addresses, the amount of tokens to be transferred, and any other relevant information. The SDK provides a variety of built-in message types, such as `MsgSend` for token transfers and MsgVote for governance voting. Developers can also create their own custom message types to meet the specific needs of their applications. With the help of the `Cosmos SDK`, developers can easily create, sign, and submit messages to the `blockchain` to perform various actions, such as transferring tokens, voting on proposals, and more.
+In conclusion, messages in the `Cosmos SDK` are the primary way for applications to interact with the blockchain. Messages contain the necessary data for a transaction, such as the sender and recipient addresses, the amount of tokens to be transferred, and any other relevant information. The SDK provides a variety of built-in message types, such as `MsgSend` for token transfers and MsgVote for governance voting. Developers can also create their own custom message types to meet the specific needs of their applications. With the help of the `Cosmos SDK`, developers can easily create, sign, and submit messages to the blockchain to perform various actions, such as transferring tokens, voting on proposals, and more.
 
 ## Want to help make our training material better?
  * Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).
