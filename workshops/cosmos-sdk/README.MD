@@ -31,6 +31,7 @@ The Terra Classic L1 Task Force `Cosmos SDK` dojo consist of four major `learnin
 - Keepers > [Client](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/4/kata)
 - [BaseApp](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata)
 - [AppIntegration](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/6/kata)
+- [AnteHandlers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/7/kata)
 
 ### Path of the Expert
 - [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata)
