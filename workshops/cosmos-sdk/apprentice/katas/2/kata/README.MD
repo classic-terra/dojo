@@ -69,12 +69,18 @@ At the top of `main.go` add an import statements for the `Go` packages neccessar
 package main
 
 import (
-    "context"
-    "fmt"
+	"context"
+	"fmt"
+	"os"
 
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
+	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	"github.com/cosmos/cosmos-sdk/crypto/hd"
+	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	bankTypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 ```
 
@@ -132,7 +138,7 @@ go build
 Lastly we can run our new `Go` program with the following command:
 
 ```bash
-./main
+./transactions
 ```
 
 ## Conclusion
