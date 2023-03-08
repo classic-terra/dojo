@@ -11,6 +11,7 @@ These instructions will help you prepare for the `training step` and ensure that
 * [Golang](https://go.dev/dl/)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 * [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (Windows)
+* [Keybase](https://keybase.io/docs/the_app/install_linux)
 
 ## Preface
 
@@ -26,7 +27,7 @@ In summary, transactions in the `Cosmos SDK` are messages that specify actions t
 
 ## Exercise
 
-This `training step` uses an example program written in `Go` to demonstrate how to create a transactions  to send tokens from one account to another using the `Cosmos SDK`.
+This `training step` we will learn how to build a simple `Go` program to demonstrate how we can create a transactions to send tokens from one account to another using the `Cosmos SDK`.
 
 **Note**: this `training step` assumes that you have set up a working `Cosmos SDK` node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
 
@@ -55,15 +56,15 @@ go get github.com/cosmos/cosmos-sdk@v0.45.12
 
 ### Step #3: Create a file called `main.go`
 
-Secondly we need to create a file for our code kata:
+Then we have to create a file for our program:
 
 ```bash
 cat > main.go
 ```
 
-### Step #4: Import the necessary packages
+### Step #4: Import required `Go` packages
 
-At the top of `main.go` add an import statements for the `Go` packages neccessary to work with the `Cosmos SDK` transactions types:
+At the top of `main.go` add an import statement with the `Go` packages neccessary to complete this `training step`:
 
 ```go
 package main
@@ -75,67 +76,175 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
+	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/tx/signing"
 	bankTypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 ```
 
 ### Step #5: Add empty main() method
 
-Then create an empty method body below the import statements:
+Then create an empty method body below the import statement:
 
 ```go
 func main() {
 }
 ```
 
-### Step #6: Set up the SDK client
+### Step #6: Set up Cosmos SDK
 
-Inside the main method begin setting up the SDK client used by our `training step`:
+Inside the main method begin by setting up the SDK configuration used by our `training step`:
 
-```go
-UPGRADE TO  v0.45.12
+```go	
+// Create a new background context
+_ = context.Background()
+
+//Set prefix for config
+sdk.GetConfig().SetBech32PrefixForAccount("terra", "terrapub")
+
+//Get simapp encoding configuration
+encodingConfig := simapp.MakeTestEncodingConfig()
 ```
 
-### Step #7: Set up the sender and recipient addresses
 
-Then initialize sender & recipient addresses variables with the appropriate values:
+### Step #7: Configure an InMemory keyring
 
-```go
-UPGRADE TO  v0.45.12
-```
-
-### Step #8: Build the transaction
-
-Once our variablees are initialized we can use then to setup a transaction to acts as a `message envelope` for broadcasting:
+Once we have the SDK configuration in place we need to setup a new `InMemory` keyring which is convenient to use in testing and prototyping scenarios, but in general should not be done in production. To complete the configuration and register a `dummy account` for our `training step` we add the following code to `main.go`:
 
 ```go
-UPGRADE TO  v0.45.12
+// Create & configure a new InMemory keyring
+kr := keyring.NewInMemory()
+
+kr.NewAccount("localkey", "torch swamp cancel lift never october child harsh rib aspect luxury word peanut length bamboo hawk material vehicle glue above west random sketch author", "12345678", sdk.FullFundraiserPath, hd.Secp256k1)
 ```
 
-### Step #9: Sign & broadcast the transaction
+### Step #8: Configure nodeClient & clientContext
 
-Before we can broadcast our transaction we need to sign it with the sender's private key:
+Now that we have our basic configuration in place and the keyring is populated with a `dummy account` we can proceed to configure the client our `Go` program will use to communicate with the blockchain:
 
 ```go
-UPGRADE TO  v0.45.12
+// Create  node client
+nodeClient, err := client.NewClientFromNode("tcp://localhost:26657")
+if err != nil {
+	fmt.Printf("failed to create node client: %s", err.Error())
+	os.Exit(1)
+}
+
+// Create a new client context
+clientCtx := client.Context{}.
+	WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
+	WithTxConfig(encodingConfig.TxConfig).
+	WithLegacyAmino(encodingConfig.Amino).
+	WithCodec(encodingConfig.Marshaler).
+	WithKeyring(kr).
+	WithClient(nodeClient).
+	WithChainID("columbus-5").
+	WithSignModeStr("SIGN_MODE_UNSPECIFIED").
+	WithBroadcastMode("block")
 ```
 
-### Step #10: Build executable
+### Step #9: Initialize transaction builder
 
-Build a new `Go` binary based on `main.go`:
+With the `Cosmos SDK` clientCtx fully configured and ready for use we can leverages its `TxConfig` property to initialize the `TxBuilder` we need to `compose` the transaction `message envelope` required for broadcasting our messages, including adding `metadata` such `fees`, `gaslimit` and a `memo`:
+
+```go
+// Create a new transaction builder
+txBuilder := clientCtx.TxConfig.NewTxBuilder()
+txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewInt64Coin("uluna", 100000)))
+txBuilder.SetGasLimit(200000)
+txBuilder.SetMemo("test transaction")
+```
+
+### Step #10: Create message for transaction
+
+Finally we have to create the message(s) that we want to put in our `message envelope` (transaction) and add required `metadata` such as sender, recipient and amount:
+
+```go
+// Fetch the sender's account key
+senderKey, err := clientCtx.Keyring.Key("localkey")
+
+clientCtx.WithFeeGranterAddress(senderKey.GetAddress())
+
+if err != nil {
+	fmt.Printf("failed to get sender key: %s", err.Error())
+	os.Exit(1)
+}
+
+// Fetch sender & recipient addresses
+fromAddr := senderKey.GetAddress()
+toAddr, err := sdk.AccAddressFromBech32("terra13vs2znvhdcy948ejsh7p8p22j8l4n4y07062qq")
+if err != nil {
+	fmt.Printf("failed to parse recipient address: %s", err.Error())
+	os.Exit(1)
+}
+
+// Create a new message to send funds to the recipient
+msg := &bankTypes.MsgSend{
+	FromAddress: fromAddr.String(),
+	ToAddress:   toAddr.String(),
+	Amount:      sdk.NewCoins(sdk.NewInt64Coin("uluna", 50000000)),
+}
+if err := msg.ValidateBasic(); err != nil {
+	fmt.Printf("failed to validate message: %s", err.Error())
+	os.Exit(1)
+}
+
+// Add the message to the transaction
+err = txBuilder.SetMsgs(msg)
+if err != nil {
+	fmt.Printf("failed to set message: %s", err.Error())
+	os.Exit(1)
+}
+```
+
+### Step #11: Sign & broadcast the transaction
+
+With our transaction fully `composed` all that remains is for us to sign it with the senders private key and broadcast it to the blockchain:
+
+```go
+// Sign the transaction
+txf := tx.Factory{}.
+	WithKeybase(clientCtx.Keyring).
+	WithSignMode(signing.SignMode_SIGN_MODE_UNSPECIFIED).
+	WithChainID(clientCtx.ChainID).
+	WithTxConfig(clientCtx.TxConfig)
+
+err = tx.Sign(txf, senderKey.GetName(), txBuilder, true)
+if err != nil {
+	fmt.Printf("failed to sign transaction: %s", err.Error())
+	os.Exit(1)
+}
+
+// Encode the transaction and broadcast it to the network
+txBytes, err := clientCtx.TxConfig.TxEncoder()(txBuilder.GetTx())
+if err != nil {
+	fmt.Printf("failed to encode transaction: %s", err.Error())
+	os.Exit(1)
+}
+
+res, err := clientCtx.BroadcastTx(txBytes)
+if err != nil {
+	fmt.Printf("failed to broadcast transaction: %s", err.Error())
+	os.Exit(1)
+}
+
+fmt.Printf("transaction sent: %s", res.TxHash)
+```
+
+### Step #12: Build executable
+
+With our code kata finalized all that remains now is to build a new `Go` binary based on `main.go`:
 
 ```bash
 go build
 ```
 
-### Step #11: Run executable
+### Step #13: Run executable
 
-Lastly we can run our new `Go` program with the following command:
+Then we can run our new `Go` program with the following command:
 
 ```bash
 ./transactions
@@ -143,9 +252,9 @@ Lastly we can run our new `Go` program with the following command:
 
 ## Conclusion
 
-In this `training step`, we learned how to set up the SDK client and define the sender and recipient addresses. We then created a transaction using the `bank.NewMsgSend` function, which send `tokens` from the sender address to the recipient address. We then set a transactions fee using the `auth.NewStdFee` function.
+In this `training step`, we learned how to set up the SDK client and define the sender and recipient addresses. We then created a transaction and added a`bank.MsgSend` message, which send `tokens` from the sender address to the recipient address.
 
-Next, we signed and broadcasted the transaction using the SDK client. We encoded the transaction message using the client's `TxEncoder` function, and then broadcasted the transaction using the `BroadcastTx` function.
+To wrap it all up we signed and broadcasted the transaction using the SDK client. We encoded the transaction message using the client's `TxEncoder` function, and then broadcasted the transaction using the clients `BroadcastTx` function.
 
 ## Want to help make our training material better?
 

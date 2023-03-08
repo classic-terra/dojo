@@ -24,23 +24,28 @@ import (
 
 	\"github.com/cosmos/cosmos-sdk/client\"
 	\"github.com/cosmos/cosmos-sdk/client/tx\"
-	\"github.com/cosmos/cosmos-sdk/codec\"
-	\"github.com/cosmos/cosmos-sdk/crypto/keyring\"
 	\"github.com/cosmos/cosmos-sdk/crypto/hd\"
+	\"github.com/cosmos/cosmos-sdk/crypto/keyring\"
 	\"github.com/cosmos/cosmos-sdk/simapp\"
 	sdk \"github.com/cosmos/cosmos-sdk/types\"
+	\"github.com/cosmos/cosmos-sdk/types/tx/signing\"
 	bankTypes \"github.com/cosmos/cosmos-sdk/x/bank/types\"
 )
 
 func main() {
-	
-	// Create a new context and client
+	// Create a new background context
 	_ = context.Background()
-	cdc := codec.NewProtoCodec(simapp.MakeTestEncodingConfig().InterfaceRegistry)
 
-	// Create a new keyring
+	//Set prefix for config
+	sdk.GetConfig().SetBech32PrefixForAccount(\"terra\", \"terrapub\")
+
+	//Get simapp encoding configuration
+	encodingConfig := simapp.MakeTestEncodingConfig()
+
+	// Create & configure a new InMemory keyring
 	kr := keyring.NewInMemory()
-	kr.NewAccount(\"mykey\", \"mymnenomic\", \"mypassphrase\", hd.CreateHDPath(1, 2, 3).String(), hd.Secp256k1)
+
+	kr.NewAccount(\"localkey\", \"torch swamp cancel lift never october child harsh rib aspect luxury word peanut length bamboo hawk material vehicle glue above west random sketch author\", \"12345678\", sdk.FullFundraiserPath, hd.Secp256k1)
 
 	// Create  node client
 	nodeClient, err := client.NewClientFromNode(\"tcp://localhost:26657\")
@@ -50,29 +55,36 @@ func main() {
 	}
 
 	// Create a new client context
-	clientCtx := client.Context{}
-	clientCtx = clientCtx.WithClient(nodeClient)
-	clientCtx = clientCtx.WithChainID(\"columbus-5\")
-	clientCtx = clientCtx.WithCodec(cdc)
-	clientCtx = clientCtx.WithKeyring(kr)
+	clientCtx := client.Context{}.
+		WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
+		WithTxConfig(encodingConfig.TxConfig).
+		WithLegacyAmino(encodingConfig.Amino).
+		WithCodec(encodingConfig.Marshaler).
+		WithKeyring(kr).
+		WithClient(nodeClient).
+		WithChainID(\"columbus-5\").
+		WithSignModeStr(\"SIGN_MODE_UNSPECIFIED\").
+		WithBroadcastMode(\"block\")
 
-	fmt.Printf(\"%+v\n\", clientCtx)
-
+	// Create a new transaction builder
 	txBuilder := clientCtx.TxConfig.NewTxBuilder()
 	txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewInt64Coin(\"uluna\", 100000)))
+	txBuilder.SetGasLimit(200000)
 	txBuilder.SetMemo(\"test transaction\")
 
-	// Set up the sender's account information
-	fromAddr, err := clientCtx.Keyring.Key(\"mykey\")
+	// Fetch the sender's account key
+	senderKey, err := clientCtx.Keyring.Key(\"localkey\")
+
+	clientCtx.WithFeeGranterAddress(senderKey.GetAddress())
+
 	if err != nil {
-		fmt.Printf(\"failed to get sender address: %s\", err.Error())
+		fmt.Printf(\"failed to get sender key: %s\", err.Error())
 		os.Exit(1)
 	}
-	txBuilder.SetGasLimit(200000)
 
-	// Set up the recipient's address
-	toAddrStr := \"terraexamplerecipientaddress\"
-	toAddr, err := sdk.AccAddressFromBech32(toAddrStr)
+	// Fetch sender & recipient addresses
+	fromAddr := senderKey.GetAddress()
+	toAddr, err := sdk.AccAddressFromBech32(\"terra13vs2znvhdcy948ejsh7p8p22j8l4n4y07062qq\")
 	if err != nil {
 		fmt.Printf(\"failed to parse recipient address: %s\", err.Error())
 		os.Exit(1)
@@ -80,7 +92,7 @@ func main() {
 
 	// Create a new message to send funds to the recipient
 	msg := &bankTypes.MsgSend{
-		FromAddress: fromAddr.GetAddress().String(),
+		FromAddress: fromAddr.String(),
 		ToAddress:   toAddr.String(),
 		Amount:      sdk.NewCoins(sdk.NewInt64Coin(\"uluna\", 50000000)),
 	}
@@ -97,7 +109,13 @@ func main() {
 	}
 
 	// Sign the transaction
-	err = tx.Sign(tx.Factory{}, fromAddr.GetName(), txBuilder, true)
+	txf := tx.Factory{}.
+		WithKeybase(clientCtx.Keyring).
+		WithSignMode(signing.SignMode_SIGN_MODE_UNSPECIFIED).
+		WithChainID(clientCtx.ChainID).
+		WithTxConfig(clientCtx.TxConfig)
+
+	err = tx.Sign(txf, senderKey.GetName(), txBuilder, true)
 	if err != nil {
 		fmt.Printf(\"failed to sign transaction: %s\", err.Error())
 		os.Exit(1)
