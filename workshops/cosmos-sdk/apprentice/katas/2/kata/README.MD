@@ -9,9 +9,9 @@ These instructions will help you prepare for the `training step` and ensure that
 ### Prerequisites
 
 * [Golang](https://go.dev/dl/)
+* [Keybase](https://keybase.io/docs/the_app/install_linux)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 * [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (Windows)
-* [Keybase](https://keybase.io/docs/the_app/install_linux)
 
 ## Preface
 

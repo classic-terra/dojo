@@ -31,9 +31,9 @@ Protocol Buffer 4.0 is the latest version of the protocol buffer specification, 
 
 ## Exercise
 
-In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 3.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `Go`. 
+In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 3.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `Go`.
 
-After generating the code, we will then write a small program that can use our new message contract to create message instances, set fields, and serialize it to a byte stream using the `proto.Marshal()` method and subsequently deserialize it back to another message instance via `proto.Unmarshal()`.
+After generating the code, we will write a small program that can use our new message contract to create message instances, set fields, and serialize it to a byte stream using the `proto.Marshal()` method and subsequently deserialize it back to another message instance via `proto.Unmarshal()`.
 
 ### Step #1: Create kata directory
 
@@ -140,15 +140,11 @@ Lastly we can run our new `Go` binary with the following command to verify that 
 
 ## Conclusion
 
-Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions of `protobuf`, offering better performance, new features, and improved tooling. Understanding this data serialization format is essential to succesfully working with `Cosmos SDK` and thus we decided make it the beginning of a hopefully long and prosperous journey through.
+Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions of `protobuf`, offering better performance, new features, and improved tooling. Understanding this data serialization format is essential to succesfully working with `Cosmos SDK` and thus we decided make it the beginning of a hopefully long and prosperous journey through the K1 dojo.
 
 The architectural pattern of Protocol Buffers is based on a client-server model, where the client and server use Protocol Buffers to communicate with each other. The server defines the `.proto` file that defines the data structure, and the client uses the generated code to serialize and deserialize the data that is transmitted over the network. This makes it a powerful tool for efficient inter-process communication and data storage.
 
-`Cosmos SDK` currently target Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version.
-
-To conclude in this `training step`, we demonstrate how to use this exciting  new technology to create a simple message instance, set its fields, and serialize it to a byte stream, which in turn was deserialized back to a new instance of the message and printed to `stdout` via the `fmt` package.
-
-We will use this knowledge as we progress to future `training steps` related to messages and types.
+`Cosmos SDK` currently target Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version in this `training step` and in the process demonstrate that the `latest` version of `protoc` works with older schemas such as the one targeted in our code kata.
 
 ## Want to help make our training material better?
 
