@@ -133,7 +133,7 @@ Next we have to create a file for the `message handler` named `SimpleHandler`, w
 cat > messagehandlers.go
 ```
 
-### Step #8: Implement `SimpleHandler` for `AddProductMsg` messages
+### Step #8: Implement `SimpleHandler` for `AddProductMsg`
 
 Open up the new file and implement the `SimpleHandler` to handle `AddProductMsg` messages sent from clients to the `SimpleKeeper`:
 
