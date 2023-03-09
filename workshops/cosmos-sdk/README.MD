@@ -25,13 +25,13 @@ The Terra Classic L1 Task Force `Cosmos SDK` dojo consist of four major `learnin
 - [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata) - explore existing `Cosmos SDK` modules, their structure & internals.
 
 ### Path of the Journeyman
-- [Keepers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/1/kata)
-- Keepers > [Types](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/2/kata)
-- Keepers > [Genesis](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/3/kata)
-- Keepers > [Client](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/4/kata)
-- [BaseApp](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata)
-- [AppIntegration](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/6/kata)
-- [AnteHandlers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/7/kata)
+- [AnteHandlers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/1/kata)
+- [BaseApp](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/2/kata)
+- [AppIntegration](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/3/kata)
+- [Keepers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/4/kata)
+- Keepers > [Types](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata)
+- Keepers > [Genesis](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/6/kata)
+- Keepers > [Client](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/7/kata)
 
 ### Path of the Expert
 - [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata)

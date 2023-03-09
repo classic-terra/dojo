@@ -1,4 +1,4 @@
-Path of the Journeyman - BaseApp
+Path of the Journeyman - Keepers > Types
 ======================================
 
 This training exercise is a **journeyman-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
