@@ -42,7 +42,7 @@ cd kata2
 
 ### Step #2: Initialize go module
 
-Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
+Now we want to initialize a new `Go` module, add required `package redirects` and fetch `Cosmos SDK v0.45.12`:
 
 ```bash
 go mod init example.com/transactions

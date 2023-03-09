@@ -4,7 +4,7 @@ This training exercise is a **apprentice-level** course on Cosmos SDK that serve
 
 ## Getting started
 
-These instructions will help you prepare for the kata and ensure that your training machine has the tools installed you will need to complete the assignment(s). If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
+These instructions will help you prepare for the `training step` and ensure that your training machine has the tools installed you will need to complete the assignment(s). If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
 
 ### Prerequisites
 
@@ -48,7 +48,7 @@ Overall, modules in `Cosmos SDK` provide a modular and extensible architecture f
 
 ## Exercise
 
-In this `training step` we will learn how to implement a simple Supply Chain module. Which is responsible for managing the state of the supply chain, including adding new products to the chain, retrieving information about existing products, and updating the status of products as they move through the supply chain.
+In this `training step` we will learn how to implement a simple supply chain module. Which is responsible for managing the state of the supply chain, including adding new products to the chain, retrieving information about existing products, and updating the status of products as they move through the supply chain.
 
 ### Step 1: Create kata directory
 
@@ -59,20 +59,34 @@ mkdir kata5
 cd kata5
 ```
 
-### Step 2: Initialize a new `Go` module
+### Step #2: Initialize go module
 
-Now  we have to initialize a new `Go` module using the `go mod` command:
+Now we want to initialize a new `Go` module, add required `package redirects` and fetch `Cosmos SDK v0.45.12`
 
 ```bash
-go mod init supplychain
+go mod init example.com/modules
+go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
+go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
+go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
+go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
+go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
 
-### Step 3: Create `custom types`
+### Step #3: Create a file called `types.go`
 
-Create a new file called `types.go` in your module directory with the below code. This file will define the data types used by your module. For a supply chain module, you might define a new struct called Product that includes fields for the product's name, ID, and any other relevant data:
+With our `Go` module initialized we can create a file for `custom types` used in our `module`:
+
+```bash
+cat > types.go
+```
+
+### Step 4: Implement a required `custom types`
+
+In the newly created `types.go` file we define a two new `custom types` named `Product` and `AddProductMsg`:
 
 ```go
-package supplychain
+package main
 
 import (
     "github.com/cosmos/cosmos-sdk/types"
@@ -85,26 +99,83 @@ type Product struct {
     Owner       types.AccAddress `json:"owner"`
     History     []string       `json:"history"`
 }
+
+type AddProductMsg struct {
+    //TODO: Implement AddProductMsg
+}
 ```
 
-### Step 4: Create basic `keeper`
+### Step #5: Create a file called `messagehandlers.go`
 
-Create a new file called `keeper.go` in your module directory with the below code. This file will define the module's keeper, which is responsible for managing the module's state. For a supply chain module, you might define a new struct called SupplyChainKeeper that includes methods for adding and retrieving products.
+Next we have to create a file for the `message handler` named `SupplyChainHandler`, which handles `AddProductMsg` messages:
+
+```bash
+cat > messagehandlers.go
+```
+
+### Step 6: Implement `SupplyChainHandler` for `AddProductMsg` messages
+
+Open up the new file and implement the `SupplyChainHandler` to handle `AddProductMsg` messages sent from clients to our newly created `SupplyChainKeeper`:
 
 ```go
-package supplychain
+package main
 
 import (
     "github.com/cosmos/cosmos-sdk/codec"
-    "github.com/cosmos/cosmos-sdk/telemetry"
     "github.com/cosmos/cosmos-sdk/types"
 )
 
+// Message handler for SupplyChainKeeper
+type SupplyChainHandler struct {
+    keeper SupplyChainKeeper
+}
+
+// Constructor for SupplyChainHandler
+func NewSupplyChainHandler(keeper SupplyChainKeeper) SupplyChainHandler {
+    return SupplyChainHandler{keeper: keeper}
+}
+
+// Implement message handler for AddProductMsg messages
+func (h SupplyChainHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) (types.Result, error) {
+    product := Product{
+        Name: msg.Name,
+        ID:   msg.ID,
+    }
+
+    h.keeper.AddProduct(ctx, product)
+
+    return types.NewResult(types.CodeOK, "product added"), nil
+}
+```
+
+### Step #7: Create a file called `keeper.go`
+
+The last piece of our simple module is the `keeper` itself. To prepare for its implementation we create a new file named `keeper.go`:
+
+```bash
+cat > keeper.go
+```
+
+
+### Step #8: Implement basic `SupplyChainKeeper`
+
+The modules `keeper` is responsible for managing the module's state. For a supply chain module you might define a new struct called `SupplyChainKeeper` that includes methods for adding and retrieving `Product` instances, as follows:
+
+```go
+package main
+
+import (
+    "github.com/cosmos/cosmos-sdk/codec"
+    "github.com/cosmos/cosmos-sdk/types"
+)
+
+// SupplyChainKeeper struct
 type SupplyChainKeeper struct {
     storeKey types.StoreKey
     cdc      *codec.Codec
 }
 
+// Constructor for SupplyChainKeeper
 func NewSupplyChainKeeper(storeKey types.StoreKey, cdc *codec.Codec) SupplyChainKeeper {
     return SupplyChainKeeper{
         storeKey: storeKey,
@@ -112,14 +183,14 @@ func NewSupplyChainKeeper(storeKey types.StoreKey, cdc *codec.Codec) SupplyChain
     }
 }
 
+// Exposes a method called AddProduct on our SupplyChainKeeper struct
 func (sk SupplyChainKeeper) AddProduct(ctx types.Context, product Product) {
-    telemetry.IncrCounter(1, "supplychain/product/add")
-
     store := ctx.KVStore(sk.storeKey)
     bz := sk.cdc.MustMarshalBinaryLengthPrefixed(product)
     store.Set(product.ID, bz)
 }
 
+// Exposes a method called GetProduct on our SupplyChainKeeper struct
 func (sk SupplyChainKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Product, bool) {
     store := ctx.KVStore(sk.storeKey)
     if !store.Has(id) {
@@ -134,75 +205,63 @@ func (sk SupplyChainKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Pr
 }
 ```
 
-### Step 5: Create basic `handler`
+### Step #9: Create a file called `main.go`
 
-Create a new file called `handler.go` in your module directory with the below code. This file will define the module's handler, which is responsible for processing transactions and other messages sent to the module. For a supply chain module, you might define a new struct called SupplyChainHandler that includes methods for handling AddProductMsg transactions.
+Lastly we have to create a file for a program to consume our new module and enable us to try out our new `keeper`:
 
-```go
-package supplychain
-
-import (
-    "github.com/cosmos/cosmos-sdk/codec"
-    "github.com/cosmos/cosmos-sdk/types"
-)
-
-type SupplyChainHandler struct {
-    keeper SupplyChainKeeper
-}
-
-func NewSupplyChainHandler(keeper SupplyChainKeeper) SupplyChainHandler {
-    return SupplyChainHandler{keeper: keeper}
-}
-
-func (h SupplyChainHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) (types.Result, error) {
-    product := Product{
-        Name: msg.Name,
-        ID:   msg.ID,
-    }
-    h.keeper.AddProduct(ctx, product)
-
-    return types.NewResult(types.CodeOK, "product added"), nil
-}
+```bash
+cat > main.go
 ```
 
-### Step 6: Create simple `app`
+### Step 10: Implement simple program
 
-Initialize the supply chain module by creating a new instance of SupplyChainKeeper in your application's `app.go` file:
+Initialize the supply chain module by setting up a new instance of our SupplyChainKeeper in the `main.go` file:
 
 ```go
 package main
 
 import (
+    "fmt"
+    "os"
+
     "github.com/cosmos/cosmos-sdk/codec"
     "github.com/cosmos/cosmos-sdk/server"
     "github.com/cosmos/cosmos-sdk/simapp"
-    "github.com/myuser/supplychain"
 )
 
 func main() {
-    cdc := codec.New()
-    supplyChainKeeper := supplychain.NewSupplyChainKeeper(simapp.MakeCodec().Name(), cdc)
-    // add other module keepers as necessary
+    //Get simapp encoding configuration
+    encodingConfig := simapp.MakeTestEncodingConfig()
 
+    //Initialize new supplychain keeper    
+    var storeKey types.StoreKey = nil //TODO: Initalize storekey
+    supplyChainKeeper := NewSupplyChainKeeper(storeKey, encodingConfig.Marshaler)
+    
     app := simapp.NewSimApp(
         logger, db, nil, true, map[int64]bool{},
         simapp.DefaultNodeHome, supplyChainKeeper,
-        // add other module keepers as necessary
     )
 
     server.Main(app)
 
-    item, err := supplyChainKeeper.GetProduct(ctx, "123")
-
+    product, err := supplyChainKeeper.GetProduct(ctx, "123")
     if err != nil {
-        // handle error
+	    fmt.Printf("failed to get Product: %s", err.Error())
+	    os.Exit(1)
     }
 
-    fmt.Println(item)
+    fmt.Println(product)
 }
 ```
+### Step #11: Run `go mod tidy`
 
-### Step #7: Build executable
+To clean up our `dependency graph` and fetch any missing packages we have to run the `go mod tidy` command:
+
+```bash
+go mod tidy
+```
+
+### Step #12: Build executable
 
 Build a new `Go` binary based on our custom module logic:
 
@@ -210,12 +269,12 @@ Build a new `Go` binary based on our custom module logic:
 go build
 ```
 
-### Step #8: Run executable
+### Step #13: Run executable
 
 Lastly we can run our new `Go` program with the following command:
 
 ```bash
-./main
+./modules
 ```
 
 ## Conclusion
