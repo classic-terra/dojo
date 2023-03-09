@@ -48,7 +48,7 @@ Overall, modules in `Cosmos SDK` provide a modular and extensible architecture f
 
 ## Exercise
 
-In this `training step` we will learn how to implement a simple supply chain module. This module is responsible for managing the state of our supply chain, including adding new products to the chain, retrieving information about existing products, and updating the status of products as they move through the supply chain.
+In this `training step` we will learn how to implement a simple module. This module is responsible for managing the state of product supply chain, including adding new products, retrieving information about existing products and updating the status of products as they move through the supply chain.
 
 ### Step 1: Create kata directory
 
@@ -75,18 +75,18 @@ go get github.com/cosmos/cosmos-sdk@v0.45.12
 
 ### Step #3: Create a file called `types.go`
 
-With our `Go` module initialized we can create a file for `custom types` used in our `module`:
+With our `Go` module initialized we can create a file for `custom types` used by our `module`:
 
 ```bash
 cat > types.go
 ```
 
-### Step 4: Implement a required `custom types`
+### Step 4: Implement a `custom type`
 
-In the newly created `types.go` file we define two new `custom types` named `Product` & `AddProductMsg`:
+In the newly created `types.go` file we define a new `custom type` named `Product`:
 
 ```go
-package main
+package types
 
 import (
     "github.com/cosmos/cosmos-sdk/types"
@@ -99,44 +99,64 @@ type Product struct {
     Owner       types.AccAddress `json:"owner"`
     History     []string       `json:"history"`
 }
+```
+
+### Step #5: Create a file called `msgs.go`
+
+With our `Go` module initialized we can create a file for `custom msgs` used by our `module`:
+
+```bash
+cat > msgs.go
+```
+
+### Step 6: Implement a `custom msg`
+
+In the newly created `msgs.go` file we define a new `custom msg` named `AddProductMsg`:
+
+```go
+package msgs
+
+import (
+    "github.com/cosmos/cosmos-sdk/types"
+)
 
 type AddProductMsg struct {
     //TODO: Implement AddProductMsg
 }
 ```
 
-### Step #5: Create a file called `messagehandlers.go`
+### Step #7: Create a file called `messagehandlers.go`
 
-Next we have to create a file for the `message handler` named `SupplyChainHandler`, which handles `AddProductMsg` messages:
+Next we have to create a file for the `message handler` named `SimpleHandler`, which handles `AddProductMsg` messages:
 
 ```bash
 cat > messagehandlers.go
 ```
 
-### Step 6: Implement `SupplyChainHandler` for `AddProductMsg` messages
+### Step #8: Implement `SimpleHandler` for `AddProductMsg` messages
 
-Open up the new file and implement the `SupplyChainHandler` to handle `AddProductMsg` messages sent from clients to the `SupplyChainKeeper`:
+Open up the new file and implement the `SimpleHandler` to handle `AddProductMsg` messages sent from clients to the `SimpleKeeper`:
 
 ```go
-package main
+package keeper
 
 import (
     "github.com/cosmos/cosmos-sdk/codec"
     "github.com/cosmos/cosmos-sdk/types"
 )
 
-// Message handler for SupplyChainKeeper
-type SupplyChainHandler struct {
-    keeper SupplyChainKeeper
+// Message handler for SimpleKeeper
+type SimpleHandler struct {
+    keeper SimpleKeeper
 }
 
-// Constructor for SupplyChainHandler
-func NewSupplyChainHandler(keeper SupplyChainKeeper) SupplyChainHandler {
-    return SupplyChainHandler{keeper: keeper}
+// Constructor for SimpleHandler
+func NewSimpleHandler(keeper SimpleKeeper) SimpleHandler {
+    return SimpleHandler{keeper: keeper}
 }
 
 // Implement message handler for AddProductMsg messages
-func (h SupplyChainHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) (types.Result, error) {
+func (h SimpleHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) (types.Result, error) {
     product := Product{
         Name: msg.Name,
         ID:   msg.ID,
@@ -148,50 +168,49 @@ func (h SupplyChainHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) 
 }
 ```
 
-### Step #7: Create a file called `keeper.go`
+### Step #9: Create a file called `keeper.go`
 
-The last piece of our supply chain module is the `keeper`. To prepare for its implementation we create a new file named `keeper.go`:
+The central piece of our "module puzzle" is the `keeper`. To prepare for its implementation we create a new file named `keeper.go`:
 
 ```bash
 cat > keeper.go
 ```
 
+### Step #10: Implement basic `SimpleKeeper`
 
-### Step #8: Implement basic `SupplyChainKeeper`
-
-The module `keeper` is responsible for managing the module's state. For our supply chain module you might define a new struct called `SupplyChainKeeper` that includes functions for adding and retrieving `Product` instances, as follows:
+The module `keeper` is responsible for managing the module's state. For our simple module you might define a new struct called `SimpleKeeper` that includes functions for adding and retrieving `Product` instances, as follows:
 
 ```go
-package main
+package keeper
 
 import (
     "github.com/cosmos/cosmos-sdk/codec"
     "github.com/cosmos/cosmos-sdk/types"
 )
 
-// SupplyChainKeeper struct
-type SupplyChainKeeper struct {
+// SimpleKeeper struct
+type SimpleKeeper struct {
     storeKey types.StoreKey
     cdc      *codec.Codec
 }
 
-// Constructor for SupplyChainKeeper
-func NewSupplyChainKeeper(storeKey types.StoreKey, cdc *codec.Codec) SupplyChainKeeper {
-    return SupplyChainKeeper{
+// Constructor for SimpleKeeper
+func NewSimpleKeeper(storeKey types.StoreKey, cdc *codec.Codec) SimpleKeeper {
+    return SimpleKeeper{
         storeKey: storeKey,
         cdc:      cdc,
     }
 }
 
-// Add product to our SupplyChainKeeper KVStore
-func (sk SupplyChainKeeper) AddProduct(ctx types.Context, product Product) {
+// Add product to our SimpleKeeper KVStore
+func (sk SimpleKeeper) AddProduct(ctx types.Context, product Product) {
     store := ctx.KVStore(sk.storeKey)
     bz := sk.cdc.MustMarshalBinaryLengthPrefixed(product)
     store.Set(product.ID, bz)
 }
 
-// Get product from our SupplyChainKeeper KVStore
-func (sk SupplyChainKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Product, bool) {
+// Get product from our SimpleKeeper KVStore
+func (sk SimpleKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Product, bool) {
     store := ctx.KVStore(sk.storeKey)
     if !store.Has(id) {
         return Product{}, false
@@ -205,48 +224,109 @@ func (sk SupplyChainKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Pr
 }
 ```
 
-### Step #9: Create a file called `main.go`
+### Step #11: Create a file called `genesis.go`
 
-Finally we can put the puzzle together by creating a simple program to consume our new module and enable us to try out the new `SupplyChainKeeper`:
+TODO:
+
+```bash
+cat > genesis.go
+```
+
+### Step #12: Implement `genesis.go`
+
+TODO:
+
+```go
+//TODO
+```
+
+### Step #13: Create a file called `module.go`
+
+TODO:
+
+```bash
+cat > module.go
+```
+
+### Step #14: Implement `module.go`
+
+TODO:
+
+```go
+//TODO
+```
+
+### Step #15: Create a file called `app.go`
+
+TODO:
+
+```bash
+cat > module.go
+```
+
+### Step #16: Implement `app.go`
+
+TODO:
+
+```go
+//TODO
+```
+
+### Step #17: Create a file called `main.go`
+
+Finally we can test out our new module by creating a simple program:
 
 ```bash
 cat > main.go
 ```
 
-### Step 10: Implement simple program
+### Step #18: Implement simple program
 
-Initialize a new instance of our `SupplyChainKeeper` in the `main.go` file, add a few products to its KVStore and fetch the `Product` with id `123`:
+Initialize a new instance of our `SimpleKeeper` in the `main.go` file, add a products to its KVStore and fetch it with id `123`:
 
 ```go
 package main
 
 import (
+    "context"
     "fmt"
     "os"
 
+    "example.com/types"
+    "example.com/msgs"
+    "example.com/keeper"
     "github.com/cosmos/cosmos-sdk/codec"
     "github.com/cosmos/cosmos-sdk/server"
     "github.com/cosmos/cosmos-sdk/simapp"
 )
 
 func main() {
+    //TODO: Create context
+    ctx := nil
+
     //Get simapp encoding configuration
     encodingConfig := simapp.MakeTestEncodingConfig()
 
-    //Initialize new supplychain keeper    
+    //Initialize new keeper    
     var storeKey types.StoreKey = nil //TODO: Initalize storekey
-    supplyChainKeeper := NewSupplyChainKeeper(storeKey, encodingConfig.Marshaler)
+    keeper := NewSimpleKeeper(storeKey, encodingConfig.Marshaler)
     
     app := simapp.NewSimApp(
         logger, db, nil, true, map[int64]bool{},
-        simapp.DefaultNodeHome, supplyChainKeeper,
+        simapp.DefaultNodeHome, keeper,
     )
 
     server.Main(app)
 
     //TODO: Add products
+    newProduct := Product{
+        Name: "Foo",
+        ID:   "123",
+    }
 
-    product, err := supplyChainKeeper.GetProduct(ctx, "123")
+    keeper.AddProduct(ctx, newProduct)
+
+    product, err := keeper.GetProduct(ctx, "123")
     if err != nil {
 	    fmt.Printf("failed to get Product: %s", err.Error())
 	    os.Exit(1)
@@ -255,7 +335,8 @@ func main() {
 	fmt.Printf("Product information: %s\n", product)
 }
 ```
-### Step #11: Run `go mod tidy`
+
+### Step #19: Run `go mod tidy`
 
 To clean up our `dependency graph` and fetch any missing packages we have to run the `go mod tidy` command:
 
@@ -263,7 +344,7 @@ To clean up our `dependency graph` and fetch any missing packages we have to run
 go mod tidy
 ```
 
-### Step #12: Build executable
+### Step #20: Build executable
 
 Build a new `Go` binary based on our custom module logic:
 
@@ -271,7 +352,7 @@ Build a new `Go` binary based on our custom module logic:
 go build
 ```
 
-### Step #13: Run executable
+### Step #21: Run executable
 
 Lastly we can run our new `Go` program with the following command:
 
