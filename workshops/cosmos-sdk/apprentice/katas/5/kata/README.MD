@@ -83,7 +83,7 @@ cat > types.go
 
 ### Step 4: Implement a required `custom types`
 
-In the newly created `types.go` file we define a two new `custom types` named `Product` and `AddProductMsg`:
+In the newly created `types.go` file we define two new `custom types` named `Product` & `AddProductMsg`:
 
 ```go
 package main
@@ -115,7 +115,7 @@ cat > messagehandlers.go
 
 ### Step 6: Implement `SupplyChainHandler` for `AddProductMsg` messages
 
-Open up the new file and implement the `SupplyChainHandler` to handle `AddProductMsg` messages sent from clients to our newly created `SupplyChainKeeper`:
+Open up the new file and implement the `SupplyChainHandler` to handle `AddProductMsg` messages sent from clients to the `SupplyChainKeeper`:
 
 ```go
 package main
@@ -150,7 +150,7 @@ func (h SupplyChainHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) 
 
 ### Step #7: Create a file called `keeper.go`
 
-The last piece of our simple module is the `keeper` itself. To prepare for its implementation we create a new file named `keeper.go`:
+The last piece of our supply chain module is the `keeper`. To prepare for its implementation we create a new file named `keeper.go`:
 
 ```bash
 cat > keeper.go
@@ -159,7 +159,7 @@ cat > keeper.go
 
 ### Step #8: Implement basic `SupplyChainKeeper`
 
-The modules `keeper` is responsible for managing the module's state. For a supply chain module you might define a new struct called `SupplyChainKeeper` that includes methods for adding and retrieving `Product` instances, as follows:
+The module `keeper` is responsible for managing the module's state. For our supply chain module you might define a new struct called `SupplyChainKeeper` that includes functions for adding and retrieving `Product` instances, as follows:
 
 ```go
 package main
@@ -183,14 +183,14 @@ func NewSupplyChainKeeper(storeKey types.StoreKey, cdc *codec.Codec) SupplyChain
     }
 }
 
-// Exposes a method called AddProduct on our SupplyChainKeeper struct
+// Add product to our SupplyChainKeeper KVStore
 func (sk SupplyChainKeeper) AddProduct(ctx types.Context, product Product) {
     store := ctx.KVStore(sk.storeKey)
     bz := sk.cdc.MustMarshalBinaryLengthPrefixed(product)
     store.Set(product.ID, bz)
 }
 
-// Exposes a method called GetProduct on our SupplyChainKeeper struct
+// Get product from our SupplyChainKeeper KVStore
 func (sk SupplyChainKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Product, bool) {
     store := ctx.KVStore(sk.storeKey)
     if !store.Has(id) {
@@ -207,7 +207,7 @@ func (sk SupplyChainKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Pr
 
 ### Step #9: Create a file called `main.go`
 
-Lastly we have to create a file for a program to consume our new module and enable us to try out our new `keeper`:
+Finally we can put the puzzle together by creating a simple program to consume our new module and enable us to try out the new `SupplyChainKeeper`:
 
 ```bash
 cat > main.go
@@ -215,7 +215,7 @@ cat > main.go
 
 ### Step 10: Implement simple program
 
-Initialize the supply chain module by setting up a new instance of our SupplyChainKeeper in the `main.go` file:
+Initialize a new instance of our SupplyChainKeeper in the `main.go` file, add a few products to its KVStore and fetch the `Product` with id `123`:
 
 ```go
 package main
@@ -244,13 +244,15 @@ func main() {
 
     server.Main(app)
 
+    //TODO: Add products
+
     product, err := supplyChainKeeper.GetProduct(ctx, "123")
     if err != nil {
 	    fmt.Printf("failed to get Product: %s", err.Error())
 	    os.Exit(1)
     }
 
-    fmt.Println(product)
+	fmt.Printf("Product information: %s\n", product)
 }
 ```
 ### Step #11: Run `go mod tidy`
