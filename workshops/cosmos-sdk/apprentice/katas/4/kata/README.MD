@@ -4,7 +4,7 @@ This training exercise is a **apprentice-level** course on Cosmos SDK that serve
 
 ## Getting started
 
-These instructions will help you prepare for the kata and ensure that your training machine has the tools installed you will need to complete the assignment(s). If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
+These instructions will help you prepare for the `training step` and ensure that your training machine has the tools installed you will need to complete the assignment(s). If you find yourself in a situation where one or more tools might not be available for your training environment please reach out to your instructor for assistance on how to proceed, post an [issue in our repository](https://github.com/classic-terra/dojo/issues) or fix it yourself via a [pull request](https://github.com/classic-terra/dojo/pulls).
 
 ### Prerequisites
 
@@ -32,9 +32,9 @@ There are several types of queries that can be executed using `Cosmos SDK`, incl
 
 ## Exercise
 
-In this exercise we  will learn how to use the balance command, which takes the account address as an argumeent, and use the Cosmos SDK client to query the balance of that account on the blockchain. The `cliCtx.QueryWithData()` function is used to execute the query, and the response is printed to the console.
+In this exercise we  will learn how to query the blockchain for specific Account using the `clientCtx.QueryWithData()` function and subsequently the `codec.UnmarshalInterface()` function to `deserialize` the `query` response to an instance of the `client.Account` interface.
 
-**Note**: this `training step` that the `Cosmos SDK` client is properly configured and that the blockchain network is up and running. It also assumes that the auth module is installed and enabled on the network.
+**Note**: this `training step` assumes that you have set up a working `Cosmos SDK` node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
 
 ### Step 1: Create kata directory
 
@@ -45,80 +45,146 @@ mkdir kata4
 cd kata4
 ```
 
-### Step #2: Create a file called `main.go`
+### Step #2: Initialize go module
 
-Secondly we need to create a file for our code kata:
+Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
+
+```bash
+go mod init example.com/queries
+go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
+go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
+go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
+go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
+go get github.com/cosmos/cosmos-sdk@v0.45.12
+```
+
+### Step #3: Create a file called `main.go`
+
+Then we have to create a file for our program:
 
 ```bash
 cat > main.go
 ```
 
-### Step #3: Import the necessary packages
+### Step #4: Import required `Go` packages
 
-At the top of `main.go` add an import statements for the `Go` packages neccessary to work with the `Cosmos SDK` `MsgSend` type:
+At the top of `main.go` add an import statement with the `Go` packages neccessary to complete this `training step`:
 
 ```go
 package main
 
 import (
     "context"
-    "fmt"
+	"fmt"
+	"os"
 
-    sdk "github.com/cosmos/cosmos-sdk/types"
-    "github.com/cosmos/cosmos-sdk/client"
-    "github.com/cosmos/cosmos-sdk/client/flags"
-    "github.com/cosmos/cosmos-sdk/x/auth/types"
-    "github.com/spf13/cobra"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/simapp"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 ```
 
-### Step #4: Add empty main() method
+### Step #5: Add empty main() method
 
-Then create an empty method body below the import statements:
+Then create an empty method body below the import statement:
 
 ```go
 func main() {
 }
 ```
 
-### Step #5: Initialize the command
+### Step #6: Set up Cosmos SDK
 
-Inside the main method begin by initializing the command used by this `training step`:
+Inside the main method begin by setting up the SDK configuration used by our `training step`:
 
-```go
-UPGRADE TO  v0.45.12
+```go	
+// Create a new background context
+_ = context.Background()
+
+//Set prefix for config
+sdk.GetConfig().SetBech32PrefixForAccount("terra", "terrapub")
+
+//Get simapp encoding configuration
+encodingConfig := simapp.MakeTestEncodingConfig()
 ```
 
-### Step #6: Add the flags
+### Step #7: Configure nodeClient & clientContext
 
-Then we need to add query flags to our new command object, as follows:
-
-```go
-UPGRADE TO  v0.45.12
-```
-
-### Step #7: Execute command
-
-Lastly we need to execute our command and print out any errors:
+Now that we have our basic configuration in place and the keyring is populated with a `dummy account` we can proceed to configure the client our `Go` program will use to communicate with the blockchain:
 
 ```go
-UPGRADE TO  v0.45.12
+// Create  node client
+nodeClient, err := client.NewClientFromNode("tcp://localhost:26657")
+if err != nil {
+	fmt.Printf("failed to create node client: %s", err.Error())
+	os.Exit(1)
+}
+
+// Create a new client context
+clientCtx := client.Context{}.
+	WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
+	WithTxConfig(encodingConfig.TxConfig).
+	WithLegacyAmino(encodingConfig.Amino).
+	WithCodec(encodingConfig.Marshaler).
+	WithClient(nodeClient).
+	WithChainID("columbus-5").
+	WithSignModeStr("SIGN_MODE_UNSPECIFIED").
+	WithBroadcastMode("block")
 ```
 
-### Step #8: Build executable
+### Step #8: QueryWithData and deserialize response
 
-Build a new `Go` binary based on `main.go`:
+Finally we can prepare our query arguments and use the `clientCtx.QueryWithData()` function to query the blockchain for the address `terra13vs2znvhdcy948ejsh7p8p22j8l4n4y07062qq`, as follows:
+
+```go
+    // Create a address from a string
+	queryAddr, err := sdk.AccAddressFromBech32("terra13vs2znvhdcy948ejsh7p8p22j8l4n4y07062qq")
+	if err != nil {
+		fmt.Printf("failed to parse recipient address: %s", err.Error())
+		os.Exit(1)
+	}
+
+	// Query account information
+	res, _, err := clientCtx.QueryWithData(fmt.Sprintf("custom/%s/%s/%s", "bank", "accounts", queryAddr.String()), nil)
+	if err != nil {
+		fmt.Printf("failed to query account: %s", err.Error())
+		os.Exit(1)
+	}
+
+	// Unmarshal account information
+	var account client.Account
+	if err := encodingConfig.Marshaler.UnmarshalInterface(res, &account); err != nil {
+		fmt.Printf("failed to unmarshal query: %s", err.Error())
+		os.Exit(1)
+	}
+
+	// Print account information
+	fmt.Printf("Account address: %s\n", account.GetAddress())
+```
+
+### Step #9: Run `go mod tidy`
+
+To clean up our `dependency graph` and fetch any missing packages we have to run the `go mod tidy` command:
+
+```bash
+go mod tidy
+```
+
+### Step #10: Build executable
+
+With our code kata finalized all that remains now is to build a new `Go` binary based on `main.go`:
 
 ```bash
 go build
 ```
 
-### Step #9: Run executable
+### Step #11: Run executable
 
-Lastly we can run our new `Go` program with the following command:
+Then we can run our new `Go` program with the following command:
 
 ```bash
-./main
+./queries
 ```
 
 ## Conclusion
