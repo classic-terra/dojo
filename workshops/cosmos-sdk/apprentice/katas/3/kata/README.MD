@@ -32,7 +32,10 @@ Overall, messages are a key component of `Cosmos SDK`, and are used to represent
 
 This `training step` demonstrates how to create, sign, and submit a basic `MsgSend` message using the `Cosmos SDK` in `Go`. You can modify the code to create and submit other types of messages as well, depending on the requirements of your application.
 
-### Step #1: Create kata directory
+
+**Note**: this `training step` assumes that you have set up a working `Cosmos SDK` node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
+
+### Step 1: Create kata directory
 
 First we setup a directory for our exercise files. It's pretty straight forward:
 
@@ -41,108 +44,238 @@ mkdir kata3
 cd kata3
 ```
 
-### Step #2: Create a file called `main.go`
+### Step #2: Initialize go module
 
-Secondly we need to create a file for our code kata:
+Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
+
+```bash
+go mod init example.com/messages
+go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
+go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
+go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
+go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
+go get github.com/cosmos/cosmos-sdk@v0.45.12
+```
+
+### Step #3: Create a file called `main.go`
+
+Then we have to create a file for our program:
 
 ```bash
 cat > main.go
 ```
 
-### Step #3: Import the necessary packages
+### Step #4: Import required `Go` packages
 
-At the top of `main.go` add an import statements for the `Go` packages neccessary to work with the `Cosmos SDK` `MsgSend` type:
+At the top of `main.go` add an import statement with the `Go` packages neccessary to complete this `training step`:
 
 ```go
 package main
 
 import (
-    "fmt"
+	"context"
+	"fmt"
+	"os"
 
-    "encoding/hex"
-
-    "github.com/cosmos/cosmos-sdk/codec"
-    "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
-    "github.com/cosmos/cosmos-sdk/types"
-    "github.com/cosmos/cosmos-sdk/types/msgservice"
-    "github.com/cosmos/cosmos-sdk/x/auth/types"
-    "github.com/cosmos/cosmos-sdk/x/auth/types/tx"
-    "github.com/tendermint/tendermint/crypto/ed25519"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
+	"github.com/cosmos/cosmos-sdk/crypto/hd"
+	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	"github.com/cosmos/cosmos-sdk/testutil/testdata"
+	"github.com/cosmos/cosmos-sdk/simapp"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/tx/signing"
+	bankTypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 ```
 
-### Step #4: Add empty main() method
+### Step #5: Add empty main() method
 
-Then create an empty method body below the import statements:
+Then create an empty method body below the import statement:
 
 ```go
 func main() {
 }
 ```
 
-### Step #5: Initialize variables
+### Step #6: Set up Cosmos SDK
 
-Inside the main method initialize some local variables used by our `training step`:
+Inside the main method begin by setting up the SDK configuration used by our `training step`:
 
-```go
-senderAddress := "terra..."
-recipientAddress := "terra..."
-senderPrivateKey := "..."
-senderPublicKey := "..."
-chainID := "columbus-5"
+```go	
+// Create a new background context
+_ = context.Background()
+
+//Set prefix for config
+sdk.GetConfig().SetBech32PrefixForAccount("terra", "terrapub")
+
+//Get simapp encoding configuration
+encodingConfig := simapp.MakeTestEncodingConfig()
 ```
 
-### Step #6: Create a new MsgSend object
 
-Then initialize a pointer to a newly created `MsgSend` object with the appropriate fields:
+### Step #7: Configure an InMemory keyring
 
-```go
-UPGRADE TO  v0.45.12
-```
-
-### Step #7: Build the transaction
-
-Once our `MsgSend` object is instantiated we can use it to build a transaction that acts as a `message envelope` once broadcasted:
+Once we have the SDK configuration in place we need to setup a new `InMemory` keyring which is convenient to use in testing and prototyping scenarios, but in general should not be done in production. To complete the configuration and register a `dummy account` for our `training step` we add the following code to `main.go`:
 
 ```go
-UPGRADE TO  v0.45.12
+// Create & configure a new InMemory keyring
+kr := keyring.NewInMemory()
+
+kr.NewAccount("localkey", testdata.TestMnemonic, keyring.DefaultBIP39Passphrase, sdk.FullFundraiserPath, hd.Secp256k1)
 ```
 
-### Step #8: Sign the transaction
+### Step #8: Configure nodeClient & clientContext
 
-Before we can broadcast our transaction we need to sign it with the sender's private key:
+Now that we have our basic configuration in place and the keyring is populated with a `dummy account` we can proceed to configure the client our `Go` program will use to communicate with the blockchain:
 
 ```go
-UPGRADE TO  v0.45.12
+// Create  node client
+nodeClient, err := client.NewClientFromNode("tcp://localhost:26657")
+if err != nil {
+	fmt.Printf("failed to create node client: %s", err.Error())
+	os.Exit(1)
+}
+
+// Create a new client context
+clientCtx := client.Context{}.
+	WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
+	WithTxConfig(encodingConfig.TxConfig).
+	WithLegacyAmino(encodingConfig.Amino).
+	WithCodec(encodingConfig.Marshaler).
+	WithKeyring(kr).
+	WithClient(nodeClient).
+	WithChainID("columbus-5").
+	WithSignModeStr("SIGN_MODE_UNSPECIFIED").
+	WithBroadcastMode("block")
 ```
 
-### Step #9: Submit the transaction to the blockchain
+### Step #9: Initialize transaction builder
 
-Now we can create a new `message service client` and broadcast the transaction:
+With the `Cosmos SDK` clientCtx fully configured and ready for use we can leverages its `TxConfig` property to initialize the `TxBuilder` we need to `compose` the transaction `message envelope` required for broadcasting our messages, including adding `metadata` such `fees`, `gaslimit` and a `memo`:
 
 ```go
-UPGRADE TO  v0.45.12
+// Create a new transaction builder
+txBuilder := clientCtx.TxConfig.NewTxBuilder()
+txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewInt64Coin("uluna", 100000)))
+txBuilder.SetGasLimit(200000)
+txBuilder.SetMemo("test transaction")
 ```
 
-### Step #10: Build executable
+### Step #10: Create multiple messages for our transaction
 
-Build a new `Go` binary based on `main.go`:
+Finally we have to create the messages that we want to put in our `message envelope` (transaction) and add `metadata` supported by the `bankTypes.MsgSend` struct, such as `sender`, `recipient` and `amount`:
+
+```go
+// Fetch the sender's account key
+senderKey, err := clientCtx.Keyring.Key("localkey")
+
+clientCtx.WithFeeGranterAddress(senderKey.GetAddress())
+
+if err != nil {
+	fmt.Printf("failed to get sender key: %s", err.Error())
+	os.Exit(1)
+}
+
+// Fetch sender & recipient addresses
+fromAddr := senderKey.GetAddress()
+toAddr, err := sdk.AccAddressFromBech32("terra13vs2znvhdcy948ejsh7p8p22j8l4n4y07062qq")
+if err != nil {
+	fmt.Printf("failed to parse recipient address: %s", err.Error())
+	os.Exit(1)
+}
+
+// Create new messages to send funds to the recipient
+msgSend1 := &bankTypes.MsgSend{
+	FromAddress: fromAddr.String(),
+	ToAddress:   toAddr.String(),
+	Amount:      sdk.NewCoins(sdk.NewInt64Coin("uluna", 50000000)),
+}
+if err := msgSend1.ValidateBasic(); err != nil {
+	fmt.Printf("failed to validate message: %s", err.Error())
+	os.Exit(1)
+}
+
+msgSend2 := &bankTypes.MsgSend{
+	FromAddress: fromAddr.String(),
+	ToAddress:   toAddr.String(),
+	Amount:      sdk.NewCoins(sdk.NewInt64Coin("uluna", 50000000)),
+}
+if err := msgSend2.ValidateBasic(); err != nil {
+	fmt.Printf("failed to validate message: %s", err.Error())
+	os.Exit(1)
+}
+
+// Add the message to the transaction
+err = txBuilder.SetMsgs(msgSend1, msgSend2)
+if err != nil {
+	fmt.Printf("failed to set message: %s", err.Error())
+	os.Exit(1)
+}
+```
+
+### Step #11: Sign & broadcast the transaction
+
+With our transaction fully `composed` all that remains is for us to sign it with the senders private key and broadcast it to the blockchain:
+
+```go
+// Sign the transaction
+txf := tx.Factory{}.
+	WithKeybase(clientCtx.Keyring).
+	WithSignMode(signing.SignMode_SIGN_MODE_UNSPECIFIED).
+	WithChainID(clientCtx.ChainID).
+	WithTxConfig(clientCtx.TxConfig)
+
+err = tx.Sign(txf, senderKey.GetName(), txBuilder, true)
+if err != nil {
+	fmt.Printf("failed to sign transaction: %s", err.Error())
+	os.Exit(1)
+}
+
+// Encode the transaction and broadcast it to the network
+txBytes, err := clientCtx.TxConfig.TxEncoder()(txBuilder.GetTx())
+if err != nil {
+	fmt.Printf("failed to encode transaction: %s", err.Error())
+	os.Exit(1)
+}
+
+res, err := clientCtx.BroadcastTx(txBytes)
+if err != nil {
+	fmt.Printf("failed to broadcast transaction: %s", err.Error())
+	os.Exit(1)
+}
+
+fmt.Printf("transaction sent: %s", res.TxHash)
+```
+
+### Step #12: Run `go mod tidy`
+
+To clean up our `dependency graph` and fetch any missing packages we have to run the `go mod tidy` command:
+
+```bash
+go mod tidy
+```
+
+### Step #13: Build executable
+
+With our code kata finalized all that remains now is to build a new `Go` binary based on `main.go`:
 
 ```bash
 go build
 ```
 
-### Step #11: Run executable
+### Step #14: Run executable
 
-Lastly we can run our new `Go` program with the following command:
+Then we can run our new `Go` program with the following command:
 
 ```bash
-./main
+./messages
 ```
 
 ## Conclusion
 
-In conclusion, messages in the `Cosmos SDK` are the primary way for applications to interact with the blockchain. Messages contain the necessary data for a transaction, such as the sender and recipient addresses, the amount of tokens to be transferred, and any other relevant information. The SDK provides a variety of built-in message types, such as `MsgSend` for token transfers and MsgVote for governance voting. Developers can also create their own custom message types to meet the specific needs of their applications. With the help of the `Cosmos SDK`, developers can easily create, sign, and submit messages to the blockchain to perform various actions, such as transferring tokens, voting on proposals, and more.
+In conclusion, messages in the `Cosmos SDK` are the primary way for applications to interact with the blockchain. Messages contain the necessary data for a transaction, such as the `sender` and `recipient` addresses, the amount of tokens to be transferred, and any other relevant information. The SDK provides a variety of built-in message types, such as `MsgSend` for token transfers and `MsgVote` for governance voting. Developers can also create their own custom message types to meet the specific needs of their applications. With the help of the `Cosmos SDK`, developers can easily create, sign, and submit messages to the blockchain to perform various actions, such as transferring tokens, voting on proposals, and more.
 
 ## Want to help make our training material better?
 

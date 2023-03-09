@@ -235,7 +235,15 @@ if err != nil {
 fmt.Printf("transaction sent: %s", res.TxHash)
 ```
 
-### Step #12: Build executable
+### Step #12: Run `go mod tidy`
+
+To clean up our `dependency graph` and fetch any missing packages we have to run the `go mod tidy` command:
+
+```bash
+go mod tidy
+```
+
+### Step #13: Build executable
 
 With our code kata finalized all that remains now is to build a new `Go` binary based on `main.go`:
 
@@ -243,7 +251,7 @@ With our code kata finalized all that remains now is to build a new `Go` binary 
 go build
 ```
 
-### Step #13: Run executable
+### Step #14: Run executable
 
 Then we can run our new `Go` program with the following command:
 

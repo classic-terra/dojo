@@ -138,10 +138,10 @@ func main() {
 	fmt.Printf(\"transaction sent: %s\", res.TxHash)
 }"
 
-#Save the programn to a file called main.go
+#Save the program to a file called main.go
 echo "$GO_CODE" > main.go
 
-#Clean up the go.mod file
+#Clean up the go.mod file & fetch infered dependencies
 go mod tidy
 
 #Build the program
