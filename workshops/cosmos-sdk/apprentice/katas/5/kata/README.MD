@@ -305,6 +305,8 @@ The structure of a `Cosmos SDK` module typically includes the following componen
 
 `Cosmos SDK` modules are designed to be flexible and extensible, allowing developers to add additional packages as needed to implement the specific functionality of the module. By following this structure, modules can be easily combined and reused to create custom blockchain applications with a wide range of functionality.
 
+This `training step` completes the `Path of the Apprentice`, congratulations are in order if you made it this fare! In the next `learning path`, `Path of the Journeyman`, we will dive deeper into some of the more advance concepts of `Cosmos SDK` and extend on the knowledge we have gained on our journey thus fare, to build our very own `blockchain application`.
+
 ## Want to help make our training material better?
 
 Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues)
