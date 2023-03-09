@@ -15,11 +15,11 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-The `Cosmos SDK` is a framework for building blockchain applications. In the context of the `Cosmos SDK`, a "message" is a piece of data that represents an action that a user wants to perform on the blockchain. Messages are used to interact with smart contracts, execute transactions, and update the state of the blockchain.
+`Cosmos SDK` is a framework for building blockchain applications. In the context of `Cosmos SDK`, a message is a piece of data that represents an action that a user wants to perform on the blockchain. Messages are used to interact with smart contracts, execute transactions, and update the state of the blockchain.
 
 Messages in the `Cosmos SDK` are defined using a special message type, called a `Msg`. Each `Msg` object contains the following fields:
 
-* `Type`: A string that identifies the type of message being sent. For example, a message to transfer tokens might have a type of "cosmos-sdk/MsgSend".
+* `Type`: A string that identifies the type of message being sent. For example, a message to transfer tokens might have a type of `cosmos-sdk/MsgSend`.
 * `FromAddress`: The address of the sender of the message.
 * `ToAddress`: The address of the recipient of the message.
 * `Amount`: The amount of tokens being sent in the message, if any.
@@ -27,11 +27,11 @@ Messages in the `Cosmos SDK` are defined using a special message type, called a 
 
 Once a `Msg` object is created, it can be signed by the sender using their private key, and then submitted to the blockchain for processing. The blockchain will validate the message, ensure that the sender has enough funds to execute the transaction, and then update the state of the blockchain accordingly.
 
-Overall, messages are a key component of `Cosmos SDK`, and are used to represent user actions on the blockchain. By using a standardized message format, the `Cosmos SDK` allows developers to build flexible and interoperable blockchain applications that can interact with other blockchain applications in the Cosmos ecosystem.
+Overall, messages are a key component of `Cosmos SDK`, and are used to represent user actions on the blockchain. By using a standardized message format, `Cosmos SDK` allows developers to build flexible and interoperable blockchain applications that can interact with other blockchain applications in the Cosmos ecosystem.
 
 ## Exercise
 
-This `training step` demonstrates how to create, sign, and submit a basic `MsgSend` message using the `Cosmos SDK` in `Go`. You can modify the code to create and submit other types of messages as well, depending on the requirements of your application.
+This `training step` demonstrates how to create, sign, and submit a basic `MsgSend` message using `Cosmos SDK` in `Go`. You can modify the code to create and submit other types of messages as well, depending on the requirements of your application.
 
 
 **Note**: this `training step` assumes that you have set up a working `Cosmos SDK` node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.

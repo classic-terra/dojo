@@ -15,15 +15,15 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-`Cosmos SDK` is a framework for building blockchain applications. Transactions are the basic building blocks of any blockchain system, and they play a crucial role in the functioning of the `Cosmos SDK`.
+`Cosmos SDK` is a framework for building blockchain applications. Transactions are the basic building blocks of any blockchain system, and they play a crucial role in the functioning of `Cosmos SDK`.
 
-In the `Cosmos SDK`, a transaction is a message that is sent from one account to another account. A transaction can contain multiple messages, each of which specifies an action that is to be executed on the blockchain. For example, a message might instruct the blockchain to transfer tokens from one account to another account, or it might instruct the blockchain to create a new smart contract.
+In `Cosmos SDK`, a transaction is a message that is sent from one account to another account. A transaction can contain multiple messages, each of which specifies an action that is to be executed on the blockchain. For example, a message might instruct the blockchain to transfer tokens from one account to another account, or it might instruct the blockchain to create a new smart contract.
 
 Each transaction is signed using the private key of the account that initiated the transaction. This ensures that only the owner of the account can authorize the transaction. When a transaction is received by the blockchain, it is validated to ensure that it meets certain criteria. For example, the transaction might be checked to ensure that the sender has sufficient funds to cover the transaction fee.
 
 Once a transaction is validated, it is added to a pool of pending transactions. These transactions are then processed by validators who compete to add them to the next block in the blockchain. Validators are rewarded for adding transactions to the blockchain, which helps to incentivize them to participate in the network.
 
-In summary, transactions in the `Cosmos SDK` are messages that specify actions to be executed on the blockchain. They are signed by the sender's private key, validated by the network, and processed by validators who compete to add them to the blockchain. Transactions are an essential component of the `Cosmos SDK's architecture`, and they enable a wide range of blockchain applications to be built on top of the framework.
+In summary, transactions in `Cosmos SDK` are messages that specify actions to be executed on the blockchain. They are signed by the sender's private key, validated by the network, and processed by validators who compete to add them to the blockchain. Transactions are an essential component of the `Cosmos SDK` architecture, as they enable a wide range of blockchain applications to be built on top of the framework.
 
 ## Exercise
 

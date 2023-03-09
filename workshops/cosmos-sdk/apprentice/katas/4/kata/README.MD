@@ -14,7 +14,7 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-`Cosmos SDK` queries are a way to retrieve data from a blockchain network built using the `Cosmos SDK`. The `Cosmos SDK` is a popular blockchain development framework that allows developers to build custom blockchain applications with their own set of rules and features.
+`Cosmos SDK` queries are a way to retrieve data from a blockchain network built using the `Cosmos SDK`. `Cosmos SDK` is a popular blockchain development framework that allows developers to build custom blockchain applications with their own set of rules and features.
 
 In the context of `Cosmos SDK`, queries are used to fetch data from the blockchain's state. The blockchain state is a record of all the transactions that have taken place on the network, along with the current state of all the accounts and other data structures that are relevant to the network.
 
