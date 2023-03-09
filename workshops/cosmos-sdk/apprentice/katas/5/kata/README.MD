@@ -176,7 +176,7 @@ The central piece of our "module puzzle" is the `keeper`. To prepare for its imp
 cat > keeper.go
 ```
 
-### Step #10: Implement basic `SimpleKeeper`
+### Step #10: Implement `SimpleKeeper`
 
 The module `keeper` is responsible for managing the module's state. For our simple module you might define a new struct called `SimpleKeeper` that includes functions for adding and retrieving `Product` instances, as follows:
 
