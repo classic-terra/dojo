@@ -78,6 +78,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/tx/signing"
@@ -118,7 +119,7 @@ Once we have the SDK configuration in place we need to setup a new `InMemory` ke
 // Create & configure a new InMemory keyring
 kr := keyring.NewInMemory()
 
-kr.NewAccount("localkey", "torch swamp cancel lift never october child harsh rib aspect luxury word peanut length bamboo hawk material vehicle glue above west random sketch author", "12345678", sdk.FullFundraiserPath, hd.Secp256k1)
+kr.NewAccount("localkey", testdata.TestMnemonic, keyring.DefaultBIP39Passphrase, sdk.FullFundraiserPath, hd.Secp256k1)
 ```
 
 ### Step #8: Configure nodeClient & clientContext
