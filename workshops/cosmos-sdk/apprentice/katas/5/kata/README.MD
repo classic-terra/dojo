@@ -48,7 +48,7 @@ Overall, modules in `Cosmos SDK` provide a modular and extensible architecture f
 
 ## Exercise
 
-In this `training step` we will learn how to implement a simple supply chain module. Which is responsible for managing the state of the supply chain, including adding new products to the chain, retrieving information about existing products, and updating the status of products as they move through the supply chain.
+In this `training step` we will learn how to implement a simple supply chain module. This module is responsible for managing the state of our supply chain, including adding new products to the chain, retrieving information about existing products, and updating the status of products as they move through the supply chain.
 
 ### Step 1: Create kata directory
 
