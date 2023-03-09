@@ -161,7 +161,7 @@ txBuilder.SetMemo("test transaction")
 
 ### Step #10: Create message for transaction
 
-Finally we have to create the message(s) that we want to put in our `message envelope` (transaction) and add required `metadata` such as sender, recipient and amount:
+Finally we have to create the message(s) that we want to put in our `message envelope` (transaction) and add `metadata` supported by the `bankTypes.MsgSend` struct, such as `sender`, `recipient` and `amount`:
 
 ```go
 // Fetch the sender's account key
@@ -253,7 +253,7 @@ Then we can run our new `Go` program with the following command:
 
 ## Conclusion
 
-In this `training step`, we learned how to set up the SDK client and define the sender and recipient addresses. We then created a transaction and added a`bank.MsgSend` message, which send `tokens` from the sender address to the recipient address.
+In this `training step`, we learned how to set up the SDK client and define the sender and recipient addresses. We then created a transaction and added a`bank.MsgSend` instance, which defines an `amount` to transfer from the sender to the recipient.
 
 To wrap it all up we signed and broadcasted the transaction using the SDK client. We encoded the transaction message using the client's `TxEncoder` function, and then broadcasted the transaction using the clients `BroadcastTx` function.
 
