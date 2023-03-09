@@ -48,7 +48,9 @@ Overall, modules in `Cosmos SDK` provide a modular and extensible architecture f
 
 ## Exercise
 
-In this `training step` we will learn how to implement a simple module. This module is responsible for managing the state of product supply chain, including adding new products, retrieving information about existing products and updating the status of products as they move through the supply chain.
+In this `training step` we will learn how to implement a simple `Cosmos SDK` module. The module will be responsible for managing the state of fictitious supply chain, including adding new products, retrieving information about existing products and updating the status of products as they move through the supply chain.
+
+**Note**: this `training step` is the first exercise to use `multiple package definitions` in the code samples, abstractly the `Go` keyword `package` is just a `namespacing technique` that allow developers to partition their `program logic` in order to manage applications as they grow in size. Its important to understand that co-located `*.go` files who share the same `package namespace` will automatically be `linked` by the `Go` compiler, however if you want to use any other `package namespace` you will need to reference them via an import statement, e.g. `example.com/keeper`.
 
 ### Step 1: Create kata directory
 
@@ -101,84 +103,17 @@ type Product struct {
 }
 ```
 
-### Step #5: Create a file called `msgs.go`
+### Step #5: Create a file called `keeper.go`
 
-With our `Go` module initialized we can create a file for `custom msgs` used by our `module`:
-
-```bash
-cat > msgs.go
-```
-
-### Step 6: Implement a `custom msg`
-
-In the newly created `msgs.go` file we define a new `custom msg` named `AddProductMsg`:
-
-```go
-package msgs
-
-import (
-    "github.com/cosmos/cosmos-sdk/types"
-)
-
-type AddProductMsg struct {
-    //TODO: Implement AddProductMsg
-}
-```
-
-### Step #7: Create a file called `messagehandlers.go`
-
-Next we have to create a file for the `message handler` named `SimpleHandler`, which handles `AddProductMsg` messages:
-
-```bash
-cat > messagehandlers.go
-```
-
-### Step #8: Implement `SimpleHandler` for `AddProductMsg`
-
-Open up the new file and implement the `SimpleHandler` to handle `AddProductMsg` messages sent from clients to the `SimpleKeeper`:
-
-```go
-package keeper
-
-import (
-    "github.com/cosmos/cosmos-sdk/codec"
-    "github.com/cosmos/cosmos-sdk/types"
-)
-
-// Message handler for SimpleKeeper
-type SimpleHandler struct {
-    keeper SimpleKeeper
-}
-
-// Constructor for SimpleHandler
-func NewSimpleHandler(keeper SimpleKeeper) SimpleHandler {
-    return SimpleHandler{keeper: keeper}
-}
-
-// Implement message handler for AddProductMsg messages
-func (h SimpleHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) (types.Result, error) {
-    product := Product{
-        Name: msg.Name,
-        ID:   msg.ID,
-    }
-
-    h.keeper.AddProduct(ctx, product)
-
-    return types.NewResult(types.CodeOK, "product added"), nil
-}
-```
-
-### Step #9: Create a file called `keeper.go`
-
-The central piece of our "module puzzle" is the `keeper`. To prepare for its implementation we create a new file named `keeper.go`:
+With the most basic `custom types` in place we can proceed to implement the most critical piece of our `module puzzle`, the `SimpleKeeper`. To prepare for its implementation we create a new file named `keeper.go`:
 
 ```bash
 cat > keeper.go
 ```
 
-### Step #10: Implement `SimpleKeeper`
+### Step #6: Implement basic `SimpleKeeper`
 
-The module `keeper` is responsible for managing the module's state. For our simple module you might define a new struct called `SimpleKeeper` that includes functions for adding and retrieving `Product` instances, as follows:
+A modules `keeper` is responsible for managing the modules `state`. For our simple module you might define a new struct called `SimpleKeeper` that includes functions for adding and retrieving `Product` instances from the underlying `KVStore` that is used to persist the modules `state`:
 
 ```go
 package keeper
@@ -224,7 +159,93 @@ func (sk SimpleKeeper) GetProduct(ctx types.Context, id types.HexBytes) (Product
 }
 ```
 
-### Step #11: Create a file called `genesis.go`
+
+### Step #7: Create a file called `msgs.go`
+
+With our `keeper` in place we can now start implementing the [`data transfer objects`](https://martinfowler.com/eaaCatalog/dataTransferObject.html), aka `custom msgs`, used by our modules `client API` when L2 `dapps` interface with the blockchain:
+
+```bash
+cat > msgs.go
+```
+
+### Step #8: Implement a `custom msg`
+
+In the newly created `msgs.go` file we define a new `custom msg` named `AddProductMsg`:
+
+```go
+package msgs
+
+import (
+    "github.com/cosmos/cosmos-sdk/types"
+)
+
+type AddProductMsg struct {
+    //TODO: Implement AddProductMsg
+}
+```
+
+### Step #9: Create a file called `handler.go`
+
+Next we have to create a file for our `message handler,` which folows a basic [`message handler design pattern`](https://www.oreilly.com/library/view/j2ee-design-patterns/0596004273/re43.html) and is responsible for responding to `AddProductMsg` messages from L2 `dapps`:
+
+```bash
+cat > handler.go
+```
+
+### Step #10: Implement `SimpleHandler`
+
+Open up the new file and implement the code neccessary to handle `AddProductMsg` messages sent from L2 `dapps` to the `SimpleKeeper`:
+
+```go
+package keeper
+
+import (
+    "github.com/cosmos/cosmos-sdk/codec"
+    "github.com/cosmos/cosmos-sdk/types"
+)
+
+// Message handler for SimpleKeeper
+type SimpleHandler struct {
+    keeper SimpleKeeper
+}
+
+// Constructor for SimpleHandler
+func NewSimpleHandler(keeper SimpleKeeper) SimpleHandler {
+    return SimpleHandler{keeper: keeper}
+}
+
+// Implement message handler for AddProductMsg messages
+func (h SimpleHandler) AddProductMsg(ctx types.Context, msg AddProductMsg) (types.Result, error) {
+    product := Product{
+        Name: msg.Name,
+        ID:   msg.ID,
+    }
+
+    h.keeper.AddProduct(ctx, product)
+
+    return types.NewResult(types.CodeOK, "product added"), nil
+}
+```
+
+### Step #11: Create a file called `querier.go`
+
+Next we have to create a file for our `querier` to handle inbound `queries` from L2 `dapps`:
+
+```bash
+cat > querier.go
+```
+
+### Step #12: Implement `SimpleQuerier`
+
+Open up the new file and implement the code neccessary to handle `queries` sent from L2 `dapps` to the `SimpleKeeper`:
+
+```go
+package querier
+
+//TODO
+```
+
+### Step #13: Create a file called `genesis.go`
 
 TODO:
 
@@ -232,15 +253,17 @@ TODO:
 cat > genesis.go
 ```
 
-### Step #12: Implement `genesis.go`
+### Step #14: Implement `genesis.go`
 
 TODO:
 
 ```go
+package simple
+
 //TODO
 ```
 
-### Step #13: Create a file called `module.go`
+### Step #15: Create a file called `module.go`
 
 TODO:
 
@@ -248,27 +271,13 @@ TODO:
 cat > module.go
 ```
 
-### Step #14: Implement `module.go`
+### Step #16: Implement `module.go`
 
 TODO:
 
 ```go
-//TODO
-```
+package simple
 
-### Step #15: Create a file called `app.go`
-
-TODO:
-
-```bash
-cat > module.go
-```
-
-### Step #16: Implement `app.go`
-
-TODO:
-
-```go
 //TODO
 ```
 
