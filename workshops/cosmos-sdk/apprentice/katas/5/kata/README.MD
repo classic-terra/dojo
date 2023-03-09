@@ -215,7 +215,7 @@ cat > main.go
 
 ### Step 10: Implement simple program
 
-Initialize a new instance of our SupplyChainKeeper in the `main.go` file, add a few products to its KVStore and fetch the `Product` with id `123`:
+Initialize a new instance of our `SupplyChainKeeper` in the `main.go` file, add a few products to its KVStore and fetch the `Product` with id `123`:
 
 ```go
 package main
