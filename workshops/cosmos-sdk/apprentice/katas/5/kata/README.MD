@@ -59,7 +59,7 @@ mkdir kata5
 cd kata5
 ```
 
-### Step #2: Initialize go module
+### Step #2: Initialize `Go` module
 
 Now we want to initialize a new `Go` module, add required `package redirects` and fetch `Cosmos SDK v0.45.12`
 

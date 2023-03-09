@@ -31,7 +31,7 @@ Protocol Buffer 4.0 is the latest version of the protocol buffer specification, 
 
 ## Exercise
 
-In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 3.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for target programming language, `Go`.
+In this `training step`, we will learn how to define a simple message contract using Protocol Buffer 3.0 syntax in a `.proto` file. Which we will then compile using the Protocol Buffer compiler (`protoc`) to generate code for our target programming language, `Go`.
 
 After generating the code, we will write a small program that can use our new message contract to create message a instance, set its fields, and serialize it to a byte stream using the `proto.Marshal()` method and subsequently deserialize it back to another message instance via `proto.Unmarshal()`.
 
@@ -44,7 +44,7 @@ mkdir kata1
 cd kata1
 ```
 
-### Step #2: Initialize go module
+### Step #2: Initialize `Go` module
 
 Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
 
