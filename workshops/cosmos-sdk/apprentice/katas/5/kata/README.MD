@@ -48,9 +48,9 @@ Overall, modules in `Cosmos SDK` provide a modular and extensible architecture f
 
 ## Exercise
 
-In this `training step` we will learn how to implement a simple `Cosmos SDK` module. The module will be responsible for managing the state of fictitious supply chain, including adding new products, retrieving information about existing products and updating the status of products as they move through the supply chain.
+In this `training step` we will learn how to implement a simple `Cosmos SDK` module. The module will be responsible for managing the state of a fictitious supply chain, including adding new products and retrieving information about existing products as they move through the supply chain.
 
-**Note**: this `training step` is the first exercise to use `multiple package definitions` in the code samples, abstractly the `Go` keyword `package` is just a `namespacing technique` that allow developers to partition their `program logic` in order to manage applications as they grow in size. Its important to understand that co-located `*.go` files who share the same `package namespace` will automatically be `linked` by the `Go` compiler, however if you want to use any other `package namespace` you will need to reference them via an import statement, e.g. `modules/x/simple/types`.
+**Note**: this `training step` is the first exercise to use `multiple package definitions` in the code samples, abstractly the `Go` keyword `package` is just a `namespacing technique` that allow developers to partition their `codebase` in order to manage applications as they grow in size. Its important to understand that co-located `*.go` files who share the same `package` will automatically be `linked` by the `Go` compiler, however if you want to use any other `package` you will need to reference them via an import statement, e.g. `modules/x/simple/types`.
 
 ### Step 1: Create kata directory
 
@@ -63,13 +63,19 @@ cd kata5
 
 ### Step 2: Create `protobuf` message contract
 
-Before we begin implementing any `Go` code we first have to create the `protobuf` message contract we need for our `SimpleKeeper` to persist data to its underlying `KVStore`. One thing to keep in mind here is the `Cosmos SDK` uses a customized version of the `protobuf` tooling so we will need to go through a few `knee-jerk exercises` to get our `Product` message contract off the ground. First we have to create a new file called `product.proto`:
+Before we can begin implementing our `Go` code program we first have to create the `protobuf` message contract we need for our `SimpleKeeper` to persist data to its underlying `KVStore`. One thing to keep in mind here is the `Cosmos SDK` uses a customized version of the `protobuf` tooling so we will need to go through a few `knee-jerk exercises` to get our `Product` message contract off the ground. First we have to create a directory structure for our `*.proto` files:
 
 ```bash
-mkdir proto && mkdir modules && mkdir simple && cat > proto/modules/simple/product.proto
+mkdir proto && cd proto && mkdir modules && cd modules && mkdir simple && cd simple
 ```
 
-Then we can add our `Product message contract`:
+Then we create a new file called `product.proto` inside the `simple` directory:
+
+```bash
+cat > product.proto
+```
+
+And proceed to fill in our `Product message contract`:
 
 ```text
 syntax = "proto3";
@@ -77,7 +83,7 @@ package modules;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "example.com/modules/x/simple/types";
+option go_package = "modules/x/simple/types";
 
 message Product {
   string identifier = 1;
@@ -86,18 +92,24 @@ message Product {
 }
 ```
 
-### Step 3: Setup `Cosmos  SDK protobuf` tooling
+To prepare for the next step we return to the root of the `kata5` directory:
 
-TODO:
+```bash
+cd ../../../
+```
+
+### Step 3: Setup `Buf` configuration files
+
+`Buf` is a tool for `protobuf` that simplifies the use of the complex `protoc` toolchain, along with other features that ensure adherence to the majority of the ecosystem's `protobuf` usage conventions. In this `training step` we will not go in-depth with how to use `Buf`, more information can be found [here](https://docs.cosmos.network/main/tooling/protobuf). For now we will simply proceed to add the required configuration files to our `toolchain` so we can get to the fun stuff, we start by creating a bunch of config files:
 
 ```bash
 cat > buf.work.yaml
-cat > proto/modules/simple/buf.yaml
-cat > proto/modules/simple/buf.gen.gogo.yaml
-cat > proto/modules/simple/buf.lock
+cat > proto/buf.yaml
+cat > proto/buf.gen.gogo.yaml
+cat > proto/buf.lock
 ```
 
-TODO buf.work.yaml:
+Then we fill out `buf.work.yaml`:
 
 ```text
 version: v1
@@ -105,7 +117,7 @@ directories:
   - proto
 ```
 
-TODO buf.yaml:
+And `buf.yaml`:
 
 ```text
 version: v1
@@ -118,7 +130,7 @@ plugins:
     opt: logtostderr=true,allow_colon_final_segments=true
 ```
 
-TODO buf.gen.gogo.yaml:
+And `buf.gen.gogo.yaml`:
 
 ```text
 version: v1
@@ -148,10 +160,9 @@ lint:
     - ENUM_VALUE_PREFIX
 ```
 
-TODO buf.lock:
+And finally `buf.lock`:
 
 ```text
-# Generated by buf. DO NOT EDIT.
 version: v1
 deps:
   - remote: buf.build
@@ -174,7 +185,7 @@ deps:
 
 ### Step 4: Create `makefile` for `Cosmos SDK` docker tooling
 
-TODO:
+For the last piece of plumbing in our `toolchain` we need to setup a simple `makefile` to run the `Cosmos SDK` docker tooling:
 
 ```text
 DOCKER := $(shell which docker)
@@ -182,36 +193,22 @@ CONTAINER_PROTO_VER=v0.7
 CONTAINER_PROTO_IMAGE=tendermintdev/sdk-proto-gen:$(CONTAINER_PROTO_VER)
 CONTAINER_PROTO_FMT=cosmos-sdk-proto-fmt-$(CONTAINER_PROTO_VER)
 
-proto-all: proto-format proto-lint proto-gen
+proto-all: proto-gen
 
 proto-gen:
 	@echo "Generating Protobuf files"
-	$(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace $(CONTAINER_PROTO_IMAGE) sh ./scripts/protocgen.sh
+	"$(DOCKER)" run --rm -v $(CURDIR):/workspace --workdir /workspace $(CONTAINER_PROTO_IMAGE) sh ./scripts/protocgen.sh
 
-proto-format:
-	@echo "Formatting Protobuf files"
-	@if docker ps -a --format '{{.Names}}' | grep -Eq "^${CONTAINER_PROTO_FMT}$$"; then docker start -a $(CONTAINER_PROTO_FMT); else docker run --name $(CONTAINER_PROTO_FMT) -v $(CURDIR):/workspace --workdir /workspace tendermintdev/docker-build-proto \
-		find ./proto -name "*.proto" -exec clang-format -i {} \; ; fi
-
-proto-swagger-gen:
-	@./scripts/protoc-swagger-gen.sh
-
-proto-lint:
-	@$(DOCKER_BUF) lint --error-format=json
-
-proto-check-breaking:
-	@$(DOCKER_BUF) breaking --against '$(HTTPS_GIT)#branch=main'
-
-.PHONY: proto-all proto-gen proto-swagger-gen proto-format proto-lint proto-check-breaking 
+.PHONY: proto-gen
 ```
 
-TODO:
+Then we create a shell script to manage the code generation process, like so:
 
 ```bash
 mkdir scripts && cat > scripts/protocgen.sh
 ```
 
-TODO:
+And complete it with some `bash magic`:
 
 ```bash
 #!/usr/bin/env sh
@@ -235,16 +232,18 @@ done
 cd ..
 
 # move proto files to the right places
-cp -r example.com/modules/* ./
-rm -rf example.com
+cp -r modules/* ./
+rm -rf modules
 ```
+
+And voila, now our `toolchain` is complete and ready for use!
 
 ### Step #5: Initialize `Go` module
 
-Now we want to initialize a new `Go` module, add required `package redirects` and fetch `Cosmos SDK v0.45.12`
+With our `toolchain`  in place we can begin the real fun by initialize a new `Go` module, adding the required `package redirects` and fetching `Cosmos SDK v0.45.12`
 
 ```bash
-go mod init example.com/modules
+go mod init modules
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
@@ -253,124 +252,17 @@ go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
 
-### Step #6: Create a file called `types.go`
+### Step #6: Create a file called `module.go`
 
-With our `Go` module initialized we can create a file for `custom types` used by our `module`:
-
-```bash
-mkdir types && cat > types/types.go
-```
-
-### Step ¤7: Implement `custom types`
-
-In the newly created `types.go` file we basic `custom types` & `functions` for our module:
-
-```go
-package types
-
-const (
-	// ModuleName is the module name of the simple module
-	ModuleName = "simple"
-
-	// StoreKey is the KVStore identifier for the simple module
-	StoreKey = ModuleName
-
-	// RouterKey is the message route for the simple module
-	RouterKey = ModuleName
-
-	// QuerierRoute is the querier route for the simple module
-	QuerierRoute = ModuleName
-)
-
-var (
-	// Keys for store prefixes
-	ProductKey = []byte{0x01} // a key for a product
-)
-
-// GetProductKey - stored by *identifier* is used to marshal and unmarshal product identifiers
-func GetProductKey(identifier string) []byte {
-	return append(ProductKey, []byte(identifier)...)
-}
-```
-
-TODO:
-
-```bash
-make proto-gen
-```
-
-### Step #8: Create a file called `keeper.go`
-
-With our `custom types` in place we can proceed to implement the most critical piece of our `module puzzle`, the `SimpleKeeper`. To prepare for its implementation we create a new file named `keeper.go`:
-
-```bash
-mkdir keeper && cat > keeper/keeper.go
-```
-
-### Step #9: Implement basic `SimpleKeeper`
-
-A modules `keeper` is responsible for managing the modules `state`. For our simple module you might define a new struct called `SimpleKeeper` that includes functions for adding and retrieving `Product` instances from the underlying `KVStore` that is used to persist the modules `state`:
-
-```go
-package keeper
-
-//Define required imports
-import (
-	types "modules/x/simple/types"
-
-	"github.com/cosmos/cosmos-sdk/codec"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-)
-
-// SimpleKeeper is the keeper for our simple module
-type SimpleKeeper struct {
-	storeKey sdk.StoreKey
-	cdc      codec.BinaryCodec
-}
-
-// Constructor for SimpleKeeper
-func NewSimpleKeeper(storeKey sdk.StoreKey, cdc codec.BinaryCodec) SimpleKeeper {
-	return SimpleKeeper{
-		storeKey: storeKey,
-		cdc:      cdc,
-	}
-}
-
-// Add a product to SimpleKeeper
-func (sk SimpleKeeper) AddProduct(ctx sdk.Context, product types.Product) {
-	store := ctx.KVStore(sk.storeKey)
-	bz := sk.cdc.MustMarshal(&product)
-	store.Set(types.GetProductKey(product.Identifier), bz)
-}
-
-// Get a product from SimpleKeeper
-func (sk SimpleKeeper) GetProduct(ctx sdk.Context, identifier string) types.Product {
-	store := ctx.KVStore(sk.storeKey)
-	key := types.GetProductKey(identifier)
-	if !store.Has(key) {
-		return types.Product{}
-	}
-
-	var product types.Product
-	bz := store.Get(key)
-	sk.cdc.MustUnmarshal(bz, &product)
-
-	return product
-}
-
-```
-
-### Step #10: Create a file called `module.go`
-
-TODO:
+Next we create `module.go` to hold our `AppModule` logic:
 
 ```bash
 cat > module.go
 ```
 
-### Step #11: Implement `simple` module
+### Step #7: Implement `simple` module
 
-TODO:
+Then we implement a `barebones AppModule`, which we will extend upon in the `Path of the Journeyman`:
 
 ```go
 package simple
@@ -568,9 +460,110 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 }
 ```
 
+### Step #8: Create a file called `types.go`
+
+With the `module` implemented we can create a file for the `custom types` it needs:
+
+```bash
+mkdir types && cat > types/types.go
+```
+
+### Step #9: Implement `custom types`
+
+In the newly created `types.go` file we add some basic `custom types` & `functions` for our module:
+
+```go
+package types
+
+const (
+	// ModuleName is the module name of the simple module
+	ModuleName = "simple"
+
+	// StoreKey is the KVStore identifier for the simple module
+	StoreKey = ModuleName
+
+	// RouterKey is the message route for the simple module
+	RouterKey = ModuleName
+
+	// QuerierRoute is the querier route for the simple module
+	QuerierRoute = ModuleName
+)
+
+var (
+	// Keys for store prefixes
+	ProductKey = []byte{0x01} // a key for a product
+)
+
+// GetProductKey - stored by *identifier* is used to marshal and unmarshal product identifiers
+func GetProductKey(identifier string) []byte {
+	return append(ProductKey, []byte(identifier)...)
+}
+```
+
+### Step #10: Create a file called `keeper.go`
+
+Then we proceed to implement the most critical piece of our `module puzzle`, the `SimpleKeeper`. To prepare for its implementation we create a new file named `keeper.go`:
+
+```bash
+mkdir keeper && cat > keeper/keeper.go
+```
+
+### Step #11: Implement basic `SimpleKeeper`
+
+A modules `keeper` is responsible for managing the modules `state`. For our simple module you might define a new struct called `SimpleKeeper` that includes functions for adding and retrieving `Product` instances from the underlying `KVStore` that is used to persist the modules `state`:
+
+```go
+package keeper
+
+//Define required imports
+import (
+	types "modules/x/simple/types"
+
+	"github.com/cosmos/cosmos-sdk/codec"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+)
+
+// SimpleKeeper is the keeper for our simple module
+type SimpleKeeper struct {
+	storeKey sdk.StoreKey
+	cdc      codec.BinaryCodec
+}
+
+// Constructor for SimpleKeeper
+func NewSimpleKeeper(storeKey sdk.StoreKey, cdc codec.BinaryCodec) SimpleKeeper {
+	return SimpleKeeper{
+		storeKey: storeKey,
+		cdc:      cdc,
+	}
+}
+
+// Add a product to SimpleKeeper
+func (sk SimpleKeeper) AddProduct(ctx sdk.Context, product types.Product) {
+	store := ctx.KVStore(sk.storeKey)
+	bz := sk.cdc.MustMarshal(&product)
+	store.Set(types.GetProductKey(product.Identifier), bz)
+}
+
+// Get a product from SimpleKeeper
+func (sk SimpleKeeper) GetProduct(ctx sdk.Context, identifier string) types.Product {
+	store := ctx.KVStore(sk.storeKey)
+	key := types.GetProductKey(identifier)
+	if !store.Has(key) {
+		return types.Product{}
+	}
+
+	var product types.Product
+	bz := store.Get(key)
+	sk.cdc.MustUnmarshal(bz, &product)
+
+	return product
+}
+```
+
+
 ### Step #12: Create a file called `main.go`
 
-Finally we can test out our new module by creating a simple program:
+To round off our `Go` coding session we create a file called `main.go` to utilize our new module:
 
 ```bash
 cat > main.go
@@ -578,7 +571,7 @@ cat > main.go
 
 ### Step #13: Implement simple program
 
-Initialize a new instance of our `SimpleKeeper` in the `main.go` file, add a products to its KVStore and fetch it with id `123`:
+Then we implement the program logic required to initialize a new instance of the modules `SimpleKeeper`, add a products to its `KVStore`, fetch it again via its identifier and print the information to the `console`:
 
 ```go
 package main
@@ -647,7 +640,15 @@ func main() {
 }
 ```
 
-### Step #19: Run `go mod tidy`
+### Step #14: Run `make proto-gen`
+
+Now we just have to use our `toolchain` to let the `Cosmos SDK` docker tooling do its thing and produce a `Product` struct that is compatible with our chosen `codec`:
+
+```bash
+make proto-gen
+```
+
+### Step #15: Run `go mod tidy`
 
 To clean up our `dependency graph` and fetch any missing packages we have to run the `go mod tidy` command:
 
@@ -655,7 +656,7 @@ To clean up our `dependency graph` and fetch any missing packages we have to run
 go mod tidy
 ```
 
-### Step #20: Build executable
+### Step #16: Build executable
 
 Build a new `Go` binary based on our custom module logic:
 
@@ -663,7 +664,7 @@ Build a new `Go` binary based on our custom module logic:
 go build
 ```
 
-### Step #21: Run executable
+### Step #17: Run executable
 
 Lastly we can run our new `Go` program with the following command:
 

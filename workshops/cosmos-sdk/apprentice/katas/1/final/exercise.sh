@@ -6,7 +6,7 @@ mkdir kata1
 cd kata1
 
 #Initialize a new go module
-go mod init example.com/proto
+go mod init proto
 
 #Install package dependencies
 go get google.golang.org/protobuf/proto

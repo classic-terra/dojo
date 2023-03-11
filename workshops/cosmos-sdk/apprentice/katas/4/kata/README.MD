@@ -50,7 +50,7 @@ cd kata4
 Now we want to initialize a new `Go` module, add required `package redirects` and fetch `Cosmos SDK v0.45.12`:
 
 ```bash
-go mod init example.com/queries
+go mod init queries
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0

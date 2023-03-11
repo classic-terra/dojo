@@ -49,7 +49,7 @@ cd kata1
 Now we want to initialize a new `Go` module and install the packages needed for code-generation with our `.proto` files:
 
 ```bash
-go mod init example.com/proto
+go mod init proto
 go get google.golang.org/protobuf/proto@latest
 go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
@@ -61,7 +61,7 @@ Next we create a simple message contract in a file called `person.proto`, e.g:
 
 ```bash
 PROTO_MSG="syntax = \"proto3\";
-option go_package = \"example.com/proto/main\";
+option go_package = \"proto/main\";
 
 message Person {
   string name = 1;

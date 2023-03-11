@@ -6,7 +6,7 @@ mkdir kata3
 cd kata3
 
 #Initialize a new go module
-go mod init example.com/messages
+go mod init messages
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
