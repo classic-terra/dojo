@@ -621,10 +621,10 @@ func main() {
 	//Create new interface registry
 	ir := codectypes.NewInterfaceRegistry()
 
-	//Get simapp encoding configuration
+	//Create new proto codec
 	cdc := codec.NewProtoCodec(ir)
 
-	//Initialize new keeper with store key and marshaler
+	//Initialize new keeper with store key and codex
 	keeper := keeper.NewSimpleKeeper(storeKey, cdc)
 
 	//Create new product instance
