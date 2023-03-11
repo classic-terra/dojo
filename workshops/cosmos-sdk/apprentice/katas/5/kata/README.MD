@@ -389,7 +389,7 @@ func (am AppModule) NewHandler() sdk.Handler {
 // QuerierRoute returns the module's querier route name.
 func (am AppModule) QuerierRoute() string { return am.Name() }
 
-// LegacyQuerierHandler returns the treasury module sdk.Querier.
+// LegacyQuerierHandler returns the module sdk.Querier.
 func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	//We will show how to implement this logic in the Path of the Journeyman
 	return nil
@@ -400,14 +400,14 @@ func (am AppModule) RegisterServices(cfg module.Configurator) {
 	//We will show how to implement this logic in the Path of the Journeyman
 }
 
-// InitGenesis performs genesis initialization for the treasury module. It returns
+// InitGenesis performs genesis initialization for the module. It returns
 // no validator updates.
 func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, data json.RawMessage) []abci.ValidatorUpdate {
 	//We will show how to implement this logic in the Path of the Journeyman
 	return nil
 }
 
-// ExportGenesis returns the exported genesis state as raw bytes for the treasury
+// ExportGenesis returns the exported genesis state as raw bytes for the
 // module.
 func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONCodec) json.RawMessage {
 	//We will show how to implement this logic in the Path of the Journeyman
@@ -417,10 +417,10 @@ func (am AppModule) ExportGenesis(ctx sdk.Context, cdc codec.JSONCodec) json.Raw
 // ConsensusVersion implements AppModule/ConsensusVersion.
 func (AppModule) ConsensusVersion() uint64 { return 1 }
 
-// BeginBlock returns the begin blocker for the treasury module.
+// BeginBlock returns the begin blocker for the module.
 func (am AppModule) BeginBlock(ctx sdk.Context, req abci.RequestBeginBlock) {}
 
-// EndBlock returns the end blocker for the treasury module.
+// EndBlock returns the end blocker for the module.
 func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.ValidatorUpdate {
 	//We will show how to implement this logic in the Path of the Journeyman
 	return nil
@@ -430,7 +430,7 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 
 // AppModuleSimulation functions used by sim operations in Cosmos SDK
 
-// GenerateGenesisState creates a randomized GenState of the distribution module.
+// GenerateGenesisState creates a randomized GenState of the module.
 func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	//We will show how to implement this logic in the Path of the Journeyman
 }
