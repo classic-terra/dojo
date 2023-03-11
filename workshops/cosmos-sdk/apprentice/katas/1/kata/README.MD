@@ -144,7 +144,7 @@ Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions 
 
 The architectural pattern of Protocol Buffers is based on a client-server model, where the client and server use Protocol Buffers to communicate with each other. The server defines the `.proto` file that defines the data structure, and the client uses the generated code to serialize and deserialize the data that is transmitted over the network. This makes it a powerful tool for efficient inter-process communication and data storage.
 
-`Cosmos SDK` currently target Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version in this `training step` and in the process demonstrate that the `latest` version of `protoc` works with older schemas such as the one targeted in our code kata.
+`Cosmos SDK` currently targets a modified version of Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version in this `training step` and in the process demonstrate that the `latest` version of `protoc` works with older schemas such as the one targeted in our code kata.
 
 ## Want to help make our training material better?
 
