@@ -419,7 +419,7 @@ func (AppModuleBasic) RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 
 // RegisterInterfaces registers the module's interface types
 func (b AppModuleBasic) RegisterInterfaces(registry codectypes.InterfaceRegistry) {
-	registry.RegisterInterface("types.Animal",
+	registry.RegisterInterface("types.Product",
 		(*types.Product)(nil),
 		&types.Product{},
 	)
