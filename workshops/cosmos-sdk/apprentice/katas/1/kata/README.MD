@@ -55,9 +55,19 @@ go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
+The above CLI commands are used to setup up our `Go` module for working with protocol buffers and gRPC. Here's what each command does:
+
+- `go mod init proto`: Initializes a new Go module named `proto` in the current directory. This command creates a `go.mod` file, which is used to manage dependencies for the module.
+
+- `go get google.golang.org/protobuf/proto@latest`: Downloads the latest version of the `proto` package from the `google.golang.org/protobuf` module and adds it as a dependency to the current module. The proto package provides support for working with protocol buffers in Go.
+
+- `go get google.golang.org/protobuf/cmd/protoc-gen-go@latest`: Downloads the latest version of the `protoc-gen-go` CLI from the `google.golang.org/protobuf` module and installs it in the bin directory of your `$GOPATH`. This tool is used to generate Go code from protocol buffer definitions.
+
+- `go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest`: Downloads the latest version of the `protoc-gen-go-grpc` cLI from the `google.golang.org/grpc` module and installs it in the bin directory of your `$GOPATH`. This tool is used to generate Go code for gRPC servers and clients from protocol buffer definitions.
+
 ### Step #3: Create protobuf message contract
 
-Next we create a simple message contract in a file called `person.proto`, e.g:
+To create a simple message contract, we can create a file named `person.proto` and add the following content:
 
 ```bash
 PROTO_MSG="syntax = \"proto3\";
@@ -72,6 +82,8 @@ message Person {
 echo "$PROTO_MSG" > person.proto
 ```
 
+Our new `message contract` defines a Protocol Buffer message named `Person` with three fields: `name`, `age`, and `hobbies`. The `option go_package = "proto/main";` statement specifies the `Go` package name for the generated code. In this case, the generated `Go` code will be placed in the `proto` directory under the `main` package.
+
 ### Step #4: Generate Go code
 
 With our `person.proto` file in place we can now use the `protoc` CLI to generate the `Go` code for our message contract:
@@ -84,7 +96,7 @@ This will generate a file called `person.pb.go` in the current directory that co
 
 ### Step #5: Utilize the new message contract
 
-Now, you can use the generated code to create and serialize `Person` messages:
+After generating the `Go` code from the `person.proto` file, you can use it to create and serialize `Person` messages. Here is an example `Go` program that creates a `Person` message, marshals it into a binary format, and then unmarshals the binary data back into a new `Person` object:
 
 ```go
 package main
@@ -120,7 +132,7 @@ func main() {
 }
 ```
 
-Once your satisfied with the implementing save the code to a file named `main.go`.
+Once you are satisfied with the implementation, you can save the code to a file named `main.go`.
 
 ### Step #6: Build executable
 

@@ -18,30 +18,28 @@ To accomplish this task we break `Cosmos SDK` into individual `learning paths` w
 The Terra Classic L1 Task Force `Cosmos SDK` dojo consist of four major `learning paths`, which when broken down into `training steps` result in the following literacy curriculum:
 
 ### Path of the Apprentice
-- [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata) - learn about the language-agnostic data serialization format developed by Google.
-- [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata) - try to create a simple `Cosmos SDK` transaction.
-- [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata) - examine how messages work in `Cosmos SDK`.
-- [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata) - try your very first query using `Cosmos SDK`.
-- [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata) - explore existing `Cosmos SDK` modules, their structure & internals.
+- [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata) (Beta)
+- [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata) (Beta)
+- [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata) (Beta)
+- [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata) (Beta)
+- [Modules](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/5/kata) (Beta)
 
 ### Path of the Journeyman
-- [AnteHandlers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/1/kata)
-- [BaseApp](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/2/kata)
-- [AppIntegration](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/3/kata)
-- [Keepers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/4/kata)
-- Keepers > [Types](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata)
-- Keepers > Params
-- Keepers > [Genesis](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/6/kata)
-- Keepers > Querier
-- Keepers > [Client](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/7/kata)
-- Keepers > Simulation
-- Keepers > Wasm
+- [AnteHandlers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/1/kata) (Pending)
+- [BaseApp](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/2/kata) (Pending)
+- [AppIntegration](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/3/kata) (Pending)
+- [Keepers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/4/kata) (Pending)
+- Keepers > [Types](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata) (Pending)
+- Keepers > [Genesis](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/6/kata) (Pending)
+- Keepers > [Client](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/7/kata) (Pending)
+- Keepers > [Simulation](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/8/kata) (Pending)
 
 ### Path of the Expert
-- [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata)
-- [Context](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/2/kata)
-- [Migrations](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/3/kata)
-- [Bridges](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/4/kata)
+- [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata) (Pending)
+- [Context](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/2/kata) (Pending)
+- [Migrations](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/3/kata) (Pending)
+- [Bridges](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/4/kata) (Pending)
+- [Wasm](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata) (Pending)
 
 ### Path of the Cosmonaut
 - [IBC](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/1/kata)
