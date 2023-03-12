@@ -59,6 +59,24 @@ go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
 
+Here is a step-by-step breakdown of what each command does:
+
+`go mod init transactions` initializes a new Go module named `messages`. This command creates a `go.mod` file in the current directory that contains metadata about the module and its dependencies.
+
+`go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0` adds a package redirect to the `go.mod` file. This command replaces any occurrence of the package `github.com/99designs/keyring` with `github.com/cosmos/keyring@v1.2.0`. Package redirects can be used to override the default version of a package that is fetched by `Go` modules.
+
+`go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2` adds another package redirect to the `go.mod` file. This command replaces any occurrence of the package `github.com/dgrijalva/jwt-go` with `github.com/golang-jwt/jwt/v4@v4.4.2`.
+
+`go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0` adds a package redirect for `github.com/gin-gonic/gin`. This command replaces any occurrence of the package `github.com/gin-gonic/gin` with `github.com/gin-gonic/gin@v1.7.0`.
+
+`go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/protobuf`. This command replaces any occurrence of the package `github.com/gogo/protobuf` with `github.com/regen-network/protobuf@v1.3.3-alpha.regen.1`.
+
+`go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0` adds a package redirect for `github.com/jhump/protoreflect`. This command replaces any occurrence of the package `github.com/jhump/protoreflect` with `github.com/jhump/protoreflect@v1.9.0`.
+
+`go get github.com/cosmos/cosmos-sdk@v0.45.12` fetches a specific version of the `Cosmos SDK` (v0.45.12) and adds it as a dependency to the `go.mod` file.
+
+Overall, these commands are used to set up a Go module with the necessary dependencies, including package redirects that ensure that the correct version of each package is used.
+
 ### Step #3: Create a file called `main.go`
 
 Then we have to create a file for our program:
@@ -85,6 +103,13 @@ import (
 )
 ```
 
+- `context` is used for managing context across API boundaries.
+- `fmt` is used for formatting and printing output.
+- `os` provides a platform-independent interface for interacting with the operating system.
+- `github.com/cosmos/cosmos-sdk/client` contains modules to create and sign transactions for Cosmos SDK-based blockchains.
+- `github.com/cosmos/cosmos-sdk/simapp` contains an example Cosmos SDK application for simulation testing.
+- `github.com/cosmos/cosmos-sdk/types` contains the core data types for the Cosmos SDK.
+
 ### Step #5: Add empty main() method
 
 Then create an empty method body below the import statement:
@@ -109,6 +134,12 @@ sdk.GetConfig().SetBech32PrefixForAccount("terra", "terrapub")
 encodingConfig := simapp.MakeTestEncodingConfig()
 ```
 
+The first line of code creates a new background context, but does not save the context anywhere.
+
+The second line sets the Bech32 prefix for account addresses and public keys. Bech32 is a format for encoding and decoding addresses in the `Cosmos SDK`.
+
+The third line creates an encoding configuration for the simulation application (simapp) using the `MakeTestEncodingConfig()` function from the `Cosmos SDK`. The encoding configuration is used to encode and decode data structures in the simapp.
+
 ### Step #7: Configure nodeClient & clientContext
 
 Now that we have our basic configuration in place and the keyring is populated with a `dummy account` we can proceed to configure the client our `Go` program will use to communicate with the blockchain:
@@ -132,6 +163,18 @@ clientCtx := client.Context{}.
 	WithSignModeStr("SIGN_MODE_UNSPECIFIED").
 	WithBroadcastMode("block")
 ```
+
+This code creates a new account in the keyring, which is a collection of keys that can be used to sign transactions. The account is created using the `NewAccount` method of a keyring object (kr) and the following parameters:
+
+- `"localkey"`: The name of the account to create.
+
+- `testdata.TestMnemonic`: The mnemonic phrase to use for generating the key.
+
+- `keyring.DefaultBIP39Passphrase`: The passphrase to use for generating the key. This is the default passphrase used in the `Cosmos SDK`.
+
+- `sdk.FullFundraiserPath`: The derivation path to use for generating the key. This path is used in the `Cosmos SDK` to generate keys for accounts in the fundraiser testnet.
+
+- `hd.Secp256k1`: The cryptographic algorithm to use for generating the key. In this case, the key is generated using the `secp256k1 elliptic curve`.
 
 ### Step #8: QueryWithData and deserialize response
 

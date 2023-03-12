@@ -59,6 +59,24 @@ go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
 
+Here is a step-by-step breakdown of what each command does:
+
+`go mod init transactions` initializes a new Go module named `messages`. This command creates a `go.mod` file in the current directory that contains metadata about the module and its dependencies.
+
+`go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0` adds a package redirect to the `go.mod` file. This command replaces any occurrence of the package `github.com/99designs/keyring` with `github.com/cosmos/keyring@v1.2.0`. Package redirects can be used to override the default version of a package that is fetched by `Go` modules.
+
+`go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2` adds another package redirect to the `go.mod` file. This command replaces any occurrence of the package `github.com/dgrijalva/jwt-go` with `github.com/golang-jwt/jwt/v4@v4.4.2`.
+
+`go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0` adds a package redirect for `github.com/gin-gonic/gin`. This command replaces any occurrence of the package `github.com/gin-gonic/gin` with `github.com/gin-gonic/gin@v1.7.0`.
+
+`go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/protobuf`. This command replaces any occurrence of the package `github.com/gogo/protobuf` with `github.com/regen-network/protobuf@v1.3.3-alpha.regen.1`.
+
+`go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0` adds a package redirect for `github.com/jhump/protoreflect`. This command replaces any occurrence of the package `github.com/jhump/protoreflect` with `github.com/jhump/protoreflect@v1.9.0`.
+
+`go get github.com/cosmos/cosmos-sdk@v0.45.12` fetches a specific version of the `Cosmos SDK` (v0.45.12) and adds it as a dependency to the `go.mod` file.
+
+Overall, these commands are used to set up a Go module with the necessary dependencies, including package redirects that ensure that the correct version of each package is used.
+
 ### Step #3: Create a file called `main.go`
 
 Then we have to create a file for our program:
@@ -91,6 +109,21 @@ import (
 )
 ```
 
+Our import section includes packages necessary to create and sign a transaction on the `Cosmos SDK` blockchain. Here's a brief explanation of each package:
+
+- `context` is used for managing context across API boundaries.
+- `fmt` is used for formatting and printing output.
+- `os` provides a platform-independent interface for interacting with the operating system.
+- `github.com/cosmos/cosmos-sdk/client` contains modules to create and sign transactions for Cosmos SDK-based blockchains.
+- `github.com/cosmos/cosmos-sdk/client/tx` contains functions to build and broadcast transactions.
+- `github.com/cosmos/cosmos-sdk/crypto/hd` contains functions to derive hierarchical deterministic (HD) keys.
+- `github.com/cosmos/cosmos-sdk/crypto/keyring` provides a keyring for managing keys for signing transactions.
+- `github.com/cosmos/cosmos-sdk/testutil/testdata` contains test data for unit tests.
+- `github.com/cosmos/cosmos-sdk/simapp` contains an example Cosmos SDK application for simulation testing.
+- `github.com/cosmos/cosmos-sdk/types` contains the core data types for the Cosmos SDK.
+- `github.com/cosmos/cosmos-sdk/types/tx/signing` contains types and functions for transaction signing.
+- `github.com/cosmos/cosmos-sdk/x/bank/types` contains types for the Cosmos SDK bank module.
+
 ### Step #5: Add empty main() method
 
 Then create an empty method body below the import statement:
@@ -115,6 +148,11 @@ sdk.GetConfig().SetBech32PrefixForAccount("terra", "terrapub")
 encodingConfig := simapp.MakeTestEncodingConfig()
 ```
 
+The first line of code creates a new background context, but does not save the context anywhere.
+
+The second line sets the Bech32 prefix for account addresses and public keys. Bech32 is a format for encoding and decoding addresses in the `Cosmos SDK`.
+
+The third line creates an encoding configuration for the simulation application (simapp) using the `MakeTestEncodingConfig()` function from the `Cosmos SDK`. The encoding configuration is used to encode and decode data structures in the simapp.
 
 ### Step #7: Configure an InMemory keyring
 
@@ -126,6 +164,18 @@ kr := keyring.NewInMemory()
 
 kr.NewAccount("localkey", testdata.TestMnemonic, keyring.DefaultBIP39Passphrase, sdk.FullFundraiserPath, hd.Secp256k1)
 ```
+
+This code creates a new account in the keyring, which is a collection of keys that can be used to sign transactions. The account is created using the `NewAccount` method of a keyring object (kr) and the following parameters:
+
+- `"localkey"`: The name of the account to create.
+
+- `testdata.TestMnemonic`: The mnemonic phrase to use for generating the key.
+
+- `keyring.DefaultBIP39Passphrase`: The passphrase to use for generating the key. This is the default passphrase used in the `Cosmos SDK`.
+
+- `sdk.FullFundraiserPath`: The derivation path to use for generating the key. This path is used in the `Cosmos SDK` to generate keys for accounts in the fundraiser testnet.
+
+- `hd.Secp256k1`: The cryptographic algorithm to use for generating the key. In this case, the key is generated using the `secp256k1 elliptic curve`.
 
 ### Step #8: Configure nodeClient & clientContext
 
@@ -151,6 +201,24 @@ clientCtx := client.Context{}.
 	WithSignModeStr("SIGN_MODE_UNSPECIFIED").
 	WithBroadcastMode("block")
 ```
+
+This code creates a new client context that is used to interact with the `Cosmos SDK` node. The context is created using the `client.Context` struct and the following methods:
+
+- `WithInterfaceRegistry(encodingConfig.InterfaceRegistry)`: Set the interface registry used for decoding protobuf messages.
+
+- `WithTxConfig(encodingConfig.TxConfig)`: Set the transaction configuration used for building and signing transactions.
+
+- `WithLegacyAmino(encodingConfig.Amino)`: Set the codec used for serializing and deserializing messages in the legacy amino format. The legacy amino codec is part of the EncodingConfig object created earlier.
+
+- `WithCodec(encodingConfig.Marshaler)`: Set the codec used for serializing and deserializing messages in the new binary format. The new codec is part of the EncodingConfig object created earlier.
+
+- `WithKeyring(kr)`: Set the keyring object that holds the accounts used for signing transactions.
+
+- `WithClient(nodeClient)`: Set the node client object that is used to connect to the Cosmos SDK node.
+
+- `WithChainID("columbus-5")`: Set the chain ID of the Cosmos SDK network that we are interacting with.
+
+- `WithSignModeStr("SIGN_MODE_UNSPECIFIED")`: Set the signature mode used for signing transactions. In this case, we are using the default signature mode.
 
 ### Step #9: Initialize transaction builder
 
@@ -249,6 +317,22 @@ if err != nil {
 
 fmt.Printf("transaction sent: %s", res.TxHash)
 ```
+
+The above code signs the transaction using the private key of the sender, then encodes it and broadcasts it to the network using the client context.
+
+`tx.Factory{}` is used to create a new transaction factory with the following methods chained to it:
+
+-`WithKeybase(clientCtx.Keyring)`: sets the keybase used to sign the transaction to the one stored in the client context.
+
+-`WithSignMode(signing.SignMode_SIGN_MODE_UNSPECIFIED)`: sets the sign mode to SIGN_MODE_UNSPECIFIED.
+
+-`WithChainID(clientCtx.ChainID)`: sets the chain ID used to sign the transaction to the one stored in the client context.
+
+-`WithTxConfig(clientCtx.TxConfig)`: sets the transaction config used to sign the transaction to the one stored in the client context.
+
+After creating the transaction factory, `tx.Sign()` is called to sign the transaction using the private key of the `sender`. The true argument indicates that the transaction should be in "generate only" mode, meaning it should not be broadcasted yet.
+
+Next, the encoded transaction is broadcasted to the network using `clientCtx.BroadcastTx()`. The resulting transaction hash is printed to the console if the broadcast was successful.
 
 ### Step #12: Run `go mod tidy`
 
