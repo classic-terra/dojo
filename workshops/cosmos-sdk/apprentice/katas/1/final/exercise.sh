@@ -9,11 +9,11 @@ cd kata1
 go mod init proto
 
 #Install package dependencies
-go get google.golang.org/protobuf/proto
-go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go get google.golang.org/`protobuf`/proto
+go get google.golang.org/`protobuf`/cmd/protoc-gen-go@latest
 go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
-#Create a file called person.proto and add the below protobuf message contract
+#Create a file called person.proto and add the below `protobuf` message contract
 PROTO_MSG="syntax = \"proto3\";
 option go_package = \"example.com/proto/main\";
 
@@ -25,7 +25,7 @@ message Person {
 
 echo "$PROTO_MSG" > person.proto
 
-#Generate the Go code from the protobuf contract
+#Generate the Go code from the `protobuf` contract
 protoc --go_out=. person.proto --go_opt=paths=source_relative
 
 #Implement a simple program
@@ -35,7 +35,7 @@ import (
     \"fmt\"
     \"log\"
 
-    \"google.golang.org/protobuf/proto\"
+    \"google.golang.org/`protobuf`/proto\"
 )
 
 func main() {

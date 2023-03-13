@@ -14,13 +14,13 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-`Cosmos SDK` queries are a way to retrieve data from a blockchain network built using the `Cosmos SDK`. `Cosmos SDK` is a popular blockchain development framework that allows developers to build custom blockchain applications with their own set of rules and features.
+Cosmos SDK queries are a way to retrieve data from a blockchain network built using the Cosmos SDK. Cosmos SDK is a popular blockchain development framework that allows developers to build custom blockchain applications with their own set of rules and features.
 
-In the context of `Cosmos SDK`, queries are used to fetch data from the blockchain's state. The blockchain state is a record of all the transactions that have taken place on the network, along with the current state of all the accounts and other data structures that are relevant to the network.
+In the context of Cosmos SDK, queries are used to fetch data from the blockchain's state. The blockchain state is a record of all the transactions that have taken place on the network, along with the current state of all the accounts and other data structures that are relevant to the network.
 
-Queries in `Cosmos SDK` can be used to retrieve information about things like account balances, transaction history, and other data that is stored on the blockchain. Queries can be executed through various channels, including CLI commands, RESTful APIs, and web sockets.
+Queries in Cosmos SDK can be used to retrieve information about things like account balances, transaction history, and other data that is stored on the blockchain. Queries can be executed through various channels, including CLI commands, RESTful APIs, and web sockets.
 
-There are several types of queries that can be executed using `Cosmos SDK`, including:
+There are several types of queries that can be executed using Cosmos SDK, including:
 
 * `Account queries`: These queries allow you to retrieve information about a particular account on the blockchain, including the account balance, transaction history, and other details.
 
@@ -32,9 +32,9 @@ There are several types of queries that can be executed using `Cosmos SDK`, incl
 
 ## Exercise
 
-In this exercise we  will learn how to query the blockchain for specific Account using the `clientCtx.QueryWithData()` function and subsequently the `codec.UnmarshalInterface()` function to `deserialize` the `query` response to an instance of the `client.Account` interface.
+In this exercise we  will learn how to query the blockchain for specific Account using the `clientCtx.QueryWithData()` function and subsequently the `codec.UnmarshalInterface()` function to deserialize the query response to an instance of the `client.Account` interface.
 
-**Note**: this `training step` assumes that you have set up a working `Cosmos SDK` node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
+**Note**: this `training step` assumes that you have set up a working Cosmos SDK node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
 
 ### Step 1: Create kata directory
 
@@ -54,7 +54,7 @@ go mod init queries
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
-go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1
 go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
@@ -69,11 +69,11 @@ Here is a step-by-step breakdown of what each command does:
 
 `go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0` adds a package redirect for `github.com/gin-gonic/gin`. This command replaces any occurrence of the package `github.com/gin-gonic/gin` with `github.com/gin-gonic/gin@v1.7.0`.
 
-`go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/protobuf`. This command replaces any occurrence of the package `github.com/gogo/protobuf` with `github.com/regen-network/protobuf@v1.3.3-alpha.regen.1`.
+`go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/`protobuf``. This command replaces any occurrence of the package `github.com/gogo/`protobuf`` with `github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1`.
 
 `go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0` adds a package redirect for `github.com/jhump/protoreflect`. This command replaces any occurrence of the package `github.com/jhump/protoreflect` with `github.com/jhump/protoreflect@v1.9.0`.
 
-`go get github.com/cosmos/cosmos-sdk@v0.45.12` fetches a specific version of the `Cosmos SDK` (v0.45.12) and adds it as a dependency to the `go.mod` file.
+`go get github.com/cosmos/cosmos-sdk@v0.45.12` fetches a specific version of the Cosmos SDK (v0.45.12) and adds it as a dependency to the `go.mod` file.
 
 Overall, these commands are used to set up a Go module with the necessary dependencies, including package redirects that ensure that the correct version of each package is used.
 
@@ -136,9 +136,9 @@ encodingConfig := simapp.MakeTestEncodingConfig()
 
 The first line of code creates a new background context, but does not save the context anywhere.
 
-The second line sets the Bech32 prefix for account addresses and public keys. Bech32 is a format for encoding and decoding addresses in the `Cosmos SDK`.
+The second line sets the Bech32 prefix for account addresses and public keys. Bech32 is a format for encoding and decoding addresses in the Cosmos SDK.
 
-The third line creates an encoding configuration for the simulation application (simapp) using the `MakeTestEncodingConfig()` function from the `Cosmos SDK`. The encoding configuration is used to encode and decode data structures in the simapp.
+The third line creates an encoding configuration for the simulation application (simapp) using the `MakeTestEncodingConfig()` function from the Cosmos SDK. The encoding configuration is used to encode and decode data structures in the simapp.
 
 ### Step #7: Configure nodeClient & clientContext
 
@@ -170,11 +170,11 @@ This code creates a new account in the keyring, which is a collection of keys th
 
 - `testdata.TestMnemonic`: The mnemonic phrase to use for generating the key.
 
-- `keyring.DefaultBIP39Passphrase`: The passphrase to use for generating the key. This is the default passphrase used in the `Cosmos SDK`.
+- `keyring.DefaultBIP39Passphrase`: The passphrase to use for generating the key. This is the default passphrase used in the Cosmos SDK.
 
-- `sdk.FullFundraiserPath`: The derivation path to use for generating the key. This path is used in the `Cosmos SDK` to generate keys for accounts in the fundraiser testnet.
+- `sdk.FullFundraiserPath`: The derivation path to use for generating the key. This path is used in the Cosmos SDK to generate keys for accounts in the fundraiser testnet.
 
-- `hd.Secp256k1`: The cryptographic algorithm to use for generating the key. In this case, the key is generated using the `secp256k1 elliptic curve`.
+- `hd.Secp256k1`: The cryptographic algorithm to use for generating the key. In this case, the key is generated using the secp256k1 elliptic curve.
 
 ### Step #8: QueryWithData and deserialize response
 
@@ -232,7 +232,7 @@ Then we can run our new `Go` program with the following command:
 
 ## Conclusion
 
-Queries are an important tool for blockchain developers who want to build applications that interact with the blockchain state. By using queries, developers can retrieve relevant data from the blockchain and use it to build powerful decentralized applications. The `Cosmos SDK` provides a variety of tools and APIs to make it easy to execute queries and retrieve data from the blockchain network.
+Queries are an important tool for blockchain developers who want to build applications that interact with the blockchain state. By using queries, developers can retrieve relevant data from the blockchain and use it to build powerful decentralized applications. The Cosmos SDK provides a variety of tools and APIs to make it easy to execute queries and retrieve data from the blockchain network.
 
 ## Want to help make our training material better?
 

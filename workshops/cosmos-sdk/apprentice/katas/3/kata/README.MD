@@ -1,6 +1,6 @@
 # Path of the Apprentice - Messages
 
-This training exercise is a **apprentice-level** course on `Cosmos SDK` that serves as a starting point for L1 developers looking to onboard the Cosmos.
+This training exercise is a **apprentice-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
 ## Getting started
 
@@ -15,9 +15,9 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-`Cosmos SDK` is a framework for building blockchain applications. In the context of `Cosmos SDK`, a message is a piece of data that represents an action that a user wants to perform on the blockchain. Messages are used to interact with smart contracts, execute transactions, and update the state of the blockchain.
+Cosmos SDK is a framework for building blockchain applications. In the context of Cosmos SDK, a message is a piece of data that represents an action that a user wants to perform on the blockchain. Messages are used to interact with smart contracts, execute transactions, and update the state of the blockchain.
 
-Messages in the `Cosmos SDK` are defined using a special message type, called a `Msg`. Each `Msg` object contains the following fields:
+Messages in the Cosmos SDK are defined using a special message type, called a `sdk.Msg`. Each `sdk.Msg` object contains the following fields:
 
 * `Type`: A string that identifies the type of message being sent. For example, a message to transfer tokens might have a type of `cosmos-sdk/MsgSend`.
 * `FromAddress`: The address of the sender of the message.
@@ -25,16 +25,16 @@ Messages in the `Cosmos SDK` are defined using a special message type, called a 
 * `Amount`: The amount of tokens being sent in the message, if any.
 * `Data`: Any additional data that is required to execute the message. This could include things like the ID of a contract being interacted with, or the parameters for a smart contract function.
 
-Once a `Msg` object is created, it can be signed by the sender using their private key, and then submitted to the blockchain for processing. The blockchain will validate the message, ensure that the sender has enough funds to execute the transaction, and then update the state of the blockchain accordingly.
+Once a `sdk.Msg` object is created, it can be signed by the sender using their private key, and then submitted to the blockchain for processing. The blockchain will validate the message, ensure that the sender has enough funds to execute the transaction, and then update the state of the blockchain accordingly.
 
-Overall, messages are a key component of `Cosmos SDK`, and are used to represent user actions on the blockchain. By using a standardized message format, `Cosmos SDK` allows developers to build flexible and interoperable blockchain applications that can interact with other blockchain applications in the Cosmos ecosystem.
+Overall, messages are a key component of Cosmos SDK, and are used to represent user actions on the blockchain. By using a standardized message format, Cosmos SDK allows developers to build flexible and interoperable blockchain applications that can interact with other blockchain applications in the Cosmos ecosystem.
 
 ## Exercise
 
-This `training step` demonstrates how to create, sign, and submit a basic `MsgSend` message using `Cosmos SDK` in `Go`. You can modify the code to create and submit other types of messages as well, depending on the requirements of your application.
+This `training step` demonstrates how to create, sign, and submit a basic `MsgSend` message using Cosmos SDK in `Go`. You can modify the code to create and submit other types of messages as well, depending on the requirements of your application.
 
 
-**Note**: this `training step` assumes that you have set up a working `Cosmos SDK` node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
+**Note**: this `training step` assumes that you have set up a working Cosmos SDK node and configured the SDK client accordingly. Additionally, you will need to import the appropriate SDK modules and define the token type and decimal places for your specific blockchain network in order for this to be used in production.
 
 ### Step 1: Create kata directory
 
@@ -54,7 +54,7 @@ go mod init messages
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
-go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1
 go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
@@ -69,11 +69,11 @@ Here is a step-by-step breakdown of what each command does:
 
 `go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0` adds a package redirect for `github.com/gin-gonic/gin`. This command replaces any occurrence of the package `github.com/gin-gonic/gin` with `github.com/gin-gonic/gin@v1.7.0`.
 
-`go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/protobuf`. This command replaces any occurrence of the package `github.com/gogo/protobuf` with `github.com/regen-network/protobuf@v1.3.3-alpha.regen.1`.
+`go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/`protobuf``. This command replaces any occurrence of the package `github.com/gogo/`protobuf`` with `github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1`.
 
 `go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0` adds a package redirect for `github.com/jhump/protoreflect`. This command replaces any occurrence of the package `github.com/jhump/protoreflect` with `github.com/jhump/protoreflect@v1.9.0`.
 
-`go get github.com/cosmos/cosmos-sdk@v0.45.12` fetches a specific version of the `Cosmos SDK` (v0.45.12) and adds it as a dependency to the `go.mod` file.
+`go get github.com/cosmos/cosmos-sdk@v0.45.12` fetches a specific version of the Cosmos SDK (v0.45.12) and adds it as a dependency to the `go.mod` file.
 
 Overall, these commands are used to set up a Go module with the necessary dependencies, including package redirects that ensure that the correct version of each package is used.
 
@@ -109,7 +109,7 @@ import (
 )
 ```
 
-Our import section includes packages necessary to create and sign a transaction on the `Cosmos SDK` blockchain. Here's a brief explanation of each package:
+Our import section includes packages necessary to create and sign a transaction on the Cosmos SDK blockchain. Here's a brief explanation of each package:
 
 - `context` is used for managing context across API boundaries.
 - `fmt` is used for formatting and printing output.
@@ -150,9 +150,9 @@ encodingConfig := simapp.MakeTestEncodingConfig()
 
 The first line of code creates a new background context, but does not save the context anywhere.
 
-The second line sets the Bech32 prefix for account addresses and public keys. Bech32 is a format for encoding and decoding addresses in the `Cosmos SDK`.
+The second line sets the Bech32 prefix for account addresses and public keys. Bech32 is a format for encoding and decoding addresses in the Cosmos SDK.
 
-The third line creates an encoding configuration for the simulation application (simapp) using the `MakeTestEncodingConfig()` function from the `Cosmos SDK`. The encoding configuration is used to encode and decode data structures in the simapp.
+The third line creates an encoding configuration for the simulation application (simapp) using the `MakeTestEncodingConfig()` function from the Cosmos SDK. The encoding configuration is used to encode and decode data structures in the simapp.
 
 ### Step #7: Configure an InMemory keyring
 
@@ -171,11 +171,11 @@ This code creates a new account in the keyring, which is a collection of keys th
 
 - `testdata.TestMnemonic`: The mnemonic phrase to use for generating the key.
 
-- `keyring.DefaultBIP39Passphrase`: The passphrase to use for generating the key. This is the default passphrase used in the `Cosmos SDK`.
+- `keyring.DefaultBIP39Passphrase`: The passphrase to use for generating the key. This is the default passphrase used in the Cosmos SDK.
 
-- `sdk.FullFundraiserPath`: The derivation path to use for generating the key. This path is used in the `Cosmos SDK` to generate keys for accounts in the fundraiser testnet.
+- `sdk.FullFundraiserPath`: The derivation path to use for generating the key. This path is used in the Cosmos SDK to generate keys for accounts in the fundraiser testnet.
 
-- `hd.Secp256k1`: The cryptographic algorithm to use for generating the key. In this case, the key is generated using the `secp256k1 elliptic curve`.
+- `hd.Secp256k1`: The cryptographic algorithm to use for generating the key. In this case, the key is generated using the secp256k1 elliptic curve.
 
 ### Step #8: Configure nodeClient & clientContext
 
@@ -202,9 +202,9 @@ clientCtx := client.Context{}.
 	WithBroadcastMode("block")
 ```
 
-This code creates a new client context that is used to interact with the `Cosmos SDK` node. The context is created using the `client.Context` struct and the following methods:
+This code creates a new client context that is used to interact with the Cosmos SDK node. The context is created using the `client.Context` struct and the following methods:
 
-- `WithInterfaceRegistry(encodingConfig.InterfaceRegistry)`: Set the interface registry used for decoding protobuf messages.
+- `WithInterfaceRegistry(encodingConfig.InterfaceRegistry)`: Set the interface registry used for decoding `protobuf` messages.
 
 - `WithTxConfig(encodingConfig.TxConfig)`: Set the transaction configuration used for building and signing transactions.
 
@@ -222,7 +222,7 @@ This code creates a new client context that is used to interact with the `Cosmos
 
 ### Step #9: Initialize transaction builder
 
-With the `Cosmos SDK` clientCtx fully configured and ready for use we can leverages its `TxConfig` property to initialize the `TxBuilder` we need to `compose` the transaction `message envelope` required for broadcasting our messages, including adding `metadata` such `fees`, `gaslimit` and a `memo`:
+With the Cosmos SDK clientCtx fully configured and ready for use we can leverages its `TxConfig` property to initialize the `TxBuilder` we need to compose the transaction `message envelope` required for broadcasting our messages, including adding metadata such `fees`, `gaslimit` and a `memo`:
 
 ```go
 // Create a new transaction builder
@@ -234,7 +234,7 @@ txBuilder.SetMemo("test transaction")
 
 ### Step #10: Create multiple messages for our transaction
 
-Finally we have to create the messages that we want to put in our `message envelope` (transaction) and add `metadata` supported by the `bankTypes.MsgSend` struct, such as `sender`, `recipient` and `amount`:
+Finally we have to create the messages that we want to put in our `message envelope` (transaction) and add metadata supported by the `bankTypes.MsgSend` struct, such as `sender`, `recipient` and `amount`:
 
 ```go
 // Fetch the sender's account key
@@ -286,7 +286,7 @@ if err != nil {
 
 ### Step #11: Sign & broadcast the transaction
 
-With our transaction fully `composed` all that remains is for us to sign it with the senders private key and broadcast it to the blockchain:
+With our transaction fully composed all that remains is for us to sign it with the senders private key and broadcast it to the blockchain:
 
 ```go
 // Sign the transaction
@@ -330,7 +330,7 @@ The above code signs the transaction using the private key of the sender, then e
 
 -`WithTxConfig(clientCtx.TxConfig)`: sets the transaction config used to sign the transaction to the one stored in the client context.
 
-After creating the transaction factory, `tx.Sign()` is called to sign the transaction using the private key of the `sender`. The true argument indicates that the transaction should be in "generate only" mode, meaning it should not be broadcasted yet.
+After creating the transaction factory, `tx.Sign()` is called to sign the transaction using the private key of the sender. The true argument indicates that the transaction should be in "generate only" mode, meaning it should not be broadcasted yet.
 
 Next, the encoded transaction is broadcasted to the network using `clientCtx.BroadcastTx()`. The resulting transaction hash is printed to the console if the broadcast was successful.
 
@@ -360,7 +360,7 @@ Then we can run our new `Go` program with the following command:
 
 ## Conclusion
 
-In conclusion, messages in the `Cosmos SDK` are the primary way for applications to interact with the blockchain. Messages contain the necessary data for a transaction, such as the `sender` and `recipient` addresses, the amount of tokens to be transferred, and any other relevant information. The SDK provides a variety of built-in message types, such as `MsgSend` for token transfers and `MsgVote` for governance voting. Developers can also create their own custom message types to meet the specific needs of their applications. With the help of the `Cosmos SDK`, developers can easily create, sign, and submit messages to the blockchain to perform various actions, such as transferring tokens, voting on proposals, and more.
+In conclusion, messages in the Cosmos SDK are the primary way for applications to interact with the blockchain. Messages contain the necessary data for a transaction, such as the sender and recipient addresses, the amount of tokens to be transferred, and any other relevant information. The SDK provides a variety of built-in message types, such as `MsgSend` for token transfers and `MsgVote` for governance voting. Developers can also create their own custom message types to meet the specific needs of their applications. With the help of the Cosmos SDK, developers can easily create, sign, and submit messages to the blockchain to perform various actions, such as transferring tokens, voting on proposals, and more.
 
 ## Want to help make our training material better?
 

@@ -14,9 +14,9 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-`Cosmos SDK` is a framework for building blockchain applications that enables developers to create custom modules to handle various functionalities of their blockchain. A module in `Cosmos SDK` is a self-contained unit of code that encapsulates a specific set of functionalities, such as handling account balances, executing transactions, or managing staking and governance.
+Cosmos SDK is a framework for building blockchain applications that enables developers to create custom modules to handle various functionalities of their blockchain. A module in Cosmos SDK is a self-contained unit of code that encapsulates a specific set of functionalities, such as handling account balances, executing transactions, or managing staking and governance.
 
-`Cosmos SDK` provides several built-in modules that are commonly needed for building blockchain applications:
+Cosmos SDK provides several built-in modules that are commonly needed for building blockchain applications:
 
 * `Auth`: This module is responsible for managing user authentication and authorization. It allows users to sign transactions and verify their identity, as well as manage access control to the blockchain's resources.
 
@@ -40,17 +40,17 @@ These instructions will help you prepare for the `training step` and ensure that
 
 * `Evidence`: This module is responsible for handling evidence of misbehavior by validators. It allows users to submit evidence of double-signing or other malicious behavior and triggers the slashing of the offending validator.
 
-In addition to these built-in modules, `Cosmos SDK` also allows developers to create their own custom modules tailored to their specific use case. For example, a developer could create a module for a decentralized exchange, a prediction market, or a decentralized storage system.
+In addition to these built-in modules, Cosmos SDK also allows developers to create their own custom modules tailored to their specific use case. For example, a developer could create a module for a decentralized exchange, a prediction market, or a decentralized storage system.
 
-Each module in `Cosmos SDK` defines a set of APIs that can be used by other modules or external applications to interact with its functionalities. These APIs are implemented using the Go programming language and are exposed through a gRPC interface, which enables communication between modules running on different nodes of the blockchain network.
+Each module in Cosmos SDK defines a set of APIs that can be used by other modules or external applications to interact with its functionalities. These APIs are implemented using the Go programming language and are exposed through a gRPC interface, which enables communication between modules running on different nodes of the blockchain network.
 
-Overall, modules in `Cosmos SDK` provide a modular and extensible architecture for building blockchain applications, allowing developers to easily add new functionalities or customize existing ones without compromising the overall system's security and reliability.
+Overall, modules in Cosmos SDK provide a modular and extensible architecture for building blockchain applications, allowing developers to easily add new functionalities or customize existing ones without compromising the overall system's security and reliability.
 
 ## Exercise
 
-In this `training step` we will learn how to implement a simple `Cosmos SDK` module. The module will be responsible for managing the state of a fictitious supply chain, including adding new products and retrieving information about existing products as they move through the supply chain.
+In this `training step` we will learn how to implement a simple Cosmos SDK module. The module will be responsible for managing the state of a fictitious supply chain, including adding new products and retrieving information about existing products as they move through the supply chain.
 
-**Note**: this `training step` is the first exercise to use `multiple package definitions` in the code samples, abstractly the `Go` keyword `package` is just a `namespacing technique` that allow developers to partition their `codebase` in order to manage applications as they grow in size. Its important to understand that co-located `*.go` files who share the same `package` will automatically be `linked` by the `Go` compiler, however if you want to use any other `package` you will need to reference them via an import statement, e.g. `modules/x/simple/types`.
+**Note**: this `training step` is the first exercise to use multiple package definitions in the code samples, abstractly the `Go` keyword `package` is just a "namespacing technique" that allow developers to partition their codebase, in order to manage applications as they grow in size. Its important to understand that co-located `*.go` files who share the same `package` will automatically be linked by the `Go` compiler, however if you want to use any other package you will need to reference them via an import statement, e.g. `modules/x/simple/types`.
 
 ### Step 1: Create kata directory
 
@@ -63,7 +63,7 @@ cd kata5
 
 ### Step 2: Create `protobuf` message contract
 
-Before we can begin implementing our `Go` code program we first have to create the `protobuf` message contract we need for our `SimpleKeeper` to persist data to its underlying `KVStore`. One thing to keep in mind here is the `Cosmos SDK` uses a customized version of the `protobuf` tooling so we will need to go through a few `knee-jerk exercises` to get our `Product` message contract off the ground. First we have to create a directory structure for our `*.proto` files:
+Before we can begin implementing our `Go` code program we first have to create the `protobuf` message contract we need for our `SimpleKeeper` to persist data to its underlying `KVStore`. One thing to keep in mind here is the Cosmos SDK uses a customized version of the `protobuf` tooling so we will need to go through a few "knee-jerk-exercises" to get our `Product` message contract off the ground. First we have to create a directory structure for our `*.proto` files:
 
 ```bash
 mkdir proto && cd proto && mkdir modules && cd modules && mkdir simple && cd simple
@@ -100,7 +100,7 @@ cd ../../../
 
 ### Step 3: Setup `Buf` configuration files
 
-`Buf` is a tool for `protobuf` that simplifies the use of the complex `protoc` toolchain, along with other features that ensure adherence to the majority of the ecosystem's `protobuf` usage conventions. In this `training step` we will not go in-depth with how to use `Buf`, more information can be found [here](https://docs.cosmos.network/main/tooling/protobuf). For now we will simply proceed to add the required configuration files to our `toolchain` so we can get to the fun stuff, we start by creating a bunch of config files:
+`Buf` is a tool for `protobuf` that simplifies the use of the complex `protoc` toolchain, along with other features that ensure adherence to the majority of the ecosystem's `protobuf` usage conventions. In this `training step` we will not go in-depth with how to use `Buf`, more information can be found [here](https://docs.cosmos.network/main/tooling/`protobuf`). For now we will simply proceed to add the required configuration files to our `toolchain` so we can get to the fun stuff, we start by creating a bunch of config files:
 
 ```bash
 cat > buf.work.yaml
@@ -124,7 +124,7 @@ version: v1
 plugins:
   - name: gocosmos
     out: ..
-    opt: plugins=grpc,Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types
+    opt: plugins=grpc,Mgoogle/`protobuf`/any.proto=github.com/cosmos/cosmos-sdk/codec/types
   - name: grpc-gateway
     out: ..
     opt: logtostderr=true,allow_colon_final_segments=true
@@ -183,9 +183,9 @@ deps:
     commit: 75b4300737fb4efca0831636be94e517
 ```
 
-### Step 4: Create `makefile` for `Cosmos SDK` docker tooling
+### Step 4: Create `makefile` for Cosmos SDK docker tooling
 
-For the last piece of plumbing in our `toolchain` we need to setup a simple `makefile` to run the `Cosmos SDK` docker tooling:
+For the last piece of plumbing in our `toolchain` we need to setup a simple `makefile` to run the Cosmos SDK docker tooling:
 
 ```text
 DOCKER := $(shell which docker)
@@ -196,7 +196,7 @@ CONTAINER_PROTO_FMT=cosmos-sdk-proto-fmt-$(CONTAINER_PROTO_VER)
 proto-all: proto-gen
 
 proto-gen:
-	@echo "Generating Protobuf files"
+	@echo "Generating `protobuf` files"
 	"$(DOCKER)" run --rm -v $(CURDIR):/workspace --workdir /workspace $(CONTAINER_PROTO_IMAGE) sh ./scripts/protocgen.sh
 
 .PHONY: proto-gen
@@ -208,7 +208,7 @@ Then we create a shell script to manage the code generation process, like so:
 mkdir scripts && cat > scripts/protocgen.sh
 ```
 
-And complete it with some `bash magic`:
+And complete it with some "bash magic":
 
 ```bash
 #!/usr/bin/env sh
@@ -247,7 +247,7 @@ go mod init modules
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
-go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1
 go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 ```
@@ -262,7 +262,7 @@ Here is a step-by-step breakdown of what each command does:
 
 `go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0` adds a package redirect for `github.com/gin-gonic/gin`. This command replaces any occurrence of the package `github.com/gin-gonic/gin` with `github.com/gin-gonic/gin@v1.7.0`.
 
-`go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/protobuf`. This command replaces any occurrence of the package `github.com/gogo/protobuf` with `github.com/regen-network/protobuf@v1.3.3-alpha.regen.1`.
+`go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1` adds a package redirect for `github.com/gogo/`protobuf``. This command replaces any occurrence of the package `github.com/gogo/`protobuf`` with `github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1`.
 
 `go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0` adds a package redirect for `github.com/jhump/protoreflect`. This command replaces any occurrence of the package `github.com/jhump/protoreflect` with `github.com/jhump/protoreflect@v1.9.0`.
 
@@ -276,7 +276,7 @@ cat > module.go
 
 ### Step #7: Implement `simple` module
 
-Then we implement a `barebones AppModule`, which we will extend upon in the `Path of the Journeyman`:
+Then we implement a barebones AppModule, which we will extend upon in the `Path of the Journeyman`:
 
 ```go
 package simple
@@ -476,7 +476,7 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 
 ### Step #8: Create a file called `types.go`
 
-With the `module` implemented we can create a file for the `custom types` it needs:
+With the module implemented we can create a file for the `custom types` it needs:
 
 ```bash
 mkdir types && cat > types/types.go
@@ -516,7 +516,7 @@ func GetProductKey(identifier string) []byte {
 
 ### Step #10: Create a file called `keeper.go`
 
-Then we proceed to implement the most critical piece of our `module puzzle`, the `SimpleKeeper`. To prepare for its implementation we create a new file named `keeper.go`:
+Then we proceed to implement the most critical piece of our module puzzle, the `SimpleKeeper`. To prepare for its implementation we create a new file named `keeper.go`:
 
 ```bash
 mkdir keeper && cat > keeper/keeper.go
@@ -574,7 +574,7 @@ func (sk SimpleKeeper) GetProduct(ctx sdk.Context, identifier string) types.Prod
 }
 ```
 
-The above code snippet defines a `SimpleKeeper` struct that is defined in a `Go` package named `keeper`. The package imports types from another module called `modules/x/simple/types`, as well as the `codec` and `sdk` packages from `Cosmos SDK`.
+The above code snippet defines a `SimpleKeeper` struct that is defined in a `Go` package named `keeper`. The package imports types from another module called `modules/x/simple/types`, as well as the `codec` and `sdk` packages from Cosmos SDK.
 
 The `SimpleKeeper` struct has two fields: `storeKey` of type `.StoreKey`, which represents the key for the `keeper's KVStore`, and `cdc` of type `codec.BinaryCodec`, which represents the binary codec used to marshal and unmarshal data.
 
@@ -663,13 +663,13 @@ func main() {
 }
 ```
 
-Our the `main` function creates a new `LevelDB` database and initializes a new `root multi store`. Then it initializes a `store key`, mounts an `IAVL store` to the `root multi store` for the `store key`, and loads the latest version of the store.
+Our `main` function creates a new `LevelDB` database and initializes a new `root multi store`. Then it initializes a `store key`, mounts an `IAVL store` to the `root multi store` for the `store key`, and loads the latest version of the store.
 
 We then create a new instance of the `Product` struct from the `types` package, add it to the `SimpleKeeper` using the `AddProduct` method, retriev it using the `GetProduct` method, and prints its information to the `console` using `fmt.Printf`.
 
 ### Step #14: Run `make proto-gen`
 
-Now we just have to use our `toolchain` to let the `Cosmos SDK` docker tooling do its thing and produce a `Product` struct that is compatible with our chosen `codec`:
+Now we just have to use our `toolchain` to let the Cosmos SDK docker tooling do its thing and produce a `Product` struct that is compatible with our chosen `codec`:
 
 ```bash
 make proto-gen
@@ -701,9 +701,9 @@ Lastly we can run our new `Go` program with the following command:
 
 ## Conclusion
 
-A `Cosmos SDK` module is a self-contained packages of code that provides a specific set of functionality within a blockchain application. Each module is designed to be independent and can be combined with other modules to create custom blockchain applications.
+A Cosmos SDK module is a self-contained packages of code that provides a specific set of functionality within a blockchain application. Each module is designed to be independent and can be combined with other modules to create custom blockchain applications.
 
-The structure of a `Cosmos SDK` module typically includes the following components:
+The structure of a Cosmos SDK module typically includes the following components:
 
 * `types`: This package defines the types used by the module, such as message types and state types.
 
@@ -723,9 +723,9 @@ The structure of a `Cosmos SDK` module typically includes the following componen
 
 * `app.go`: This file initializes and configures the module keeper, and includes the module keeper as a dependency of the main application.
 
-`Cosmos SDK` modules are designed to be flexible and extensible, allowing developers to add additional packages as needed to implement the specific functionality of the module. By following this structure, modules can be easily combined and reused to create custom blockchain applications with a wide range of functionality.
+Cosmos SDK modules are designed to be flexible and extensible, allowing developers to add additional packages as needed to implement the specific functionality of the module. By following this structure, modules can be easily combined and reused to create custom blockchain applications with a wide range of functionality.
 
-This `training step` completes the `Path of the Apprentice`, congratulations are in order if you made it this fare! In the next `learning path`, `Path of the Journeyman`, we will dive deeper into some of the more advance concepts of `Cosmos SDK` and extend on the knowledge we have gained on our journey thus fare, to build our very own `blockchain application`.
+This `training step` completes the `Path of the Apprentice`, congratulations are in order if you made it this fare! In the next `learning path`, `Path of the Journeyman`, we will dive deeper into some of the more advance concepts of Cosmos SDK and extend on the knowledge we have gained on our journey thus fare, to build our very own blockchain application.
 
 ## Want to help make our training material better?
 

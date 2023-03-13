@@ -1,6 +1,6 @@
 # Path of the Journeyman - Keepers
 
-This training exercise is a **journeyman-level** course on `Cosmos SDK` that serves as a starting point for L1 developers looking to onboard the Cosmos.
+This training exercise is a **journeyman-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
 ## Getting started
 
@@ -14,7 +14,7 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-In the `Cosmos SDK`, Keepers are modules that are responsible for maintaining the state of a blockchain network. They are essentially the operational logic behind the blockchain's functionality. Keepers are responsible for executing certain tasks that require access to the blockchain's state, such as validating transactions, updating account balances, and performing other system-level tasks.
+In the Cosmos SDK, Keepers are modules that are responsible for maintaining the state of a blockchain network. They are essentially the operational logic behind the blockchain's functionality. Keepers are responsible for executing certain tasks that require access to the blockchain's state, such as validating transactions, updating account balances, and performing other system-level tasks.
 
 Keepers are designed to be modular, meaning that developers can create custom Keepers to add new functionality to the blockchain network. For example, a developer might create a Keeper that performs automated market-making on a decentralized exchange, or a Keeper that verifies the identity of users on the network.
 

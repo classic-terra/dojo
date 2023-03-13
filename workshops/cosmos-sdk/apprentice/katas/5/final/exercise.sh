@@ -22,13 +22,13 @@ message Product {
   string description = 3;
 }"
 
-#Create product.proto and add the above protobuf message contract
+#Create product.proto and add the above `protobuf` message contract
 echo "$PROTO_MSG" > product.proto
 
 #Return to the kata5 directory
 cd ../../../
 
-#Create config files for Cosmos SDK protobuf container tooling
+#Create config files for Cosmos SDK `protobuf` container tooling
 BUF_WORK_YML="version: v1
 directories:
   - proto"
@@ -39,7 +39,7 @@ BUF_GEN_YML="version: v1
 plugins:
   - name: gocosmos
     out: ..
-    opt: plugins=grpc,Mgoogle/protobuf/any.proto=github.com/cosmos/cosmos-sdk/codec/types
+    opt: plugins=grpc,Mgoogle/`protobuf`/any.proto=github.com/cosmos/cosmos-sdk/codec/types
   - name: grpc-gateway
     out: ..
     opt: logtostderr=true,allow_colon_final_segments=true"
@@ -95,21 +95,21 @@ deps:
 
 echo "$BUF_GEN_YML" > proto/buf.lock
 
-#Create makefile to run Cosmos SDK protobuf container tooling
+#Create makefile to run Cosmos SDK `protobuf` container tooling
 MAKEFILE="DOCKER := \$(shell which docker)
 CONTAINER_PROTO_VER=v0.7
 CONTAINER_PROTO_IMAGE=tendermintdev/sdk-proto-gen:\$(CONTAINER_PROTO_VER)
 CONTAINER_PROTO_FMT=cosmos-sdk-proto-fmt-\$(CONTAINER_PROTO_VER)
 
 proto-gen:
-	@echo \"Generating Protobuf files\"
+	@echo \"Generating `protobuf` files\"
 	\"\$(DOCKER)\" run --rm -v \$(CURDIR):/workspace --workdir /workspace \$(CONTAINER_PROTO_IMAGE) sh ./scripts/protocgen.sh
 
 .PHONY: proto-gen"
 
 echo "$MAKEFILE" > makefile
 
-#Create protocgen.sh to mount on container running Cosmos SDK protobuf container tooling
+#Create protocgen.sh to mount on container running Cosmos SDK `protobuf` container tooling
 PROTOCGEN_SH="#!/usr/bin/env sh
 
 set -eo pipefail
@@ -141,7 +141,7 @@ go mod init modules
 go mod edit -replace github.com/99designs/keyring=github.com/cosmos/keyring@v1.2.0
 go mod edit -replace github.com/dgrijalva/jwt-go=github.com/golang-jwt/jwt/v4@v4.4.2
 go mod edit -replace github.com/gin-gonic/gin=github.com/gin-gonic/gin@v1.7.0
-go mod edit -replace github.com/gogo/protobuf=github.com/regen-network/protobuf@v1.3.3-alpha.regen.1
+go mod edit -replace github.com/gogo/`protobuf`=github.com/regen-network/`protobuf`@v1.3.3-alpha.regen.1
 go mod edit -replace github.com/jhump/protoreflect=github.com/jhump/protoreflect@v1.9.0
 go get github.com/cosmos/cosmos-sdk@v0.45.12
 

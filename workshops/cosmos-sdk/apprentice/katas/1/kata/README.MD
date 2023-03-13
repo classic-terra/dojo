@@ -1,6 +1,6 @@
-# Path of the Apprentice - Protobuf
+# Path of the Apprentice - `protobuf`
 
-This training exercise is a **apprentice-level** course on `Cosmos SDK` that serves as a starting point for L1 developers looking to onboard the Cosmos.
+This training exercise is a **apprentice-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
 ## Getting started
 
@@ -15,19 +15,19 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-Protocol Buffers (protobuf) is a language-agnostic data serialization format developed by Google. It is used for exchanging data between different applications and systems, especially those written in different programming languages.
+Protocol Buffers (`protobuf`) is a language-agnostic data serialization format developed by Google. It is used for exchanging data between different applications and systems, especially those written in different programming languages.
 
 Protocol Buffer 4.0 is the latest version of the protocol buffer specification, which was released in February 2022. It introduces several new features and improvements over the previous version, including:
 
-* `Backward compatibility`: Protobuf 4.0 introduces a new syntax for defining messages that is backwards-compatible with earlier versions of protobuf. This means that existing protobuf messages can be used with newer versions of protobuf without requiring any changes to the message definition.
+* `Backward compatibility`: `protobuf` 4.0 introduces a new syntax for defining messages that is backwards-compatible with earlier versions of `protobuf`. This means that existing `protobuf` messages can be used with newer versions of `protobuf` without requiring any changes to the message definition.
 
-* `Support for new data types`: Protobuf 4.0 adds support for several new data types, including uint128, int128, and Timestamp with subsecond precision.
+* `Support for new data types`: `protobuf` 4.0 adds support for several new data types, including uint128, int128, and Timestamp with subsecond precision.
 
-* `Improved performance`: Protobuf 4.0 introduces several optimizations that improve serialization and deserialization performance, especially for large messages.
+* `Improved performance`: `protobuf` 4.0 introduces several optimizations that improve serialization and deserialization performance, especially for large messages.
 
-* `Simplified syntax`: Protobuf 4.0 introduces a simplified syntax for defining messages, which makes it easier to write and maintain protobuf message definitions.
+* `Simplified syntax`: `protobuf` 4.0 introduces a simplified syntax for defining messages, which makes it easier to write and maintain `protobuf` message definitions.
 
-* `Improved tooling`: Protobuf 4.0 includes several improvements to the protobuf compiler and related tooling, including support for generating code in additional programming languages, improved error messages, and better support for integrating with build systems.
+* `Improved tooling`: `protobuf` 4.0 includes several improvements to the `protobuf` compiler and related tooling, including support for generating code in additional programming languages, improved error messages, and better support for integrating with build systems.
 
 ## Exercise
 
@@ -50,8 +50,8 @@ Now we want to initialize a new `Go` module and install the packages needed for 
 
 ```bash
 go mod init proto
-go get google.golang.org/protobuf/proto@latest
-go get google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go get google.golang.org/`protobuf`/proto@latest
+go get google.golang.org/`protobuf`/cmd/protoc-gen-go@latest
 go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
@@ -59,13 +59,13 @@ The above CLI commands are used to setup up our `Go` module for working with pro
 
 - `go mod init proto`: Initializes a new Go module named `proto` in the current directory. This command creates a `go.mod` file, which is used to manage dependencies for the module.
 
-- `go get google.golang.org/protobuf/proto@latest`: Downloads the latest version of the `proto` package from the `google.golang.org/protobuf` module and adds it as a dependency to the current module. The proto package provides support for working with protocol buffers in Go.
+- `go get google.golang.org/`protobuf`/proto@latest`: Downloads the latest version of the `proto` package from the `google.golang.org/`protobuf`` module and adds it as a dependency to the current module. The proto package provides support for working with protocol buffers in Go.
 
-- `go get google.golang.org/protobuf/cmd/protoc-gen-go@latest`: Downloads the latest version of the `protoc-gen-go` CLI from the `google.golang.org/protobuf` module and installs it in the bin directory of your `$GOPATH`. This tool is used to generate Go code from protocol buffer definitions.
+- `go get google.golang.org/`protobuf`/cmd/protoc-gen-go@latest`: Downloads the latest version of the `protoc-gen-go` CLI from the `google.golang.org/`protobuf`` module and installs it in the bin directory of your `$GOPATH`. This tool is used to generate Go code from protocol buffer definitions.
 
 - `go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest`: Downloads the latest version of the `protoc-gen-go-grpc` cLI from the `google.golang.org/grpc` module and installs it in the bin directory of your `$GOPATH`. This tool is used to generate Go code for gRPC servers and clients from protocol buffer definitions.
 
-### Step #3: Create protobuf message contract
+### Step #3: Create `protobuf` message contract
 
 To create a simple message contract, we can create a file named `person.proto` and add the following content:
 
@@ -105,7 +105,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/golang/protobuf/proto"
+    "github.com/golang/`protobuf`/proto"
 )
 
 func main() {
@@ -152,11 +152,11 @@ Lastly we can run our new `Go` binary with the following command to verify that 
 
 ## Conclusion
 
-Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions of `protobuf`, offering better performance, new features, and improved tooling. Understanding this data serialization format is essential to succesfully working with `Cosmos SDK` and thus we decided make it the beginning of a hopefully long and prosperous journey through the K1 dojo.
+Overall, Protocol Buffer 4.0 is a significant improvement over earlier versions of `protobuf`, offering better performance, new features, and improved tooling. Understanding this data serialization format is essential to succesfully working with Cosmos SDK and thus we decided make it the beginning of a hopefully long and prosperous journey through the K1 dojo.
 
 The architectural pattern of Protocol Buffers is based on a client-server model, where the client and server use Protocol Buffers to communicate with each other. The server defines the `.proto` file that defines the data structure, and the client uses the generated code to serialize and deserialize the data that is transmitted over the network. This makes it a powerful tool for efficient inter-process communication and data storage.
 
-`Cosmos SDK` currently targets a modified version of Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version in this `training step` and in the process demonstrate that the `latest` version of `protoc` works with older schemas such as the one targeted in our code kata.
+Cosmos SDK currently targets a modified version of Protocol Buffer 3.0 however we expect support for Protocol Buffer 4.0 to become available in the near future and thus we decided it made more sense to target the newest version in this `training step` and in the process demonstrate that the latest version of `protoc` works with older schemas such as the one targeted in our code kata.
 
 ## Want to help make our training material better?
 
