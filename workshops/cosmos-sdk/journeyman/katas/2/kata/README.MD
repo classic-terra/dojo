@@ -24,7 +24,7 @@ Overall, the `Cosmos SDK BaseApp` provides a powerful foundation for building sc
 
 ## Exercise
 
-This `training step` teaches us how to implement a new `myApp` struct that extends the `baseapp.BaseApp` struct provided by the Cosmos SDK. We then implement a `NewMyApp` function that sets up the application's modules (`bank`, `auth`, and `params`), initializes the application's state, and sets the `initChainer` function to be called during the initialization process.
+This `training step` teaches us how to implement a new `myApp` struct that extends the `baseapp.BaseApp` struct provided by the Cosmos SDK. We then implement a `NewMyApp` constructor method that sets up the application's modules (`bank`, `auth`, and `params`), initializes the application's state, and sets the `initChainer` function to be called during the initialization process.
 
 ### Step 1: Create kata directory
 
@@ -108,4 +108,4 @@ The `BaseApp` is built on top of the `Tendermint` consensus engine, which provid
 
 ## Want to help make our training material better?
 
-Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues)
+Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).

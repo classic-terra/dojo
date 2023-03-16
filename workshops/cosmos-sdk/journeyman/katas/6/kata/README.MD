@@ -1,4 +1,4 @@
-#Path of the Journeyman - Keepers > Genesis
+# Path of the Journeyman - Keepers > Genesis
 
 This training exercise is a **journeyman-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
@@ -36,4 +36,3 @@ cd kata6
 ## Want to help make our training material better?
 
 Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).
- 

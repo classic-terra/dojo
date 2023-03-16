@@ -36,4 +36,3 @@ cd kata5
 ## Want to help make our training material better?
 
 Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).
- 

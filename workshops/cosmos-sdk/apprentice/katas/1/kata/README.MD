@@ -160,4 +160,4 @@ Cosmos SDK currently targets a modified version of Protocol Buffer 3.0 however w
 
 ## Want to help make our training material better?
 
-Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues)
+Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).

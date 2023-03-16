@@ -366,4 +366,4 @@ To wrap it all up we signed and broadcasted the transaction using the SDK client
 
 ## Want to help make our training material better?
 
-Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues)
+Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).

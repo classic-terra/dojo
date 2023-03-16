@@ -364,4 +364,4 @@ In conclusion, messages in the Cosmos SDK are the primary way for applications t
 
 ## Want to help make our training material better?
 
-Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues)
+Want to **log an issue** or **request a new kata**? Feel free to visit our [GitHub site](https://github.com/classic-terra/dojo/issues).

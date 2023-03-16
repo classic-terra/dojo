@@ -39,7 +39,8 @@ The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `learning 
 - [Context](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/2/kata) (Pending)
 - [Migrations](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/3/kata) (Pending)
 - [Bridges](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/4/kata) (Pending)
-- [Wasm](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/journeyman/katas/5/kata) (Pending)
+- [Wasm](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/5/kata) (Pending)
+- [Cosmovisor](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/6/kata) (Pending)
 
 ### Path of the Cosmonaut
 - [IBC](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/1/kata)
