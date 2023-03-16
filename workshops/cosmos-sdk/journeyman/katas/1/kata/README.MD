@@ -1,4 +1,4 @@
-# Path of the Journeyman - AnteHandlers
+# Path of the Journeyman - AnteHandler
 
 This training exercise is a **journeyman-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 

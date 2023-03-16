@@ -1,4 +1,4 @@
-# Path of the Expert - Bridges
+# Path of the Expert - Migrations
 
 This training exercise is a **expert-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
