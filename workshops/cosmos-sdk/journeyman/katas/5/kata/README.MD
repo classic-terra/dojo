@@ -14,7 +14,18 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+Cosmos SDK provides a set of tools and libraries for developers to build custom blockchain applications, which includes a number of built-in types that are used throughout the SDK:
+
+* `Coin`: A struct representing a single coin, with a denomination and an amount.
+* `Coins`: A slice of coin objects, representing a set of coins.
+* `Int`: A struct representing a signed integer, used throughout the SDK for mathematical calculations.
+* `Dec`: A struct representing a decimal number, used for precise mathematical calculations.
+* `AccAddress`: A struct representing an account address, used to identify accounts on the blockchain.
+* `ValAddress`: A struct representing a validator address, used to identify validators on the blockchain.
+* `Context`: A struct representing the context in which a blockchain transaction is executed.
+* `Msg`: An interface representing a message that can be sent as part of a transaction.
+* `Result`: A struct representing the result of executing a blockchain transaction.
+* `ModuleAccount`: A struct representing an account owned by a module on the blockchain.
 
 ## Exercise
 
@@ -24,7 +35,7 @@ These instructions will help you prepare for the `training step` and ensure that
 
 First we setup a directory for our exercise files. It's pretty straight forward:
 
-```
+```bash
 mkdir kata5
 cd kata5
 ```

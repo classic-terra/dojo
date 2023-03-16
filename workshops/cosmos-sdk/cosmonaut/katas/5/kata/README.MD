@@ -14,7 +14,13 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+One of the core functionalities of a blockchain application is the ability to transfer tokens between users. In Cosmos SDK, token transfer functionality is built into the framework, allowing developers to easily implement token transfers within their blockchain applications.
+
+The token transfer functionality in Cosmos SDK works by utilizing a module called `bank`. This module provides an interface for users to send and receive tokens within the blockchain application. The `bank` module also handles the accounting and bookkeeping associated with token transfers.
+
+To send tokens, a user must have a wallet or account within the blockchain application. This account holds the user's token balance and provides the necessary information to send and receive tokens. The user must specify the recipient's account address, the amount of tokens to be sent, and any transaction fees associated with the transfer. Once the transaction is validated by the network, the specified amount of tokens is transferred from the sender's account to the recipient's account.
+
+Token transfers in Cosmos SDK are designed to be secure and reliable. The framework uses cryptographic protocols to ensure that transactions are authenticated and cannot be tampered with. The transaction is also validated by the network of nodes running the blockchain application, ensuring that the transfer is valid and that the sender has sufficient funds to complete the transaction.
 
 ## Exercise
 

@@ -14,13 +14,18 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+To transfer digital assets between different chains in the Cosmos ecosystem we have to use something called an `interchain account`, which is a type of account that can be used to hold digital assets on one chain and transfer them to another chain in the Cosmos network. This is accomplished through the use of an intermediate account, called a `relay account`, which acts as a bridge between the two chains. The `relay account` is responsible for receiving the assets on one chain and then transferring them to the user's `interchain account` on another chain.
+
+`Interchain accounts` are designed to be interoperable, meaning that they can be used across different chains in the Cosmos network. This allows users to move their digital assets freely between different chains, without having to worry about the underlying technical details of each chain.
+
+To use `interchain accounts` in Cosmos SDK, developers must first enable the `IBC` (Inter-Blockchain Communication) module in their application. They can then create interchain accounts by implementing the `Relayer` interface and defining the necessary functions for sending and receiving interchain transfers.
 
 ## Exercise
 
 [TEXT]
 
 ### Step 1: Create kata directory
+
 First we setup a directory for our exercise files. It's pretty straight forward:
 
 ```bash
@@ -30,7 +35,7 @@ cd kata6
 
 ## Conclusion
 
-[TEXT]
+Overall, `interchain accounts` represent an important step forward for the Cosmos ecosystem, as they make it easier for users to transfer digital assets between different chains in a secure and interoperable manner.
 
 ## Want to help make our training material better?
 

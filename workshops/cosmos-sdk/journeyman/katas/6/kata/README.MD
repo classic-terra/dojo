@@ -14,7 +14,21 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+In the context of blockchain technology, the term "genesis" refers to the initial state of a blockchain network when it is first created.
+
+The genesis state of the Cosmos SDK includes a set of initial parameters that define the basic configuration of the blockchain network, including:
+
+* `genesis_time`: The time at which the network was created.
+* `chain_id`: A unique identifier for the network.
+* `consensus_params`: Parameters that define the rules for validating transactions on the network.
+* `app_state`: The initial state of the application, including the accounts and validators that are present at the genesis block.
+* `staking`: Parameters that define the rules for staking on the network.
+
+The `app_state` is particularly important, as it contains the initial state of the application and all of its components. This includes the initial set of accounts and validators, as well as any other data structures defined by the application.
+
+Developers can customize the genesis state of their blockchain network by modifying these parameters to fit the specific needs of their application. For example, they can adjust the staking parameters to change the rewards for validators, or add additional parameters to the app_state object to define new types of data structures.
+
+Overall, the genesis state of the Cosmos SDK serves as the foundation for the entire blockchain network, and developers must carefully consider the initial configuration of their network to ensure that it is secure, stable, and capable of supporting their intended use cases.
 
 ## Exercise
 

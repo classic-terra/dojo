@@ -14,7 +14,17 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+In the context of blockchain technology, a `client` refers to a software program that interacts with a blockchain network. The Cosmos SDK includes a `client` that allows users to interact with the blockchain network, either through a command-line interface (CLI) or through an application programming interface (API).
+
+The Cosmos SDK `client` package provides a range of functionality, including the ability to:
+
+* Create and manage accounts on the network
+* Send and receive transactions
+* Query the state of the network
+* Submit proposals for changes to the network's parameters
+* Participate in consensus as a validator node
+
+`Clients` can be run on any machine that has access to the blockchain network, and it can be used to interact with any application that is built on top of the Cosmos SDK. It includes a number of built-in features, as specified above,furthermore developers can customize the `client` by adding their own features or extending upon existing features to suit their needs.
 
 ## Exercise
 
