@@ -22,7 +22,7 @@ The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `learning 
 
 ### Path of the Apprentice
 
-- [Protobuf](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata) (Beta)
+- [Protocol Buffers](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/1/kata) (Beta)
 - [Transactions](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/2/kata) (Beta)
 - [Messages](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/3/kata) (Beta)
 - [Queries](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/apprentice/katas/4/kata) (Beta)

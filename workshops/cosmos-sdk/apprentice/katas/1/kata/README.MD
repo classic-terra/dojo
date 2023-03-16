@@ -1,4 +1,4 @@
-# Path of the Apprentice - `protobuf`
+# Path of the Apprentice - Protocol Buffers
 
 This training exercise is a **apprentice-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
