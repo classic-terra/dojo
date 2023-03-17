@@ -14,7 +14,18 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+A context in Cosmos SDK refers to an object that contains information about the current state of the blockchain which is passed to various modules and functions as they execute. It contains a number of important properties that help support module and function "internals":
+
+* `BlockHeight`: This is the height of the current block being processed.
+* `BlockTime`: This is the time at which the current block was created.
+* `TxBytes`: This is the size of the transaction being processed.
+* `Logger`: This is a logger object that can be used to log messages during execution.
+* `ChainID`: This is the ID of the current blockchain.
+* `MinimumGasPrices`: This is the minimum gas price required for a transaction to be processed.
+* `GasMeter`: This is an object that tracks the amount of gas used during execution.
+* `CoinType`: This is the type of cryptocurrency being used in the blockchain.
+
+Contexts are important because they allow different modules to access and update information about the current state of the blockchain in a consistent and secure manner. They also help ensure that transactions are processed correctly by providing information about gas usage and minimum gas prices.
 
 ## Exercise
 

@@ -14,7 +14,17 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+The WebAssembly (WASM) module in Cosmos SDK is a binary executable format that allows developers to write high-performance smart contracts in a variety of programming languages, including Rust, C++, and AssemblyScript.
+
+WASM modules are designed to be lightweight, portable, and secure. They can be deployed and executed in a wide range of environments, including web browsers, mobile devices, and server-side applications.
+
+In the context of Cosmos SDK, WASM modules are used to create custom application-specific modules that can be deployed on a Cosmos blockchain. These modules can implement custom business logic, such as token issuance, staking, governance, or other functionality.
+
+The Cosmos SDK provides a WASM module interface that abstracts away the complexities of interacting with the low-level WASM runtime. This interface enables developers to write smart contracts in a familiar programming language and leverage the full power of the Cosmos SDK's ecosystem.
+
+Once a WASM module is compiled, it can be uploaded to a Cosmos chain and instantiated as a contract instance. The module can then be called from other modules or external applications using standard Cosmos SDK messages.
+
+Overall, the WASM module in Cosmos SDK provides developers with a powerful and flexible tool for building custom blockchain applications that can be easily deployed and executed in a wide range of environments.
 
 ## Exercise
 

@@ -41,21 +41,21 @@ The Terra Classic L1 Task Force Cosmos SDK dojo consist of four major `learning 
 
 ### Path of the Expert
 
-- [Contexts](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata) (Pending)
-- [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/2/kata) (Pending)
-- [Bridges](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/3/kata) (Pending)
-- [Migrations](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/4/kata) (Pending)
-- [Wasm](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/5/kata) (Pending)
-- [Cosmovisor](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/6/kata) (Pending)
+- [Contexts](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/1/kata) (InProgress)
+- [Events](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/2/kata) (InProgress)
+- [Bridges](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/3/kata) (InProgress)
+- [Migrations](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/4/kata) (InProgress)
+- [Wasm](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/5/kata) (InProgress)
+- [Cosmovisor](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/expert/katas/6/kata) (InProgress)
 
 ### Path of the Cosmonaut
 
-- [IBC](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/1/kata) (Pending)
-- IBC > [Connections](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/2/kata) (Pending)
-- IBC > [Channels](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/3/kata) (Pending)
-- IBC > [Clients](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/4/kata) (Pending)
-- IBC > [Token Transfer](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/5/kata) (Pending)
-- IBC > [Interchain Accounts](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/6/kata) (Pending)
+- [IBC](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/1/kata) (InProgress)
+- IBC > [Connections](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/2/kata) (InProgress)
+- IBC > [Channels](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/3/kata) (InProgress)
+- IBC > [Clients](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/4/kata) (InProgress)
+- IBC > [Token Transfer](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/5/kata) (InProgress)
+- IBC > [Interchain Accounts](https://github.com/classic-terra/dojo/tree/main/workshops/cosmos-sdk/cosmonaut/katas/6/kata) (InProgress)
 
 ## Troubleshooting
 

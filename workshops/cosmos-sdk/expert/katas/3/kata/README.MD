@@ -14,7 +14,20 @@ These instructions will help you prepare for the `training step` and ensure that
 
 ## Preface
 
-[TEXT]
+In the context of Cosmos SDK, bridges refer to a set of tools and protocols that enable interoperability between independent blockchain networks.
+
+Bridges are necessary because each blockchain network typically operates in isolation, with its own set of rules, validators, and consensus mechanisms. This isolation can limit the potential of blockchain technology by preventing cross-chain communication and collaboration.
+
+Bridges allow independent blockchain networks to communicate and exchange value with each other. This enables a wide range of use cases, including cross-chain asset transfers, decentralized exchanges, and interoperable smart contracts.
+
+The Cosmos SDK provides several tools and protocols to facilitate cross-chain interoperability, including:
+
+* `IBC (Inter-Blockchain Communication)`: IBC is a protocol for transferring digital assets and data across independent blockchain networks. IBC allows independent blockchains to interoperate without requiring them to trust each other.
+* `Peggy`: Peggy is a bridge between Ethereum and Cosmos SDK-based blockchains that allows users to transfer `ERC20` tokens to and from Cosmos-based blockchains.
+* `BandChain`: BandChain is an oracle network that provides reliable and decentralized price feeds for various digital assets. BandChain is used by the Cosmos SDK to provide price information for cross-chain asset transfers.
+* `Gravity DEX`: Gravity DEX is a decentralized exchange that allows users to trade tokens from different blockchains. Gravity DEX is built on top of the `IBC` protocol and enables cross-chain liquidity pools.
+
+Overall, bridges in the Cosmos SDK provide a powerful toolset for enabling cross-chain interoperability between independent blockchain networks. This interoperability opens up a wide range of possibilities for decentralized finance, gaming, and other blockchain applications.
 
 ## Exercise
 

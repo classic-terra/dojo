@@ -1,4 +1,4 @@
-# Path of the Cosmonaut - Token Transfer
+# Path of the Cosmonaut - IBC > Token Transfer
 
 This training exercise is a **cosmonaut-level** course on Cosmos SDK that serves as a starting point for L1 developers looking to onboard the Cosmos.
 
