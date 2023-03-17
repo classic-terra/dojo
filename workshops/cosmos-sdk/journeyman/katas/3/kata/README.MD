@@ -16,17 +16,17 @@ These instructions will help you prepare for the `training step` and ensure that
 
 Now that we have mastered the basics of the `AnteHandler` & `BaseApp` we are ready to begin implementing our very own Cosmos SDK blockchain application. For this we need to implement a `SimpleApp` struct that acts as a surrogate for our custom `BaseApp` to enables us to wire together the different pieces of our blockchain application. At a high level the areas of responsibility that will be managed by our `SimpleApp` are as follow:
 
-* `codec`: TODO @ Cosmos SDK codec.Codec
+* `codec`: A codec defines how to encode and decode data in the Cosmos SDK.
 
-* `interface registry`: TODO @ Cosmos SDK sdk.InterfaceRegistry
+* `interface registry`: The interface registry is a module that provides a way to register and manage interfaces for use in cross-module communication.
 
-* `params & subspaces`: TODO @ https://docs.cosmos.network/v0.45/modules/params/
+* `params & subspaces`: Params allows developers to define and manage the parameters of a blockchain network, such as transaction fees, block sizes, and governance parameters. Subspaces provide a way to organize and manage sets of related parameters within the overall parameter space of a blockchain network.
 
-* `module manager`: helps developers manage the modules in their blockchain application via a struct named `Manager`. `Manager` is a native Cosmos SDK type that provides a convenient way to add, remove, update and determine order-of-execution of modules in our blockchain application. This helps avoid `AppHash errors` and a very important thing to remember when dealing with the `module manager` is that any module instantiated in the module manager, which is later modified outside the `module manager` by our blockchain application, must be passed by reference upon `module registration` to help ensure the overall integrity of our `replicated state machine`. If you want to learn more about the `module manager` read the [official documentation](https://docs.cosmos.network/main/building-modules/module-manager)
+* `module manager`: Helps developers manage the modules in their blockchain application via a struct named `Manager`. `Manager` is a native Cosmos SDK type that provides a convenient way to add, remove, update and determine order-of-execution of modules in our blockchain application. This helps avoid `AppHash errors` and a very important thing to remember when dealing with the `module manager` is that any module instantiated in the module manager, which is later modified outside the `module manager` by our blockchain application, must be passed by reference upon `module registration` to help ensure the overall integrity of our `replicated state machine`. If you want to learn more about the `module manager` read the [official documentation](https://docs.cosmos.network/main/building-modules/module-manager)
 
-* `module configurator`: provides hooks to allow nested modules to configure and register their services in the `RegisterServices` method. It is designed to eventually support module object capabilities isolation as described [here](https://github.com/cosmos/cosmos-sdk/issues/7093).
+* `module configurator`: Provides hooks to allow nested modules to configure and register their services in the `RegisterServices` method. It is designed to eventually support module object capabilities isolation as described [here](https://github.com/cosmos/cosmos-sdk/issues/7093).
 
-* `module permission`: TODO @ auth.PermissionsForAddress
+* `module permission`: Permissions are a way to control access to various actions on the network, such as sending transactions or executing specific types of smart contracts. Each permission is represented by a unique bit within a bitfield, which is a compact representation of all permissions associated with a given account.
 
 ## Exercise
 
